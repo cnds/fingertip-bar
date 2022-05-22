@@ -1,0 +1,12 @@
+.container {
+  padding: 0 32px;
+
+  .main {
+    background-color: rgb(105, 144, 244);
+
+    .btn {
+      --background-color: green;
+    }
+  }
+}
+
