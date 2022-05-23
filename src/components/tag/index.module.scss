@@ -1,0 +1,18 @@
+.tag {
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 12px;
+  border-radius: 5px;
+  padding: 4px;
+
+  &_period {
+    color: #f74757;
+    background-color: rgba(247, 71, 87, 0.1);
+  }
+
+  &_new {
+    color: #ff9400;
+    background-color: rgba(255, 148, 0, 0.1);
+    font-style: italic;
+  }
+}
