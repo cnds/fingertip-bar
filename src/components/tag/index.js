@@ -7,6 +7,7 @@ const Tag = ({ children, type }) => {
       className={classNames(styles.tag, {
         [styles.tag_period]: type === "period",
         [styles.tag_new]: type === "new",
+        [styles.tag_recommend]: type === "recommend",
       })}
     >
       {children}
