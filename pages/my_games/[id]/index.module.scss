@@ -1,0 +1,201 @@
+.wrapper {
+  background: url("/game_detail_bg.png") no-repeat;
+  background-size: 100%;
+
+  .headNavBar {
+    color: #fff;
+  }
+
+  .overview {
+    display: flex;
+    margin: 24px 16px 16px;
+
+    img {
+      border-radius: 12px;
+    }
+
+    .text {
+      flex: 1;
+      margin-left: 6px;
+    }
+
+    .first {
+      display: flex;
+      justify-content: space-between;
+      height: 30px;
+      align-items: center;
+
+      .name {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 22px;
+        max-width: 176px;
+        color: #fff;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .amount {
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 30px;
+        color: #fff;
+        font-style: italic;
+      }
+    }
+
+    .second {
+      display: flex;
+      justify-content: space-between;
+      height: 30px;
+      align-items: center;
+
+      .endTime {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+        color: rgba(255, 255, 255, 0.8);
+        margin-right: 8px;
+      }
+
+      .total {
+        font-size: 14px;
+        line-height: 20px;
+        color: rgba(255, 255, 255, 0.8);
+      }
+    }
+  }
+
+  .binding {
+    background: #fff7eb;
+    border: 1px solid #ffffff;
+    box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.03);
+    border-radius: 9px;
+    margin: 16px 16px;
+
+    .title {
+      padding: 8px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(
+        90deg,
+        rgba(250, 200, 46, 0.12) 0%,
+        rgba(250, 200, 46, 0) 100%
+      );
+
+      .id {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+        color: rgba(0, 0, 0, 0.8);
+
+        .notBound {
+          font-weight: 600;
+          color: #f74757;
+        }
+      }
+
+      .refresh {
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 18px;
+        border-radius: 12px;
+        background: #f74757;
+        color: #fff;
+        box-shadow: 0px 1px 4px rgba(247, 71, 87, 0.36);
+      }
+    }
+
+    .start {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 17px;
+      color: rgba(0, 0, 0, 0.5);
+
+      .entry {
+        color: #f74757;
+        text-decoration: underline;
+      }
+    }
+
+    .stepNumber {
+      display: inline-block;
+      text-align: center;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 12px;
+      border: 0.5px solid rgba(0, 0, 0, 0.5);
+      color: rgba(0, 0, 0, 0.5);
+      vertical-align: middle;
+    }
+
+    :global {
+      .adm-step-title {
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 18px;
+        color: rgba(0, 0, 0, 0.8);
+      }
+
+      .adm-steps-vertical .adm-step .adm-step-content {
+        padding-bottom: 8px;
+      }
+
+      .adm-step-icon-container {
+        display: flex;
+        background-color: #fff7eb;
+      }
+
+      .adm-steps-vertical .adm-step .adm-step-indicator::after {
+        border-left: 0.5px dashed rgba(0, 0, 0, 0.3);
+        background-color: transparent;
+      }
+    }
+  }
+
+  .tabsWrapper {
+    background-color: #fff;
+    border-radius: 20px 20px 0px 0px;
+
+    .btnWrap {
+      margin: 0 48px 24px 48px;
+
+      .startBtn {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 22px;
+        color: #fff;
+        background: #f74757;
+        box-shadow: 0px 3px 6px rgba(247, 71, 87, 0.36);
+        border-radius: 33px;
+      }
+    }
+
+    :global {
+      .adm-tabs-tab {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 22px;
+        color: rgba(0, 0, 0, 0.5);
+
+        &.adm-tabs-tab-active {
+          color: rgba(0, 0, 0, 0.8);
+        }
+      }
+
+      .adm-tabs-header {
+        border: none;
+      }
+
+      .adm-tabs-tab-line {
+        --fixed-active-line-width: 24px;
+        background-color: #f74757;
+      }
+    }
+  }
+}

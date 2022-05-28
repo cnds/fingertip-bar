@@ -1,0 +1,31 @@
+.bonus {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+
+  &:nth-child(odd) {
+    background-color: #f9fafb;
+    border-radius: 6px;
+  }
+
+  .text {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .amount {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 17px;
+    color: #f74757;
+
+    em {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+}

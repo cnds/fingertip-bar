@@ -1,7 +1,8 @@
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/Link";
 import classNames from "classnames";
-import HeadNavBar from "@/components/headNavBar";
+import { NavBar } from "antd-mobile";
 import Tag from "@/components/tag";
 import gameImg from "@/public/game.png";
 import styles from "./index.module.scss";
@@ -15,7 +16,7 @@ const MyGames = () => {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <HeadNavBar>我的游戏</HeadNavBar>
+      <NavBar className={styles.headNavBar}>我的游戏</NavBar>
       <div className={styles.body}>
         <div className={styles.box}>
           <div className={styles.title}>
@@ -25,8 +26,8 @@ const MyGames = () => {
             </span>
           </div>
 
-          <div>
-            <For of={[1, 2]} index="index">
+          <For of={[1, 2]} index="index" each="gameId">
+            <Link href={`/my_games/${gameId}`}>
               <div key={index} className={styles.gameItem}>
                 <Image src={gameImg} width={60} height={60} objectFit="cover" />
                 <div className={styles.text}>
@@ -45,8 +46,8 @@ const MyGames = () => {
                   </div>
                 </div>
               </div>
-            </For>
-          </div>
+            </Link>
+          </For>
         </div>
 
         <div className={styles.box}>
@@ -57,8 +58,8 @@ const MyGames = () => {
             </span>
           </div>
 
-          <div>
-            <For of={[1, 2]} index="index">
+          <For of={[3, 4]} index="index" each="gameId">
+            <Link href={`/my_games/${gameId}`}>
               <div key={index} className={styles.gameItem}>
                 <Image src={gameImg} width={60} height={60} objectFit="cover" />
                 <div className={styles.text}>
@@ -76,7 +77,7 @@ const MyGames = () => {
                           styles.endTimeFinished
                         )}
                       >
-                        2022/4/16结束
+                        2022/4/16已结束
                       </span>
                       <Tag type="period">1期</Tag>
                     </span>
@@ -84,8 +85,8 @@ const MyGames = () => {
                   </div>
                 </div>
               </div>
-            </For>
-          </div>
+            </Link>
+          </For>
         </div>
 
         <div className={styles.everybody}>
