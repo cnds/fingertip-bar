@@ -8,6 +8,7 @@ const Tag = ({ children, type }) => {
         [styles.tag_period]: type === "period",
         [styles.tag_new]: type === "new",
         [styles.tag_recommend]: type === "recommend",
+        [styles.tag_yellowPeriod]: type === "yellowPeriod",
       })}
     >
       {children}

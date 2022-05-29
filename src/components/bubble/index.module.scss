@@ -1,0 +1,26 @@
+.wrapper {
+  position: relative;
+
+  .bubble {
+    position: absolute;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 17px;
+    color: #fff;
+    padding: 3px 8px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 16px;
+    width: auto;
+    white-space: nowrap;
+    top: -25px;
+    right: 0;
+    transform: translate(90%, 0);
+
+    .triangle {
+      position: absolute;
+      top: 23px;
+      left: 20px;
+    }
+  }
+}
