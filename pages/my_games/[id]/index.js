@@ -11,6 +11,7 @@ import Exclamation from "@/public/exclamation.svg";
 import BubbleTriangle from "@/public/bubble_triangle.svg";
 import redPacketLeft from "@/public/red_packet_left.png";
 import redPacketRight from "@/public/red_packet_right.png";
+import RedPacketSpeed from "@/public/red_packet_speed.svg";
 import Banner from "@/public/banner.svg";
 import Gift from "@/public/gift.svg";
 import MoneyLeft from "@/public/money_left.svg";
@@ -53,7 +54,7 @@ const GameDetail = () => {
           <Gift className={styles.gift} />
           <Banner className={styles.banner} />
           <span className={styles.title}>恭喜获得奖励</span>
-          <div className={styles.amount}>+ 0.5</div>
+          <div className={styles.amount}>+0.5</div>
           <div className={styles.content}>奖励已发放至余额账户</div>
         </>
       ),
@@ -61,6 +62,7 @@ const GameDetail = () => {
       onConfirm: () => {
         // console.log("Confirmed");
       },
+      confirmText: "继续努力",
     });
 
     Modal.alert({
@@ -70,14 +72,26 @@ const GameDetail = () => {
           <MoneyRight className={styles.moneyRight} />
           <div className={styles.title}>当前落后于85%玩家</div>
           <div className={styles.subTitle}>升级太慢？送你一个加速补贴</div>
+          <div className={styles.redPacketSpeed}>
+            <span className={styles.amount}>+10</span>
+            <span className={styles.text}>累计充值10元</span>
+            <span className={styles.bubble}>
+              今日限时
+              <BubbleTriangle className={styles.triangle} />
+            </span>
+            <RedPacketSpeed />
+          </div>
           <div className={styles.content}>完成后升级指数：</div>
-          <div className={styles.content}>近3分钟完成的玩家平均加快180%</div>
+          <div className={styles.content}>
+            近3分钟完成的玩家平均加快<em>180%</em>
+          </div>
         </>
       ),
       bodyClassName: styles.speedUpModal,
       onConfirm: () => {
         // console.log("Confirmed");
       },
+      confirmText: "试一试",
     });
   };
 

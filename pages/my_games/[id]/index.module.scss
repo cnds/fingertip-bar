@@ -103,11 +103,9 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: linear-gradient(
-        90deg,
-        rgba(250, 200, 46, 0.12) 0%,
-        rgba(250, 200, 46, 0) 100%
-      );
+      background: linear-gradient(90deg,
+          rgba(250, 200, 46, 0.12) 0%,
+          rgba(250, 200, 46, 0) 100%);
 
       .id {
         font-weight: 500;
@@ -305,6 +303,7 @@
       left: 44%;
 
       .triangle {
+        fill: rgba(0, 0, 0, 0.5);
         position: absolute;
         top: 23px;
         left: 20px;
@@ -428,11 +427,9 @@
 }
 
 .speedUpModal {
-  background: linear-gradient(
-      180deg,
+  background: linear-gradient(180deg,
       rgba(255, 162, 0, 0) 50%,
-      rgba(255, 162, 0, 0.12) 100%
-    ),
+      rgba(255, 162, 0, 0.12) 100%),
     #fbf6ec;
 
   .moneyLeft {
@@ -445,6 +442,56 @@
     position: absolute;
     top: 63px;
     right: -20px;
+  }
+
+  .redPacketSpeed {
+    position: relative;
+    margin: 20px 0;
+    text-align: center;
+
+    .amount {
+      position: absolute;
+      left: 50%;
+      top: 10px;
+      transform: translate(-50%, 0);
+      font-weight: 500;
+      font-size: 36px;
+      line-height: 53px;
+      color: #f74757;
+      font-style: italic;
+    }
+
+    .text {
+      position: absolute;
+      left: 50%;
+      top: 80px;
+      transform: translate(-50%, 0);
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .bubble {
+      position: absolute;
+      top: -8px;
+      right: 48px;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 17px;
+      color: #fff;
+      padding: 0 6px;
+      background: linear-gradient(90deg, #FF8000 0%, #FFA800 100%);
+      border-radius: 16px;
+
+      .triangle {
+        position: absolute;
+        top: 17px;
+        left: 16px;
+        fill: #FF8000;
+      }
+    }
   }
 
   .title {
@@ -469,6 +516,10 @@
     line-height: 20px;
     text-align: center;
     color: rgba(0, 0, 0, 0.5);
+
+    em {
+      color: #F74757;
+    }
   }
 
   :global {
