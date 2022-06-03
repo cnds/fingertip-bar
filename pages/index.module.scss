@@ -1,5 +1,5 @@
 .wrapper {
-  background: #e5e5e5 url("/homepage_bg.png") no-repeat;
+  background: #f7f7f7 url("/homepage_bg.png") no-repeat;
   background-size: 100%;
 
   .navBar {
@@ -26,11 +26,9 @@
       padding: 12px;
 
       &_attractive {
-        background: linear-gradient(
-          90deg,
-          rgba(247, 71, 87, 0.1) 0%,
-          rgba(247, 71, 87, 0) 99.48%
-        );
+        background: linear-gradient(90deg,
+            rgba(247, 71, 87, 0.1) 0%,
+            rgba(247, 71, 87, 0) 99.48%);
       }
 
       .titleText {

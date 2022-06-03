@@ -1,0 +1,154 @@
+.wrapper {
+  background: #f7f7f7 url("/user_bg.png") no-repeat;
+  margin-bottom: 52px;
+
+  .container {
+    padding: 0 16px;
+
+    .info {
+      display: flex;
+      margin: 16px 0;
+
+      .detail {
+        flex: 1;
+        margin-left: 10px;
+
+        .name {
+          font-weight: 500;
+          font-size: 18px;
+          line-height: 30px;
+          color: #000;
+        }
+
+        .userId {
+          display: flex;
+          align-items: center;
+
+          &>span {
+            &:nth-child(1) {
+              font-weight: 600;
+              font-size: 12px;
+              line-height: 16px;
+              padding: 0 2px;
+              color: #fff;
+              background: linear-gradient(90deg, #ff8000 0%, #ffa800 100%);
+              border-radius: 7px 4px;
+            }
+
+            &:nth-child(2) {
+              font-weight: 400;
+              font-size: 14px;
+              line-height: 20px;
+              margin: 0 6px;
+              color: rgba(0, 0, 0, 0.5);
+            }
+          }
+
+          .copy {
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 10px;
+            padding: 4px 6px;
+            color: #ffa200;
+            border: 0.5px solid #ffa200;
+            border-radius: 20px;
+          }
+        }
+      }
+    }
+
+    .money {
+      padding: 16px 20px;
+      background: linear-gradient(83.95deg, #f74757 1.97%, #ff8a7e 99.07%);
+      box-shadow: 0px 3px 20px rgba(247, 71, 87, 0.24);
+      border-radius: 9px;
+
+      .balance {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .label {
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 17px;
+          color: rgba(255, 255, 255, 0.8);
+        }
+
+        .amount {
+          font-weight: 600;
+          font-size: 38px;
+          line-height: 56px;
+          color: #fff;
+        }
+
+        .exchange {
+          font-weight: 500;
+          font-size: 13px;
+          line-height: 18px;
+          color: #F74757;
+          padding: 4px 16px;
+          border: none;
+          background: linear-gradient(277.89deg, #FFF0C2 3.55%, #FFF8E2 79.46%);
+          box-shadow: 0px 1px 4px rgba(247, 71, 87, 0.36);
+          border-radius: 33px;
+        }
+      }
+
+      .income {
+        display: flex;
+        margin-top: 12px;
+
+        .type {
+          width: 50%;
+
+          .label {
+            display: block;
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 17px;
+            color: rgba(255, 255, 255, 0.8);
+          }
+
+          .amount {
+            font-weight: 400;
+            font-size: 20px;
+            line-height: 30px;
+            color: #fff;
+          }
+        }
+      }
+    }
+
+    .list {
+      .action {
+        display: flex;
+        align-items: center;
+        height: 56px;
+        box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.03);
+
+        span {
+          flex: 1;
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 22px;
+          margin-left: 12px;
+          color: rgba(0, 0, 0, 0.8);
+        }
+
+        .rightArrow {
+          margin: 0 8px;
+        }
+      }
+    }
+
+    .slogan {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 17px;
+      text-align: center;
+      color: rgba(0, 0, 0, 0.3);
+      padding: 82px 0 32px;
+    }
+  }
+}
