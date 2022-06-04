@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/router";
 import MenuTabBar from "@/components/menuTabBar";
 import BalancedDetailIcon from "@/public/balanced_detail_icon.svg";
 import Contact from "@/public/contact.svg";
@@ -18,6 +19,7 @@ const { useForm } = Form;
 const COUNTDOWN_SECOND = 60;
 
 const User = () => {
+  const router = useRouter();
   const [form] = useForm();
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [phone, setPhone] = useState(0);
@@ -60,6 +62,10 @@ const User = () => {
   const handleClickGetCaptcha = () => {
     setIsSending(true);
     startCountdown();
+  };
+
+  const handleClickConfirm = () => {
+    router.push("/exchange");
   };
 
   return (
@@ -146,7 +152,6 @@ const User = () => {
         bodyStyle={{
           borderTopLeftRadius: "20px",
           borderTopRightRadius: "20px",
-          minHeight: "40vh",
         }}
         getContainer={null}
         bodyClassName={styles.verificationPopup}
@@ -205,6 +210,7 @@ const User = () => {
                     disabled={
                       !isPhone(phone) || captcha?.length < 4 || !isAgree
                     }
+                    onClick={handleClickConfirm}
                   >
                     确认
                   </Button>
