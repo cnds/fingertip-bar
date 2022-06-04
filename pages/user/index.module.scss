@@ -1,6 +1,7 @@
 .wrapper {
   background: #f7f7f7 url("/user_bg.png") no-repeat;
   margin-bottom: 52px;
+  min-height: 100vh;
 
   .container {
     padding: 0 16px;
@@ -121,6 +122,8 @@
     }
 
     .list {
+      margin-top: 16px;
+
       .action {
         display: flex;
         align-items: center;
@@ -132,7 +135,7 @@
           font-weight: 500;
           font-size: 16px;
           line-height: 22px;
-          margin-left: 12px;
+          margin-left: 8px;
           color: rgba(0, 0, 0, 0.8);
         }
 
@@ -149,6 +152,118 @@
       text-align: center;
       color: rgba(0, 0, 0, 0.3);
       padding: 82px 0 32px;
+    }
+  }
+
+  .verificationPopup {
+
+    .title {
+      position: relative;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 22px;
+      text-align: center;
+      padding: 16px 0;
+      color: rgba(0, 0, 0, 0.8);
+
+      .cancelBtn {
+        position: absolute;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+        text-align: center;
+        top: 16px;
+        left: 16px;
+        color: rgba(0, 0, 0, 0.3);
+      }
+
+    }
+
+    .content {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+      color: rgba(0, 0, 0, 0.5);
+      margin: 12px 16px;
+    }
+
+    .division {
+      width: 1px;
+      height: 10px;
+      background-color: rgba(0, 0, 0, 0.3);
+      display: inline-block;
+    }
+
+    .captchaBtn {
+      position: relative;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 25px;
+      color: rgba(0, 0, 0, 0.8);
+      padding: 4px 6px;
+    }
+
+    .agreeText {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 17px;
+      color: rgba(0, 0, 0, 0.3);
+
+      span {
+        color: #f74757;
+      }
+    }
+
+    .btnWrapper {
+      margin: 12px 36px;
+
+      .confirmBtn {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 22px;
+        color: #fff;
+        background: #F74757;
+        padding: 12px 12px;
+        box-shadow: 0px 3px 6px rgba(247, 71, 87, 0.36);
+        border-radius: 33px;
+      }
+    }
+
+    :global {
+      .adm-radio-icon {
+        width: 16px;
+        height: 16px;
+      }
+
+      .adm-radio.adm-radio-checked .adm-radio-icon {
+        border-color: #f74757;
+        background-color: #f74757;
+      }
+
+      .adm-radio-content {
+        padding-left: 4px;
+      }
+
+      .adm-input-element {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 25px;
+        color: rgba(0, 0, 0, 0.8);
+      }
+
+      .adm-list-item-content {
+        padding: 0;
+        margin-right: 16px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+      }
+
+      .adm-list-item:nth-child(4) .adm-list-item-content {
+        border: none;
+      }
+
+      .adm-list-body {
+        border: none;
+      }
     }
   }
 }
