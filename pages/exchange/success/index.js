@@ -19,7 +19,7 @@ const Success = () => {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <NavBar backArrow={false}>申请成功</NavBar>
+      <NavBar backArrow={false} className={styles.navBar}>申请成功</NavBar>
       <div className={styles.container}>
         <div className={styles.complete}>
           <Button

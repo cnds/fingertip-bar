@@ -1,9 +1,14 @@
 .wrapper {
+    background: #f7f7f7;
+    min-height: 100vh;
+
+    .navBar {
+        background-color: #fff;
+    }
+
     .container {
-        background: #f7f7f7;
         text-align: center;
         padding: 20px;
-        min-height: calc(100vh - 45px);
 
         .complete {
             text-align: right;

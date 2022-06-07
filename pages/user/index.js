@@ -72,6 +72,10 @@ const User = () => {
     router.push("/balance_detail");
   };
 
+  const handleClickSettings = () => {
+    router.push("/settings");
+  };
+
   return (
     <div className={styles.wrapper}>
       <Head>
@@ -141,7 +145,9 @@ const User = () => {
 
           <div className={styles.action}>
             <SettingIcon />
-            <span className={styles.text}>关于设置</span>
+            <span className={styles.text} onClick={handleClickSettings}>
+              关于设置
+            </span>
             <RightArrow className={styles.rightArrow} />
           </div>
         </div>

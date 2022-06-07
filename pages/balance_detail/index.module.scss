@@ -1,5 +1,6 @@
 .wrapper {
   background: #f7f7f7;
+  min-height: 100vh;
 
   .navBar {
     background-color: #fff;
@@ -7,7 +8,6 @@
 
   .container {
     padding: 4px 16px;
-    min-height: calc(100vh - 45px);
 
     .detailWrapper {
       padding: 8px 12px;
