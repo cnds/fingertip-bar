@@ -68,6 +68,10 @@ const User = () => {
     router.push("/exchange");
   };
 
+  const handleClickBalance = () => {
+    router.push("/balance_detail");
+  };
+
   return (
     <div className={styles.wrapper}>
       <Head>
@@ -123,7 +127,7 @@ const User = () => {
             <RightArrow className={styles.rightArrow} />
           </div>
 
-          <div className={styles.action}>
+          <div className={styles.action} onClick={handleClickBalance}>
             <BalancedDetailIcon />
             <span className={styles.text}>余额明细</span>
             <RightArrow className={styles.rightArrow} />

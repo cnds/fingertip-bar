@@ -1,0 +1,145 @@
+.wrapper {
+  background: #f7f7f7;
+
+  .navBar {
+    background-color: #fff;
+  }
+
+  .container {
+    padding: 4px 16px;
+    min-height: calc(100vh - 45px);
+
+    .detailWrapper {
+      padding: 8px 12px;
+      background: #fff;
+      border-radius: 9px;
+      margin: 16px 0;
+
+      .collapse {
+        margin-left: 58px;
+
+        .action {
+          text-align: right;
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 17px;
+          color: rgba(0, 0, 0, 0.3);
+
+          .arrow {
+            margin-left: 5px;
+            transition: transform 0.5s;
+
+            &.opened {
+              transform: rotate(180deg);
+            }
+          }
+        }
+
+        :global {
+          .ReactCollapse--collapse {
+            transition: height 0.5s;
+          }
+        }
+
+        .flowWrapper {
+          padding: 8px 0;
+          transition: height 0.5s;
+
+          .flow {
+            display: flex;
+            align-items: center;
+            column-gap: 8px;
+
+            &:not(:last-child) {
+              margin-bottom: 8px;
+            }
+
+            .content {
+              flex: 1;
+              font-weight: 400;
+              font-size: 12px;
+              line-height: 17px;
+              color: rgba(0, 0, 0, 0.5);
+            }
+
+            .time {
+              font-weight: 400;
+              font-size: 12px;
+              line-height: 17px;
+              color: rgba(0, 0, 0, 0.3);
+            }
+          }
+        }
+      }
+
+      .detail {
+        display: flex;
+        align-items: center;
+
+        .content {
+          flex: 1;
+          margin-left: 10px;
+        }
+
+        .title {
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 20px;
+          color: rgba(0, 0, 0, 0.8);
+          margin-bottom: 2px;
+        }
+
+        .time {
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 20px;
+          color: rgba(0, 0, 0, 0.5);
+        }
+
+        .amount {
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 24px;
+          color: rgba(0, 0, 0, 0.8);
+          font-style: italic;
+
+          &.increase {
+            color: #F74757;
+          }
+        }
+      }
+    }
+
+
+
+    .tip {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 17px;
+      text-align: center;
+      color: rgba(0, 0, 0, 0.3);
+      margin: 24px 0;
+    }
+
+    .btnWrapper {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 10px 48px;
+      background: #fff;
+      box-shadow: inset 0px 1px 0px rgba(0, 0, 0, 0.06);
+
+      .continueBtn {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 22px;
+        color: #fff;
+        background: #F74757;
+        padding: 12px 12px;
+        box-shadow: 0px 3px 6px rgba(247, 71, 87, 0.36);
+        border-radius: 33px;
+      }
+    }
+  }
+}
