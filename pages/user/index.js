@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
 import MenuTabBar from "@/components/menuTabBar";
 import BalancedDetailIcon from "@/public/balanced_detail_icon.svg";
-import Contact from "@/public/contact.svg";
+import Contact from "@/components/contact";
 import ContactUsIcon from "@/public/contact_us_icon.svg";
 import RecordIcon from "@/public/record_icon.svg";
 import RightArrow from "@/public/right_arrow.svg";
@@ -80,6 +80,13 @@ const User = () => {
     router.push(path);
   };
 
+  const handleClickContactUs = () => {
+    window.open(
+      "https://yzf.qq.com/xv/web/static/chat/index.html?sign=37ef9b97d27354c7714d9ce849e1b76461665a28638153f3870fab90fcd400b714017e14abd8e4d6b2cd5f432111bb53880c16",
+      "_self"
+    );
+  };
+
   return (
     <div className={styles.wrapper}>
       <Head>
@@ -88,7 +95,9 @@ const User = () => {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <NavBar right={<Contact />}>个人中心</NavBar>
+      <NavBar right={<Contact />} backArrow={false}>
+        个人中心
+      </NavBar>
       <div className={styles.container}>
         <div className={styles.info}>
           <Image src={userAvatar} />
@@ -141,7 +150,7 @@ const User = () => {
             <RightArrow className={styles.rightArrow} />
           </div>
 
-          <div className={styles.action}>
+          <div className={styles.action} onClick={handleClickContactUs}>
             <ContactUsIcon />
             <span className={styles.text}>联系客服</span>
             <RightArrow className={styles.rightArrow} />

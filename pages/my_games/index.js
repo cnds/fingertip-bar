@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/Link";
+import { useRouter } from "next/router";
 import classNames from "classnames";
 import { NavBar } from "antd-mobile";
 import Tag from "@/components/tag";
@@ -8,6 +9,12 @@ import gameImg from "@/public/game.png";
 import styles from "./index.module.scss";
 
 const MyGames = () => {
+  const router = useRouter();
+
+  const handleClickBack = () => {
+    router.push("/");
+  };
+
   return (
     <div className={styles.wrapper}>
       <Head>
@@ -16,7 +23,9 @@ const MyGames = () => {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <NavBar className={styles.headNavBar}>我的游戏</NavBar>
+      <NavBar className={styles.headNavBar} onBack={handleClickBack}>
+        我的游戏
+      </NavBar>
       <div className={styles.body}>
         <div className={styles.box}>
           <div className={styles.title}>

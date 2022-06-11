@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { NavBar, Button, Steps, Tabs, Modal, Space, Swiper } from "antd-mobile";
 import Tag from "@/components/tag";
 import Bubble from "@/components/bubble";
-import Contact from "@/public/contact.svg";
+import Contact from "@/components/contact";
 import gameImg from "@/public/game.png";
 import playerImg from "@/public/player.png";
 import Exclamation from "@/public/exclamation.svg";
@@ -95,6 +95,10 @@ const GameDetail = () => {
     });
   };
 
+  const handleClickBack = () => {
+    router.push('/my_games');
+  };
+
   return (
     <div className={styles.wrapper}>
       <Head>
@@ -103,7 +107,7 @@ const GameDetail = () => {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <NavBar className={styles.headNavBar} right={<Contact />}>
+      <NavBar className={styles.headNavBar} right={<Contact />} onBack={handleClickBack}>
         游戏详情
       </NavBar>
 
