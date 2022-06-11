@@ -76,6 +76,10 @@ const User = () => {
     router.push("/settings");
   };
 
+  const gotoAgreement = (path) => {
+    router.push(path);
+  };
+
   return (
     <div className={styles.wrapper}>
       <Head>
@@ -204,8 +208,30 @@ const User = () => {
           <Form.Item name="isAgree">
             <Radio block>
               <div className={styles.agreeText}>
-                我同意<span>《用户协议》</span>、<span>《隐私政策》</span>、
-                <span>《共享经济协议》</span>
+                我同意
+                <span
+                  onClick={() => {
+                    gotoAgreement("/agreement/user");
+                  }}
+                >
+                  《用户协议》
+                </span>
+                、
+                <span
+                  onClick={() => {
+                    gotoAgreement("/agreement/privacyPolicy");
+                  }}
+                >
+                  《隐私政策》
+                </span>
+                、
+                <span
+                  onClick={() => {
+                    gotoAgreement("/agreement/shareeconomy");
+                  }}
+                >
+                  《共享经济协议》
+                </span>
               </div>
             </Radio>
           </Form.Item>
