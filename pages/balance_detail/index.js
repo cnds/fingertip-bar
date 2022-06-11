@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { NavBar, Button } from "antd-mobile";
 import { useRouter } from "next/router";
-import Detail from "./detail";
+import Detail from "@/components/detail";
 import styles from "./index.module.scss";
 
 const BalanceDetail = () => {
