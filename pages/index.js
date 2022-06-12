@@ -1,5 +1,8 @@
 import Head from "next/head";
+import dayjs from "dayjs";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import queryString from "query-string";
 import { NavBar, Space, Button } from "antd-mobile";
 import Image from "next/image";
 import classNames from "classnames";
@@ -7,9 +10,15 @@ import MenuTabBar from "@/components/menuTabBar";
 import Tag from "@/components/tag";
 import game from "@/public/game.png";
 import RightArrow from "@/public/right_arrow.svg";
+import { getDashboard } from "@/request/index";
 import styles from "./index.module.scss";
 
-const Home = () => {
+const Home = ({ dashboard }) => {
+  const calRemainDays = (endDate) => {
+    const remainDays = dayjs(endDate).diff(dayjs(), "days");
+    return remainDays > 0 ? remainDays : 0;
+  };
+
   return (
     <div className={styles.wrapper}>
       <Head>
@@ -40,17 +49,25 @@ const Home = () => {
             </Link>
           </div>
           <div className={styles.recently}>
-            <For of={[1, 2, 3, 4]} each="item" index="index">
-              <div key={index} className={styles.gameItem}>
+            <For of={dashboard?.playing} each="game">
+              <div key={game?.game_id} className={styles.gameItem}>
                 <span className={styles.imgWrapper}>
-                  <span className={styles.recommendTag}>
-                    <Tag type="recommend">推荐</Tag>
-                  </span>
-                  <Image src={game} width={48} height={48} objectFit="cover" />
+                  <If condition={game?.is_recommend}>
+                    <span className={styles.recommendTag}>
+                      <Tag type="recommend">推荐</Tag>
+                    </span>
+                  </If>
+                  <Image
+                    src={game?.logo}
+                    width={48}
+                    height={48}
+                    style={{ borderRadius: "8px" }}
+                    objectFit="cover"
+                  />
                 </span>
-                <span className={styles.name}>游戏名称游戏名称</span>
+                <span className={styles.name}>{game?.app_name}</span>
                 <span className={styles.reward}>
-                  已领<span className={styles.amount}>22.6</span>
+                  已领<span className={styles.amount}>{game?.rewarded}</span>
                 </span>
               </div>
             </For>
@@ -62,30 +79,44 @@ const Home = () => {
             <span className={styles.titleText}>游戏任务</span>
           </div>
           <div className={styles.task}>
-            <For of={[1, 2, 3, 4, 5, 6, 7]} each="item" index="index">
-              <div key={index} className={styles.gameItem}>
-                <Image src={game} width={60} height={60} objectFit="cover" />
+            <For of={dashboard?.list} each="game">
+              <div key={game?.game_id} className={styles.gameItem}>
+                <Image
+                  src={game?.logo}
+                  width={60}
+                  height={60}
+                  objectFit="cover"
+                  style={{ borderRadius: "8px" }}
+                />
                 <div className={styles.main}>
                   <div className={styles.first}>
                     <div className={styles.left}>
-                      <span className={styles.name}>游戏名称游戏名称</span>
+                      <span className={styles.name}>{game?.app_name}</span>
                       <Space>
-                        <Tag type="period">1期</Tag>
-                        <Tag type="new">NEW</Tag>
+                        <Tag type="period">{game?.stage}期</Tag>
+                        <If condition={game?.is_new}>
+                          <Tag type="new">NEW</Tag>
+                        </If>
                       </Space>
                     </div>
                     <div className={styles.right}>
-                      1分钟人均<em className={styles.highlight}>9.9</em>
+                      1分钟人均
+                      <em className={styles.highlight}>
+                        {game?.avg_minute_reward}
+                      </em>
                     </div>
                   </div>
 
                   <div className={styles.second}>
                     <div className={styles.reward}>
                       <span>
-                        总奖<span className={styles.highlight}>8989</span>
+                        总奖
+                        <span className={styles.highlight}>
+                          {game?.reward_total}
+                        </span>
                       </span>
                       <span className={styles.divider} />
-                      <span>剩20天</span>
+                      <span>剩{calRemainDays(game?.end_date)}天</span>
                       <span className={styles.divider} />
                       <span>等你挑战</span>
                     </div>
@@ -102,5 +133,15 @@ const Home = () => {
     </div>
   );
 };
+
+export async function getServerSideProps(context) {
+  const res = await getDashboard(queryString.stringify(context?.query));
+
+  return {
+    props: {
+      dashboard: res?.data?.payload,
+    },
+  };
+}
 
 export default Home;

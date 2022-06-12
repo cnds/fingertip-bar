@@ -18,6 +18,9 @@ const nextConfig = {
     // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
+  images: {
+    domains: ["statics1.qkcdn.com", "upload1.qkcdn.com"],
+  },
 };
 
 module.exports = withTM(nextConfig);
