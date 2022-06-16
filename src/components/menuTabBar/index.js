@@ -1,11 +1,10 @@
+import Homepage from "@/public/homepage.svg";
+import HomepageActive from "@/public/homepage_active.svg";
+import User from "@/public/user.svg";
+import UserActive from "@/public/user_active.svg";
 import { TabBar } from "antd-mobile";
 import { useRouter } from "next/router";
-import Homepage from "@/public/homepage.svg";
-import RedPacket from "@/public/red_packet.svg";
-import User from "@/public/user.svg";
-import HomepageActive from "@/public/homepage_active.svg";
-import RedPacketActive from "@/public/red_packet_active.svg";
-import UserActive from "@/public/user_active.svg";
+import queryString from "query-string";
 import styles from "./index.module.scss";
 
 const MenuTabBar = () => {
@@ -17,12 +16,12 @@ const MenuTabBar = () => {
       title: "首页",
       icon: router?.pathname === "/" ? <HomepageActive /> : <Homepage />,
     },
-    {
-      key: "/redPacket",
-      title: "拆红包",
-      icon:
-        router?.pathname === "/redPacket" ? <RedPacketActive /> : <RedPacket />,
-    },
+    // {
+    //   key: "/redPacket",
+    //   title: "拆红包",
+    //   icon:
+    //     router?.pathname === "/redPacket" ? <RedPacketActive /> : <RedPacket />,
+    // },
     {
       key: "/user",
       title: "我的",
@@ -31,7 +30,9 @@ const MenuTabBar = () => {
   ];
 
   const handleChangeTabBar = (key) => {
-    router.push(key);
+    const queryStr = queryString.stringify(router?.query);
+
+    router.push(`${key}?${queryStr}`);
   };
 
   return (

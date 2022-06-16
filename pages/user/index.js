@@ -1,24 +1,26 @@
-import { useState, useRef, useEffect } from "react";
-import { useRouter } from "next/router";
+import Contact from "@/components/contact";
 import MenuTabBar from "@/components/menuTabBar";
 import BalancedDetailIcon from "@/public/balanced_detail_icon.svg";
-import Contact from "@/components/contact";
 import ContactUsIcon from "@/public/contact_us_icon.svg";
 import RecordIcon from "@/public/record_icon.svg";
 import RightArrow from "@/public/right_arrow.svg";
 import SettingIcon from "@/public/setting_icon.svg";
 import userAvatar from "@/public/user_avatar.png";
-import { Button, NavBar, Popup, Form, Input, Radio } from "antd-mobile";
+import { getAccount } from "@/request/index";
+import { isPhone } from "@/utils/index.js";
+import { Button, Form, Input, NavBar, Popup, Radio } from "antd-mobile";
 import Head from "next/head";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import queryString from "query-string";
+import { useEffect, useRef, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { isPhone } from "@/utils/index.js";
 import styles from "./index.module.scss";
 
 const { useForm } = Form;
 const COUNTDOWN_SECOND = 60;
 
-const User = () => {
+const User = ({ account }) => {
   const router = useRouter();
   const [form] = useForm();
   const [isPopupVisible, setIsPopupVisible] = useState(false);
@@ -100,12 +102,12 @@ const User = () => {
       </NavBar>
       <div className={styles.container}>
         <div className={styles.info}>
-          <Image src={userAvatar} />
+          <Image src={account?.avatar || userAvatar} />
           <div className={styles.detail}>
-            <div className={styles.name}>用户名用户名</div>
+            <div className={styles.name}>{account?.nickname || ""}</div>
             <div className={styles.userId}>
               <span>ID</span>
-              <span>68500001</span>
+              <span>{account?.uid}</span>
               <CopyToClipboard text="68500001">
                 <Button className={styles.copy}>复制</Button>
               </CopyToClipboard>
@@ -117,7 +119,7 @@ const User = () => {
           <div className={styles.balance}>
             <div>
               <div className={styles.label}>当前余额</div>
-              <div className={styles.amount}>188.6</div>
+              <div className={styles.amount}>{account?.balance || 0}</div>
             </div>
             <Button className={styles.exchange} onClick={handleClickExchange}>
               去兑换
@@ -127,12 +129,16 @@ const User = () => {
           <div className={styles.income}>
             <span className={styles.type}>
               <span className={styles.label}>今日收益</span>
-              <span className={styles.amount}>28.2</span>
+              <span className={styles.amount}>
+                {account?.today_reward || 0}
+              </span>
             </span>
 
             <span className={styles.type}>
               <span className={styles.label}>累计收益</span>
-              <span className={styles.amount}>5882</span>
+              <span className={styles.amount}>
+                {account?.total_reward || 0}
+              </span>
             </span>
           </div>
         </div>
@@ -269,5 +275,15 @@ const User = () => {
     </div>
   );
 };
+
+export async function getServerSideProps(context) {
+  const res = await getAccount(queryString.stringify(context?.query));
+
+  return {
+    props: {
+      account: res?.data?.payload,
+    },
+  };
+}
 
 export default User;

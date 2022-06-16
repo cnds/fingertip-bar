@@ -1,14 +1,17 @@
+import Tag from "@/components/tag";
+import gameImg from "@/public/game.png";
+import { getMyGames } from "@/request/index";
+import { NavBar } from "antd-mobile";
+import classNames from "classnames";
+import dayjs from "dayjs";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import classNames from "classnames";
-import { NavBar } from "antd-mobile";
-import Tag from "@/components/tag";
-import gameImg from "@/public/game.png";
+import queryString from "query-string";
 import styles from "./index.module.scss";
 
-const MyGames = () => {
+const MyGames = ({ myGames }) => {
   const router = useRouter();
 
   const handleClickBack = () => {
@@ -35,23 +38,32 @@ const MyGames = () => {
             </span>
           </div>
 
-          <For of={[1, 2]} index="index" each="gameId">
-            <Link href={`/my_games/${gameId}`}>
-              <div key={index} className={styles.gameItem}>
-                <Image src={gameImg} width={60} height={60} objectFit="cover" />
+          <For of={myGames?.playing} each="game" index="index">
+            <Link href={`/my_games/${game?.game_id}`} key={index}>
+              <div className={styles.gameItem}>
+                <Image
+                  src={game?.logo || gameImg}
+                  width={60}
+                  height={60}
+                  objectFit="cover"
+                />
                 <div className={styles.text}>
                   <div className={styles.first}>
-                    <span className={styles.name}>梦幻新诛仙游戏游戏游戏</span>
+                    <span className={styles.name}>{game?.app_name}</span>
                     <span className={styles.amount}>
-                      已领<em>29.6</em>
+                      已领<em>{game?.rewarded}</em>
                     </span>
                   </div>
                   <div className={styles.second}>
                     <span>
-                      <span className={styles.endTime}>2022/4/16结束</span>
-                      <Tag type="period">1期</Tag>
+                      <span className={styles.endTime}>
+                        {dayjs(game?.end_date).format("YYYY/MM/DD")}结束
+                      </span>
+                      <Tag type="period">{game?.stage}期</Tag>
                     </span>
-                    <span className={styles.reward}>总奖9999.9</span>
+                    <span className={styles.reward}>
+                      总奖{game?.reward_total}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -67,15 +79,20 @@ const MyGames = () => {
             </span>
           </div>
 
-          <For of={[3, 4]} index="index" each="gameId">
-            <Link href={`/my_games/${gameId}`}>
-              <div key={index} className={styles.gameItem}>
-                <Image src={gameImg} width={60} height={60} objectFit="cover" />
+          <For of={myGames?.finished} each="game" index="index">
+            <Link href={`/my_games/${game?.game_id}`} key={index}>
+              <div className={styles.gameItem}>
+                <Image
+                  src={game?.logo || gameImg}
+                  width={60}
+                  height={60}
+                  objectFit="cover"
+                />
                 <div className={styles.text}>
                   <div className={styles.first}>
-                    <span className={styles.name}>梦幻新诛仙游戏游戏游戏</span>
+                    <span className={styles.name}>{game?.app_name}</span>
                     <span className={styles.amount}>
-                      已领<em>29.6</em>
+                      已领<em>{game?.rewarded}</em>
                     </span>
                   </div>
                   <div className={styles.second}>
@@ -86,11 +103,13 @@ const MyGames = () => {
                           styles.endTimeFinished
                         )}
                       >
-                        2022/4/16已结束
+                        {dayjs(game?.end_date).format("YYYY/MM/DD")}结束
                       </span>
-                      <Tag type="period">1期</Tag>
+                      <Tag type="period">{game?.stage}期</Tag>
                     </span>
-                    <span className={styles.reward}>总奖9999.9</span>
+                    <span className={styles.reward}>
+                      总奖{game?.reward_total}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -101,19 +120,34 @@ const MyGames = () => {
         <div className={styles.everybody}>
           <div className={styles.title}>大家都在玩</div>
           <div className={styles.games}>
-            <For of={[1, 2, 3, 4]} index="index">
+            <For of={myGames?.recommend} each="game" index="index">
               <div className={styles.gameItem} key={index}>
-                <Image src={gameImg} width={48} height={48} objectFit="cover" />
-                <div className={styles.name}>游戏名称游戏名称</div>
+                <Image
+                  src={game?.logo || gameImg}
+                  width={48}
+                  height={48}
+                  objectFit="cover"
+                />
+                <div className={styles.name}>{game?.app_name}</div>
               </div>
             </For>
           </div>
         </div>
 
-        <div className={styles.uid}>UID：92893845</div>
+        <div className={styles.uid}>UID：{myGames?.uid}</div>
       </div>
     </div>
   );
 };
+
+export async function getServerSideProps(context) {
+  const res = await getMyGames(queryString.stringify(context?.query));
+
+  return {
+    props: {
+      myGames: res?.data?.payload,
+    },
+  };
+}
 
 export default MyGames;

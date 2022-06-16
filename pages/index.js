@@ -1,23 +1,30 @@
-import Head from "next/head";
-import dayjs from "dayjs";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import queryString from "query-string";
-import { NavBar, Space, Button } from "antd-mobile";
-import Image from "next/image";
-import classNames from "classnames";
 import MenuTabBar from "@/components/menuTabBar";
 import Tag from "@/components/tag";
 import game from "@/public/game.png";
 import RightArrow from "@/public/right_arrow.svg";
 import { getDashboard } from "@/request/index";
+import { Button, NavBar, Space } from "antd-mobile";
+import classNames from "classnames";
+import dayjs from "dayjs";
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import queryString from "query-string";
+import { useMemo } from "react";
 import styles from "./index.module.scss";
 
 const Home = ({ dashboard }) => {
+  const router = useRouter();
+
   const calRemainDays = (endDate) => {
     const remainDays = dayjs(endDate).diff(dayjs(), "days");
     return remainDays > 0 ? remainDays : 0;
   };
+
+  const queryStr = useMemo(() => {
+    return queryString.stringify(router?.query);
+  }, []);
 
   return (
     <div className={styles.wrapper}>
@@ -41,7 +48,7 @@ const Home = ({ dashboard }) => {
             )}
           >
             <span className={styles.titleText}>最近在玩</span>
-            <Link href="/my_games">
+            <Link href={`/my_games?${queryStr}`}>
               <span className={styles.more}>
                 更多
                 <RightArrow />

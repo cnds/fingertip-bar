@@ -8,7 +8,7 @@
 
     .info {
       display: flex;
-      margin: 16px 0;
+      padding: 16px 0;
 
       .detail {
         flex: 1;
@@ -19,13 +19,14 @@
           font-size: 18px;
           line-height: 30px;
           color: #000;
+          min-height: 30px;
         }
 
         .userId {
           display: flex;
           align-items: center;
 
-          &>span {
+          & > span {
             &:nth-child(1) {
               font-weight: 600;
               font-size: 12px;
@@ -87,10 +88,10 @@
           font-weight: 500;
           font-size: 13px;
           line-height: 18px;
-          color: #F74757;
+          color: #f74757;
           padding: 4px 16px;
           border: none;
-          background: linear-gradient(277.89deg, #FFF0C2 3.55%, #FFF8E2 79.46%);
+          background: linear-gradient(277.89deg, #fff0c2 3.55%, #fff8e2 79.46%);
           box-shadow: 0px 1px 4px rgba(247, 71, 87, 0.36);
           border-radius: 33px;
         }
@@ -156,7 +157,6 @@
   }
 
   .verificationPopup {
-
     .title {
       position: relative;
       font-weight: 500;
@@ -176,7 +176,6 @@
         left: 16px;
         color: rgba(0, 0, 0, 0.3);
       }
-
     }
 
     .content {
@@ -222,7 +221,7 @@
         font-size: 16px;
         line-height: 22px;
         color: #fff;
-        background: #F74757;
+        background: #f74757;
         padding: 12px 12px;
         box-shadow: 0px 3px 6px rgba(247, 71, 87, 0.36);
         border-radius: 33px;
