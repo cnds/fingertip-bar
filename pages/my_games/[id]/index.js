@@ -127,8 +127,8 @@ const GameDetail = ({ adDetail }) => {
   };
 
   const calSecondAgo = (time) => {
-    const secondAgo = dayjs().diff(dayjs(time), "second");
-    ko;
+    const secondAgo = dayjs().diff(dayjs(time), "seconds");
+
     if (secondAgo > 60) {
       return `${Math.floor(secondAgo / 60)}分钟前`;
     }
