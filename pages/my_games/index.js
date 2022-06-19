@@ -15,7 +15,13 @@ const MyGames = ({ myGames }) => {
   const router = useRouter();
 
   const handleClickBack = () => {
-    router.push("/");
+    router.push(`/?${queryString.stringify(router?.query)}`);
+  };
+
+  const getAdDetailUrl = ({ path, adId }) => {
+    const queryStr = queryString.stringify({ ...router?.query, AdId: adId });
+
+    return `${path}/${adId}?${queryStr}`;
   };
 
   return (
@@ -39,7 +45,10 @@ const MyGames = ({ myGames }) => {
           </div>
 
           <For of={myGames?.playing} each="game" index="index">
-            <Link href={`/my_games/${game?.game_id}`} key={index}>
+            <Link
+              href={getAdDetailUrl({ path: "/my_games", adId: game?.ad_id })}
+              key={index}
+            >
               <div className={styles.gameItem}>
                 <Image
                   src={game?.logo || gameImg}
@@ -80,7 +89,10 @@ const MyGames = ({ myGames }) => {
           </div>
 
           <For of={myGames?.finished} each="game" index="index">
-            <Link href={`/my_games/${game?.game_id}`} key={index}>
+            <Link
+              href={getAdDetailUrl({ path: "/my_games", adId: game?.ad_id })}
+              key={index}
+            >
               <div className={styles.gameItem}>
                 <Image
                   src={game?.logo || gameImg}
@@ -121,15 +133,20 @@ const MyGames = ({ myGames }) => {
           <div className={styles.title}>大家都在玩</div>
           <div className={styles.games}>
             <For of={myGames?.recommend} each="game" index="index">
-              <div className={styles.gameItem} key={index}>
-                <Image
-                  src={game?.logo || gameImg}
-                  width={48}
-                  height={48}
-                  objectFit="cover"
-                />
-                <div className={styles.name}>{game?.app_name}</div>
-              </div>
+              <Link
+                href={getAdDetailUrl({ path: "/my_games", adId: game?.ad_id })}
+                key={index}
+              >
+                <div className={styles.gameItem} key={index}>
+                  <Image
+                    src={game?.logo || gameImg}
+                    width={48}
+                    height={48}
+                    objectFit="cover"
+                  />
+                  <div className={styles.name}>{game?.app_name}</div>
+                </div>
+              </Link>
             </For>
           </div>
         </div>

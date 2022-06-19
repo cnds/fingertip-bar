@@ -1,0 +1,129 @@
+.wrapper {
+  .bonus {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+
+    &:nth-child(odd) {
+      background-color: #f9fafb;
+      border-radius: 6px;
+    }
+
+    .text {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+      color: rgba(0, 0, 0, 0.8);
+    }
+
+    .amount {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 17px;
+      color: #f74757;
+
+      em {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+      }
+    }
+
+    .bonusTag {
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-weight: 500;
+      font-size: 10px;
+      line-height: 14px;
+      color: #fff;
+      padding: 1px 5px;
+      background-color: rgba(255, 193, 0, 0.8);
+      border-radius: 0 6px 0 6px;
+    }
+  }
+
+  .completedWrapper {
+    &Folded {
+      display: none;
+    }
+  }
+
+  .bonusCompleted {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background-color: #f9fafb;
+
+    &:first-child() {
+      border-radius: 6px 6px 0 0;
+    }
+
+    .text {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+      color: rgba(0, 0, 0, 0.5);
+    }
+
+    .amount {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 17px;
+      color: rgba(0, 0, 0, 0.5);
+
+      em {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        margin-left: 2px;
+      }
+    }
+
+    .bonusTag {
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-weight: 500;
+      font-size: 10px;
+      line-height: 14px;
+      color: #fff;
+      padding: 1px 5px;
+      background-color: rgba(255, 193, 0, 0.8);
+      border-radius: 0 6px 0 6px;
+    }
+  }
+
+  .foldBtn {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: rgba(0, 0, 0, 0.3);
+    background-color: #f9fafb;
+    border-radius: 6px;
+    border: none;
+
+    .folded {
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+
+    .opened {
+      margin-left: 4px;
+      transform: rotate(180deg);
+      vertical-align: middle;
+    }
+  }
+
+  .guide {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 17px;
+    color: rgba(0, 0, 0, 0.3);
+    margin-bottom: 16px;
+  }
+}

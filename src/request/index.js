@@ -14,3 +14,8 @@ export const getAccount = (queryStr) => {
 export const getMyGames = (queryStr) => {
   return axios.get(`https://api.maobey.com/m/my_games?${queryStr}`);
 };
+
+// 游戏详情
+export const getAdDetail = (queryStr) => {
+  return axios.get(`https://api.maobey.com/m/ad_detail?${queryStr}`);
+};

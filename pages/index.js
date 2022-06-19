@@ -26,6 +26,12 @@ const Home = ({ dashboard }) => {
     return queryString.stringify(router?.query);
   }, []);
 
+  const getAdDetailUrl = ({ path, adId }) => {
+    const queryStr = queryString.stringify({ ...router?.query, AdId: adId });
+
+    return `${path}/${adId}?${queryStr}`;
+  };
+
   return (
     <div className={styles.wrapper}>
       <Head>
@@ -56,27 +62,32 @@ const Home = ({ dashboard }) => {
             </Link>
           </div>
           <div className={styles.recently}>
-            <For of={dashboard?.playing} each="game">
-              <div key={game?.game_id} className={styles.gameItem}>
-                <span className={styles.imgWrapper}>
-                  <If condition={game?.is_recommend}>
-                    <span className={styles.recommendTag}>
-                      <Tag type="recommend">推荐</Tag>
-                    </span>
-                  </If>
-                  <Image
-                    src={game?.logo}
-                    width={48}
-                    height={48}
-                    style={{ borderRadius: "8px" }}
-                    objectFit="cover"
-                  />
-                </span>
-                <span className={styles.name}>{game?.app_name}</span>
-                <span className={styles.reward}>
-                  已领<span className={styles.amount}>{game?.rewarded}</span>
-                </span>
-              </div>
+            <For of={dashboard?.playing} each="game" index="index">
+              <Link
+                href={getAdDetailUrl({ path: "/my_games", adId: game?.ad_id })}
+                key={index}
+              >
+                <div className={styles.gameItem}>
+                  <span className={styles.imgWrapper}>
+                    <If condition={game?.is_recommend}>
+                      <span className={styles.recommendTag}>
+                        <Tag type="recommend">推荐</Tag>
+                      </span>
+                    </If>
+                    <Image
+                      src={game?.logo}
+                      width={48}
+                      height={48}
+                      style={{ borderRadius: "8px" }}
+                      objectFit="cover"
+                    />
+                  </span>
+                  <span className={styles.name}>{game?.app_name}</span>
+                  <span className={styles.reward}>
+                    已领<span className={styles.amount}>{game?.rewarded}</span>
+                  </span>
+                </div>
+              </Link>
             </For>
           </div>
         </div>
@@ -86,51 +97,56 @@ const Home = ({ dashboard }) => {
             <span className={styles.titleText}>游戏任务</span>
           </div>
           <div className={styles.task}>
-            <For of={dashboard?.list} each="game">
-              <div key={game?.game_id} className={styles.gameItem}>
-                <Image
-                  src={game?.logo}
-                  width={60}
-                  height={60}
-                  objectFit="cover"
-                  style={{ borderRadius: "8px" }}
-                />
-                <div className={styles.main}>
-                  <div className={styles.first}>
-                    <div className={styles.left}>
-                      <span className={styles.name}>{game?.app_name}</span>
-                      <Space>
-                        <Tag type="period">{game?.stage}期</Tag>
-                        <If condition={game?.is_new}>
-                          <Tag type="new">NEW</Tag>
-                        </If>
-                      </Space>
+            <For of={dashboard?.list} each="game" index="index">
+              <Link
+                href={getAdDetailUrl({ path: "/my_games", adId: game?.ad_id })}
+                key={index}
+              >
+                <div className={styles.gameItem}>
+                  <Image
+                    src={game?.logo}
+                    width={60}
+                    height={60}
+                    objectFit="cover"
+                    style={{ borderRadius: "8px" }}
+                  />
+                  <div className={styles.main}>
+                    <div className={styles.first}>
+                      <div className={styles.left}>
+                        <span className={styles.name}>{game?.app_name}</span>
+                        <Space>
+                          <Tag type="period">{game?.stage}期</Tag>
+                          <If condition={game?.is_new}>
+                            <Tag type="new">NEW</Tag>
+                          </If>
+                        </Space>
+                      </div>
+                      <div className={styles.right}>
+                        1分钟人均
+                        <em className={styles.highlight}>
+                          {game?.avg_minute_reward}
+                        </em>
+                      </div>
                     </div>
-                    <div className={styles.right}>
-                      1分钟人均
-                      <em className={styles.highlight}>
-                        {game?.avg_minute_reward}
-                      </em>
-                    </div>
-                  </div>
 
-                  <div className={styles.second}>
-                    <div className={styles.reward}>
-                      <span>
-                        总奖
-                        <span className={styles.highlight}>
-                          {game?.reward_total}
+                    <div className={styles.second}>
+                      <div className={styles.reward}>
+                        <span>
+                          总奖
+                          <span className={styles.highlight}>
+                            {game?.reward_total}
+                          </span>
                         </span>
-                      </span>
-                      <span className={styles.divider} />
-                      <span>剩{calRemainDays(game?.end_date)}天</span>
-                      <span className={styles.divider} />
-                      <span>等你挑战</span>
+                        <span className={styles.divider} />
+                        <span>剩{calRemainDays(game?.end_date)}天</span>
+                        <span className={styles.divider} />
+                        <span>等你挑战</span>
+                      </div>
+                      <Button className={styles.playBtn}>开玩</Button>
                     </div>
-                    <Button className={styles.playBtn}>开玩</Button>
                   </div>
                 </div>
-              </div>
+              </Link>
             </For>
           </div>
         </div>

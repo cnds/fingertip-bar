@@ -1,29 +1,32 @@
-import Head from "next/head";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import { NavBar, Button, Steps, Tabs, Modal, Space, Swiper } from "antd-mobile";
-import Tag from "@/components/tag";
 import Bubble from "@/components/bubble";
 import Contact from "@/components/contact";
-import gameImg from "@/public/game.png";
-import playerImg from "@/public/player.png";
-import Exclamation from "@/public/exclamation.svg";
-import BubbleTriangle from "@/public/bubble_triangle.svg";
-import redPacketLeft from "@/public/red_packet_left.png";
-import redPacketRight from "@/public/red_packet_right.png";
-import RedPacketSpeed from "@/public/red_packet_speed.svg";
+import Tag from "@/components/tag";
 import Banner from "@/public/banner.svg";
+import BubbleTriangle from "@/public/bubble_triangle.svg";
+import Exclamation from "@/public/exclamation.svg";
+import gameImg from "@/public/game.png";
 import Gift from "@/public/gift.svg";
 import MoneyLeft from "@/public/money_left.svg";
 import MoneyRight from "@/public/money_right.svg";
+import playerImg from "@/public/player.png";
+import redPacketLeft from "@/public/red_packet_left.png";
+import redPacketRight from "@/public/red_packet_right.png";
+import RedPacketSpeed from "@/public/red_packet_speed.svg";
+import { getAdDetail } from "@/request/index";
+import { Button, Modal, NavBar, Space, Steps, Swiper, Tabs } from "antd-mobile";
+import dayjs from "dayjs";
+import Head from "next/head";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import queryString from "query-string";
 import Bonus from "./bonus";
 import Cash from "./cash";
-import Rankings from "./rankings";
 import styles from "./index.module.scss";
+import Rankings from "./rankings";
 
 const { Step } = Steps;
 
-const GameDetail = () => {
+const GameDetail = ({ adDetail }) => {
   const router = useRouter();
   const { id } = router.query;
 
@@ -96,7 +99,8 @@ const GameDetail = () => {
   };
 
   const handleClickBack = () => {
-    router.push('/my_games');
+    const { AdId, id, ...restQueryObj } = router?.query;
+    router.push(`/my_games?${queryString.stringify(restQueryObj)}`);
   };
 
   return (
@@ -107,7 +111,11 @@ const GameDetail = () => {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <NavBar className={styles.headNavBar} right={<Contact />} onBack={handleClickBack}>
+      <NavBar
+        className={styles.headNavBar}
+        right={<Contact />}
+        onBack={handleClickBack}
+      >
         游戏详情
       </NavBar>
 
@@ -138,18 +146,25 @@ const GameDetail = () => {
         </Swiper>
       </div>
       <div className={styles.overview}>
-        <Image src={gameImg} width={60} height={60} objectFit="cover" />
+        <Image
+          src={adDetail?.game_info?.logo || gameImg}
+          width={60}
+          height={60}
+          objectFit="cover"
+        />
         <div className={styles.text}>
           <div className={styles.first}>
-            <span className={styles.name}>
-              游戏名称游戏名称游戏名称游戏名称
+            <span className={styles.name}>{adDetail?.game_info?.app_name}</span>
+            <span className={styles.amount}>
+              {adDetail?.game_info?.reward_total}
             </span>
-            <span className={styles.amount}>99999.9</span>
           </div>
           <div className={styles.second}>
             <span>
-              <span className={styles.endTime}>2022/4/14结束</span>
-              <Tag type="yellowPeriod">1期</Tag>
+              <span className={styles.endTime}>
+                {dayjs(adDetail?.game_info?.end_date)?.format("YYYY/MM/DD")}结束
+              </span>
+              <Tag type="yellowPeriod">{adDetail?.game_info?.stage}期</Tag>
             </span>
             <span className={styles.total}>总奖励</span>
           </div>
@@ -163,7 +178,8 @@ const GameDetail = () => {
             <Choose>
               <When condition={isAccountSync}>
                 <Space>
-                  X20228877<Tag type="period">老用户</Tag>
+                  {adDetail?.game_info?.ad_id}
+                  <Tag type="period">老用户</Tag>
                 </Space>
               </When>
               <Otherwise>
@@ -190,10 +206,15 @@ const GameDetail = () => {
                   <span className={styles.name}>
                     账号：玩家昵称玩家昵称玩家昵称
                   </span>
-                  <span className={styles.level}>等级：203 | 充值：12</span>
+                  <span className={styles.level}>
+                    等级：{adDetail?.account_info?.level} | 充值：
+                    {adDetail?.account_info?.recharge}
+                  </span>
                 </span>
                 <span>
-                  <span className={styles.amount}>999.9</span>
+                  <span className={styles.amount}>
+                    {adDetail?.account_info?.rewarded}
+                  </span>
                   <span className={styles.amountLabel}>本期已领</span>
                 </span>
               </div>
@@ -231,13 +252,13 @@ const GameDetail = () => {
       <div className={styles.tabsWrapper}>
         <Tabs activeLineMode="fixed">
           <Tabs.Tab title="等级奖励" key="bonus">
-            <Bonus />
+            <Bonus level={adDetail?.tasks?.level} />
           </Tabs.Tab>
           <Tabs.Tab title="充值返现" key="recharge">
-            <Cash />
+            <Cash recharge={adDetail?.tasks?.recharge} />
           </Tabs.Tab>
           <Tabs.Tab title="排行榜" key="rankings">
-            <Rankings />
+            <Rankings rank={adDetail?.tasks?.rank} />
           </Tabs.Tab>
         </Tabs>
         <span className={styles.bubble}>
@@ -260,5 +281,15 @@ const GameDetail = () => {
     </div>
   );
 };
+
+export async function getServerSideProps(context) {
+  const res = await getAdDetail(queryString.stringify(context?.query));
+
+  return {
+    props: {
+      adDetail: res?.data?.payload,
+    },
+  };
+}
 
 export default GameDetail;

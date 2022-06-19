@@ -1,32 +1,10 @@
-import classNames from "classnames";
+import RankingsBg from "@/public/rankings_bg.svg";
 import RedPacketIcon from "@/public/red_packet_icon.svg";
 import TrophyGold from "@/public/trophy_gold.svg";
-import TrophyGray from "@/public/trophy_gray.svg";
-import RankingsBg from "@/public/rankings_bg.svg";
+import classNames from "classnames";
 import styles from "./rankings.module.scss";
 
-const RankList = () => {
-  const lists = [
-    {
-      text: "最先达到520的第1名",
-      redPacket: 999.9,
-      num: "1/1",
-      status: 1,
-    },
-    {
-      text: "最先达到9999的第2～9名",
-      redPacket: 999.9,
-      num: "1/1",
-      status: 0,
-    },
-    {
-      text: "最先达到9999的第9～99名",
-      redPacket: 999.9,
-      num: "1/1",
-      status: 0,
-    },
-  ];
-
+const RankList = ({ rankListData }) => {
   return (
     <div className={styles.box}>
       <RankingsBg className={styles.rankingsBg} />
@@ -49,17 +27,17 @@ const RankList = () => {
         <span>名额</span>
         <span>状态</span>
       </div>
-      <For of={lists} each="rank" index="index">
+      <For of={rankListData} each="rank" index="index">
         <div className={styles.rankingRow} key={index}>
-          <span>{rank?.text}</span>
-          <span>{rank?.redPacket}</span>
-          <span>{rank?.num}</span>
+          <span>{rank?.ad_title}</span>
+          <span>{rank?.reward}</span>
+          <span>{rank?.reward_num}</span>
           <span
             className={classNames({
-              [styles.received]: rank?.status,
+              [styles.received]: rank?.rewarded,
             })}
           >
-            {rank?.status ? "已满员" : "已领取"}
+            {rank?.rewarded ? "已领取" : "未领取"}
           </span>
         </div>
       </For>
