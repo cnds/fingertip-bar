@@ -19,6 +19,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import queryString from "query-string";
+import { useEffect, useRef } from "react";
 import Bonus from "./bonus";
 import Cash from "./cash";
 import styles from "./index.module.scss";
@@ -29,6 +30,7 @@ const { Step } = Steps;
 const GameDetail = ({ adDetail }) => {
   const router = useRouter();
   const { id } = router.query;
+  const adTimeoutRef = useRef(null);
 
   const isAccountSync = id > 2;
 
@@ -45,62 +47,93 @@ const GameDetail = ({ adDetail }) => {
   };
 
   const handleClickStart = () => {
-    Modal.alert({
-      content: (
-        <>
-          <span className={styles.redPacketLeft}>
-            <Image src={redPacketLeft} />
-          </span>
-          <span className={styles.redPacketRight}>
-            <Image src={redPacketRight} />
-          </span>
-          <Gift className={styles.gift} />
-          <Banner className={styles.banner} />
-          <span className={styles.title}>恭喜获得奖励</span>
-          <div className={styles.amount}>+0.5</div>
-          <div className={styles.content}>奖励已发放至余额账户</div>
-        </>
-      ),
-      bodyClassName: styles.getRewardModal,
-      onConfirm: () => {
-        // console.log("Confirmed");
-      },
-      confirmText: "继续努力",
-    });
+    const reward = adDetail?.message?.find((modal) => modal?.type === 1);
 
-    Modal.alert({
-      content: (
-        <>
-          <MoneyLeft className={styles.moneyLeft} />
-          <MoneyRight className={styles.moneyRight} />
-          <div className={styles.title}>当前落后于85%玩家</div>
-          <div className={styles.subTitle}>升级太慢？送你一个加速补贴</div>
-          <div className={styles.redPacketSpeed}>
-            <span className={styles.amount}>+10</span>
-            <span className={styles.text}>累计充值10元</span>
-            <span className={styles.bubble}>
-              今日限时
-              <BubbleTriangle className={styles.triangle} />
+    if (reward) {
+      Modal.alert({
+        content: (
+          <>
+            <span className={styles.redPacketLeft}>
+              <Image src={redPacketLeft} />
             </span>
-            <RedPacketSpeed />
-          </div>
-          <div className={styles.content}>完成后升级指数：</div>
-          <div className={styles.content}>
-            近3分钟完成的玩家平均加快<em>180%</em>
-          </div>
-        </>
-      ),
-      bodyClassName: styles.speedUpModal,
-      onConfirm: () => {
-        // console.log("Confirmed");
-      },
-      confirmText: "试一试",
-    });
+            <span className={styles.redPacketRight}>
+              <Image src={redPacketRight} />
+            </span>
+            <Gift className={styles.gift} />
+            <Banner className={styles.banner} />
+            <span className={styles.title}>恭喜获得奖励</span>
+            <div className={styles.amount}>+{reward?.amount}</div>
+            <div className={styles.content}>{reward?.content}</div>
+          </>
+        ),
+        bodyClassName: styles.getRewardModal,
+        onConfirm: () => {
+          // console.log("Confirmed");
+        },
+        confirmText: "继续努力",
+      });
+    }
   };
+
+  useEffect(() => {
+    adTimeoutRef.current = setTimeout(() => {
+      const advertisement = adDetail?.message?.find(
+        (modal) => modal?.type === 2
+      );
+
+      if (advertisement) {
+        Modal.alert({
+          content: (
+            <>
+              <MoneyLeft className={styles.moneyLeft} />
+              <MoneyRight className={styles.moneyRight} />
+              <div className={styles.title}>当前落后于85%玩家</div>
+              <div className={styles.subTitle}>{advertisement?.title}</div>
+              <div className={styles.redPacketSpeed}>
+                <span className={styles.amount}>+{advertisement?.amount}</span>
+                <span className={styles.text}>累计充值10元</span>
+                <span className={styles.bubble}>
+                  今日限时
+                  <BubbleTriangle className={styles.triangle} />
+                </span>
+                <RedPacketSpeed />
+              </div>
+              <div className={styles.content}>{addEventListener?.content}</div>
+              <div className={styles.content}>
+                近3分钟完成的玩家平均加快<em>180%</em>
+              </div>
+            </>
+          ),
+          bodyClassName: styles.speedUpModal,
+          onConfirm: () => {
+            // console.log("Confirmed");
+          },
+          confirmText: "试一试",
+        });
+      }
+    }, 10 * 1000);
+
+    return () => {
+      if (adTimeoutRef?.current) {
+        clearTimeout(adTimeoutRef?.current);
+        adTimeoutRef.current = null;
+      }
+    };
+  }, []);
 
   const handleClickBack = () => {
     const { AdId, id, ...restQueryObj } = router?.query;
     router.push(`/my_games?${queryString.stringify(restQueryObj)}`);
+  };
+
+  const calSecondAgo = (time) => {
+    const secondAgo = dayjs().diff(dayjs(time), "second");
+    ko;
+    if (secondAgo > 60) {
+      return `${Math.floor(secondAgo / 60)}分钟前`;
+    }
+
+    return `${secondAgo}秒前`;
   };
 
   return (
@@ -121,15 +154,14 @@ const GameDetail = ({ adDetail }) => {
 
       <div className={styles.notices}>
         <Swiper
-          direction="vertical"
           style={{ "--height": "24px" }}
           autoplay={true}
           loop={true}
           allowTouchMove={false}
           indicator={() => {}}
         >
-          <For of={[1, 2, 3, 4]} each="id">
-            <Swiper.Item key={id}>
+          <For of={adDetail?.slides} each="slide" index="index">
+            <Swiper.Item key={index}>
               <div className={styles.notice}>
                 <Image
                   src={playerImg}
@@ -138,7 +170,7 @@ const GameDetail = ({ adDetail }) => {
                   objectFit="cover"
                 />
                 <span className={styles.noticeText}>
-                  {`用户X**X 领取红包0.5 ${id}秒前`}
+                  {`${slide?.content} ${calSecondAgo(slide?.time)}`}
                 </span>
               </div>
             </Swiper.Item>

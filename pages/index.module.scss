@@ -26,9 +26,11 @@
       padding: 12px;
 
       &_attractive {
-        background: linear-gradient(90deg,
-            rgba(247, 71, 87, 0.1) 0%,
-            rgba(247, 71, 87, 0) 99.48%);
+        background: linear-gradient(
+          90deg,
+          rgba(247, 71, 87, 0.1) 0%,
+          rgba(247, 71, 87, 0) 99.48%
+        );
       }
 
       .titleText {
@@ -120,6 +122,11 @@
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
+              font-weight: 500;
+              font-size: 16px;
+              line-height: 22px;
+              color: rgba(0, 0, 0, 0.8);
+              margin-right: 4px;
             }
           }
 

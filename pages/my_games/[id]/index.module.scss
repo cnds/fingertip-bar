@@ -1,6 +1,7 @@
 .wrapper {
   background: url("/game_detail_bg.png") no-repeat;
   background-size: 100%;
+  margin-bottom: 80px;
 
   .headNavBar {
     color: #fff;
@@ -103,9 +104,11 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: linear-gradient(90deg,
-          rgba(250, 200, 46, 0.12) 0%,
-          rgba(250, 200, 46, 0) 100%);
+      background: linear-gradient(
+        90deg,
+        rgba(250, 200, 46, 0.12) 0%,
+        rgba(250, 200, 46, 0) 100%
+      );
 
       .id {
         font-weight: 500;
@@ -243,7 +246,11 @@
     border-radius: 20px 20px 0px 0px;
 
     .btnWrap {
-      margin: 0 48px 24px 48px;
+      position: fixed;
+      bottom: 0;
+      padding: 12px 48px 24px 48px;
+      width: 100%;
+      background-color: #fff;
 
       .startBtn {
         font-weight: 500;
@@ -427,9 +434,11 @@
 }
 
 .speedUpModal {
-  background: linear-gradient(180deg,
+  background: linear-gradient(
+      180deg,
       rgba(255, 162, 0, 0) 50%,
-      rgba(255, 162, 0, 0.12) 100%),
+      rgba(255, 162, 0, 0.12) 100%
+    ),
     #fbf6ec;
 
   .moneyLeft {
@@ -482,14 +491,14 @@
       line-height: 17px;
       color: #fff;
       padding: 0 6px;
-      background: linear-gradient(90deg, #FF8000 0%, #FFA800 100%);
+      background: linear-gradient(90deg, #ff8000 0%, #ffa800 100%);
       border-radius: 16px;
 
       .triangle {
         position: absolute;
         top: 17px;
         left: 16px;
-        fill: #FF8000;
+        fill: #ff8000;
       }
     }
   }
@@ -518,7 +527,7 @@
     color: rgba(0, 0, 0, 0.5);
 
     em {
-      color: #F74757;
+      color: #f74757;
     }
   }
 
