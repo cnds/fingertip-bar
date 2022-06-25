@@ -56,7 +56,9 @@ const Exchange = ({ account }) => {
     applyWithdraw(queryStr, params)
       .then((res) => {
         if (res?.data?.err_code === 0) {
-          router.push("/exchange/success");
+          router.push(
+            `/exchange/success?${queryString.stringify(router?.query)}`
+          );
         } else {
           Toast.show({
             content: res?.data?.err_msg,
@@ -69,7 +71,7 @@ const Exchange = ({ account }) => {
             content: err?.response?.data?.err_msg,
           });
         }
-        if (err?.response?.status) {
+        if (err?.response?.status === 500) {
           Toast.show({
             content: "服务器报错",
           });

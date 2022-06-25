@@ -81,12 +81,20 @@ const User = ({ account }) => {
 
     const queryStr = queryString.stringify(router?.query);
 
-    sendSms(queryStr, params).then((res) => {
-      if (res?.data?.err_code === 0) {
-        setIsSending(true);
-        startCountdown();
-      }
-    });
+    sendSms(queryStr, params)
+      .then((res) => {
+        if (res?.data?.err_code === 0) {
+          setIsSending(true);
+          startCountdown();
+        }
+      })
+      .catch((err) => {
+        if (err?.response?.data?.err_msg) {
+          Toast.show({
+            content: err?.response?.data?.err_msg,
+          });
+        }
+      });
   };
 
   // 绑定手机

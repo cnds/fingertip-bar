@@ -1,14 +1,15 @@
+import ApplySuccess from "@/public/apply_success.svg";
+import { Button, NavBar } from "antd-mobile";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { NavBar, Button } from "antd-mobile";
-import ApplySuccess from "@/public/apply_success.svg";
+import queryString from "query-string";
 import styles from "./index.module.scss";
 
 const Success = () => {
   const router = useRouter();
 
   const onContinue = () => {
-    router.push("/exchange");
+    router.push(`/exchange?${queryString.stringify(router?.query)}`);
   };
 
   return (
@@ -19,7 +20,9 @@ const Success = () => {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <NavBar backArrow={false} className={styles.navBar}>申请成功</NavBar>
+      <NavBar backArrow={false} className={styles.navBar}>
+        申请成功
+      </NavBar>
       <div className={styles.container}>
         <div className={styles.complete}>
           <Button
