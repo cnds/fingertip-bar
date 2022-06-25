@@ -181,7 +181,7 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
       </Head>
       <NavBar
         className={styles.headNavBar}
-        right={<Contact />}
+        right={<Contact className={styles.contactIcon} />}
         onBack={handleClickBack}
       >
         游戏详情

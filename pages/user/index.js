@@ -128,10 +128,7 @@ const User = ({ account }) => {
   };
 
   const handleClickContactUs = () => {
-    window.open(
-      "https://yzf.qq.com/xv/web/static/chat/index.html?sign=37ef9b97d27354c7714d9ce849e1b76461665a28638153f3870fab90fcd400b714017e14abd8e4d6b2cd5f432111bb53880c16",
-      "_self"
-    );
+    router.push("/customer_service");
   };
 
   const handleChangeIsAgree = (value) => {
@@ -146,7 +143,10 @@ const User = ({ account }) => {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <NavBar right={<Contact />} backArrow={false}>
+      <NavBar
+        right={<Contact className={styles.contactIcon} />}
+        backArrow={false}
+      >
         个人中心
       </NavBar>
       <div className={styles.container}>

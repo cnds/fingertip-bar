@@ -1,0 +1,16 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  background: #f7f7f7;
+  min-height: 100vh;
+
+  .navBar {
+    background-color: #fff;
+  }
+
+  .iframeWrapper {
+    flex: 1;
+    border: none;
+    outline: none;
+  }
+}
