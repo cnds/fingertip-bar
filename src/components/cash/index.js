@@ -2,7 +2,7 @@ import ArrowDown from "@/public/arrow_down.svg";
 import { Button } from "antd-mobile";
 import classNames from "classnames";
 import { useState } from "react";
-import styles from "./cash.module.scss";
+import styles from "./index.module.scss";
 
 const Cash = ({ recharge }) => {
   const [isFolded, setIsFolded] = useState(true);

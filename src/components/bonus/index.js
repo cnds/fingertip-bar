@@ -2,7 +2,7 @@ import ArrowDown from "@/public/arrow_down.svg";
 import { Button } from "antd-mobile";
 import classNames from "classnames";
 import { useState } from "react";
-import styles from "./bonus.module.scss";
+import styles from "./index.module.scss";
 
 const Bonus = ({ level = [] }) => {
   const [isFolded, setIsFolded] = useState(true);

@@ -1,4 +1,4 @@
-import styles from "./rankings.module.scss";
+import styles from "./index.module.scss";
 import RankList from "./rankList";
 
 const Rankings = ({ rank }) => {

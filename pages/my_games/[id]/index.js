@@ -1,5 +1,8 @@
+import Bonus from "@/components/bonus";
 import Bubble from "@/components/bubble";
+import Cash from "@/components/cash";
 import Contact from "@/components/contact";
+import Rankings from "@/components/rankings";
 import Tag from "@/components/tag";
 import Banner from "@/public/banner.svg";
 import BubbleTriangle from "@/public/bubble_triangle.svg";
@@ -20,10 +23,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import queryString from "query-string";
 import { useEffect, useMemo, useRef, useState } from "react";
-import Bonus from "./bonus";
-import Cash from "./cash";
 import styles from "./index.module.scss";
-import Rankings from "./rankings";
 
 const { Step } = Steps;
 

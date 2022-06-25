@@ -5,7 +5,7 @@ import TrophyGold from "@/public/trophy_gold.svg";
 import classNames from "classnames";
 import { useMemo, useState } from "react";
 import { Collapse } from "react-collapse";
-import styles from "./rankings.module.scss";
+import styles from "./index.module.scss";
 
 const RankList = ({ rankListData, type }) => {
   const [isOpened, setIsOpened] = useState(false);
