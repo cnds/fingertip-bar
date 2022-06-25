@@ -37,3 +37,26 @@ export const getClientAdDetail = (queryStr) => {
 
   return axios.get(`https://api.maobey.com/m/ad_detail?${queryStr}`);
 };
+
+// 发送短信
+export const sendSms = (queryStr, params) => {
+  if (process.env.NODE_ENV === "development") {
+    return axios.post(`/m/sms?${queryStr}`, params);
+  }
+
+  return axios.post(`https://api.maobey.com/m/sms?${queryStr}`, params);
+};
+
+// 绑定手机
+export const bindMobile = (queryStr, params) => {
+  if (process.env.NODE_ENV === "development") {
+    return axios.post(`/m/bind_mobile?${queryStr}`, params);
+  }
+
+  return axios.post(`https://api.maobey.com/m/bind_mobile?${queryStr}`, params);
+};
+
+// 获取余额详情
+export const getBalanceDetail = (queryStr) => {
+  return axios.get(`https://api.maobey.com/m/balance_detail?${queryStr}`);
+};

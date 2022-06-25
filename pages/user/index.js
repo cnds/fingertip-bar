@@ -6,7 +6,7 @@ import RecordIcon from "@/public/record_icon.svg";
 import RightArrow from "@/public/right_arrow.svg";
 import SettingIcon from "@/public/setting_icon.svg";
 import userAvatar from "@/public/user_avatar.png";
-import { getAccount } from "@/request/index";
+import { bindMobile, getAccount, sendSms } from "@/request/index";
 import { isPhone } from "@/utils/index.js";
 import { Button, Form, Input, NavBar, Popup, Radio } from "antd-mobile";
 import Head from "next/head";
@@ -25,9 +25,11 @@ const User = ({ account }) => {
   const [form] = useForm();
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [phone, setPhone] = useState(0);
+  const [verifyCode, setVerifyCode] = useState("");
   const intervalIdRef = useRef(0);
   const [countdown, setCountdown] = useState(COUNTDOWN_SECOND);
   const [isSending, setIsSending] = useState(false);
+  const [isAgree, setIsAgree] = useState(true);
 
   const handleClickExchange = () => {
     setIsPopupVisible(true);
@@ -39,6 +41,10 @@ const User = ({ account }) => {
 
   const handleChangePhone = (value) => {
     setPhone(value);
+  };
+
+  const handleChangeVerifyCode = (value) => {
+    setVerifyCode(value);
   };
 
   useEffect(() => {
@@ -61,21 +67,60 @@ const User = ({ account }) => {
     }, 1000);
   };
 
+  // 发送短信
   const handleClickGetCaptcha = () => {
-    setIsSending(true);
-    startCountdown();
+    // 已绑定手机
+    if (account?.has_mobile) {
+      router.push(`/exchange?${queryString.stringify(router?.query)}`);
+    } else {
+      const params = {
+        operation_type: 1, // 操作类型 1 - 绑定手机
+        mobile: phone,
+      };
+
+      const queryStr = queryString.stringify(router?.query);
+
+      sendSms(queryStr, params).then((res) => {
+        if (res?.data?.err_code === 0) {
+          setIsSending(true);
+          startCountdown();
+        }
+      });
+    }
   };
 
+  // 绑定手机
   const handleClickConfirm = () => {
-    router.push("/exchange");
+    const params = {
+      verify_code: Number(verifyCode),
+      mobile: phone,
+    };
+
+    const queryStr = queryString.stringify(router?.query);
+
+    bindMobile(queryStr, params)
+      .then((res) => {
+        if (res?.data?.err_code === 0) {
+          router.push(`/exchange?${queryString.stringify(router?.query)}`);
+        } else {
+          Toast.show({
+            content: res?.data?.err_msg,
+          });
+        }
+      })
+      .catch((err) => {
+        Toast.show({
+          content: "参数错误",
+        });
+      });
   };
 
   const handleClickBalance = () => {
-    router.push("/balance_detail");
+    router.push(`/balance_detail?${queryString.stringify(router?.query)}`);
   };
 
   const handleClickSettings = () => {
-    router.push("/settings");
+    router.push(`/settings?${queryString.stringify(router?.query)}`);
   };
 
   const gotoAgreement = (path) => {
@@ -87,6 +132,10 @@ const User = ({ account }) => {
       "https://yzf.qq.com/xv/web/static/chat/index.html?sign=37ef9b97d27354c7714d9ce849e1b76461665a28638153f3870fab90fcd400b714017e14abd8e4d6b2cd5f432111bb53880c16",
       "_self"
     );
+  };
+
+  const handleChangeIsAgree = (value) => {
+    setIsAgree(value);
   };
 
   return (
@@ -218,10 +267,14 @@ const User = ({ account }) => {
               </>
             }
           >
-            <Input placeholder="输入验证码" clearable />
+            <Input
+              placeholder="输入验证码"
+              onChange={handleChangeVerifyCode}
+              clearable
+            />
           </Form.Item>
           <Form.Item name="isAgree">
-            <Radio block>
+            <Radio block checked={isAgree} onChange={handleChangeIsAgree}>
               <div className={styles.agreeText}>
                 我同意
                 <span
@@ -252,14 +305,14 @@ const User = ({ account }) => {
           </Form.Item>
           <Form.Item dependencies={["phone", "captcha", "isAgree"]}>
             {({ getFieldsValue }) => {
-              const { phone, captcha, isAgree } = getFieldsValue();
+              const { phone, captcha } = getFieldsValue();
               return (
                 <div className={styles.btnWrapper}>
                   <Button
                     className={styles.confirmBtn}
                     block
                     disabled={
-                      !isPhone(phone) || captcha?.length < 4 || !isAgree
+                      !(isPhone(phone) && captcha?.length >= 4 && isAgree)
                     }
                     onClick={handleClickConfirm}
                   >

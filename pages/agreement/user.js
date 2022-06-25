@@ -1,13 +1,13 @@
+import { NavBar } from "antd-mobile";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { NavBar } from "antd-mobile";
 import styles from "./index.module.scss";
 
 const UserAgreement = () => {
   const router = useRouter();
 
   const onBack = () => {
-    router.push("/user");
+    router.back();
   };
 
   return (

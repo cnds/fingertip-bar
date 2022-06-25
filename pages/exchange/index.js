@@ -1,11 +1,12 @@
-import { useState } from "react";
+import AlipayIcon from "@/public/alipay_icon.svg";
+import NoticeIcon from "@/public/notice_icon.svg";
+import WechatIcon from "@/public/wechat_icon.svg";
+import { Button, Form, Input, NavBar, Popup, Radio } from "antd-mobile";
 import classNames from "classnames";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { NavBar, Radio, Button, Popup, Form, Input } from "antd-mobile";
-import NoticeIcon from "@/public/notice_icon.svg";
-import AlipayIcon from "@/public/alipay_icon.svg";
-import WechatIcon from "@/public/wechat_icon.svg";
+import queryString from "query-string";
+import { useState } from "react";
 import styles from "./index.module.scss";
 
 const { useForm } = Form;
@@ -18,7 +19,7 @@ const Exchange = () => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
 
   const onBack = () => {
-    router.push("/user");
+    router.push(`/user?${queryString.stringify(router?.query)}`);
   };
 
   const handleSelectAmount = (amount) => {
@@ -38,7 +39,7 @@ const Exchange = () => {
   };
 
   const handleClickConfirm = () => {
-    router.push('/exchange/success');
+    router.push("/exchange/success");
   };
 
   return (

@@ -1,17 +1,19 @@
-import Head from "next/head";
-import { NavBar, Button } from "antd-mobile";
-import { useRouter } from "next/router";
 import Detail from "@/components/detail";
+import { getBalanceDetail } from "@/request/index";
+import { Button, NavBar } from "antd-mobile";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import queryString from "query-string";
 import styles from "./index.module.scss";
 
-const BalanceDetail = () => {
+const BalanceDetail = ({ balanceDetail }) => {
   const router = useRouter();
 
   const onBack = () => {
-    router.push("/user");
+    router.push(`/user?${queryString.stringify(router?.query)}`);
   };
 
-  const details = [
+  const mockDetails = [
     {
       type: "increase",
       amount: "10.0",
@@ -54,7 +56,7 @@ const BalanceDetail = () => {
         余额明细
       </NavBar>
       <div className={styles.container}>
-        <For of={details} each="detail" index="index">
+        <For of={balanceDetail} each="detail" index="index">
           <Detail key={index} detail={detail} />
         </For>
 
@@ -69,5 +71,15 @@ const BalanceDetail = () => {
     </div>
   );
 };
+
+export async function getServerSideProps(context) {
+  const res = await getBalanceDetail(queryString.stringify(context?.query));
+
+  return {
+    props: {
+      balanceDetail: res?.data?.payload,
+    },
+  };
+}
 
 export default BalanceDetail;
