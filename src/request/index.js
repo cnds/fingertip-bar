@@ -25,6 +25,15 @@ export const getMyGames = (queryStr) => {
 };
 
 // 游戏详情
-export const getAdDetail = (queryStr) => {
+export const getServeAdDetail = (queryStr) => {
+  return axios.get(`https://api.maobey.com/m/ad_detail?${queryStr}`);
+};
+
+// 游戏详情
+export const getClientAdDetail = (queryStr) => {
+  if (process.env.NODE_ENV === "development") {
+    return axios.get(`/m/ad_detail?${queryStr}`);
+  }
+
   return axios.get(`https://api.maobey.com/m/ad_detail?${queryStr}`);
 };

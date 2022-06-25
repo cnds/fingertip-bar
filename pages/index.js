@@ -42,7 +42,6 @@ const StartBtn = ({ game }) => {
           Toast.show({ content: "该游戏不可参与，试试其他的哦" });
         } else {
           callLib?.open({
-            params: {},
             path: "",
           });
         }
@@ -64,7 +63,7 @@ const Home = ({ dashboard }) => {
   const router = useRouter();
 
   const calRemainDays = (endDate) => {
-    const remainDays = dayjs(endDate).diff(dayjs(), "days");
+    const remainDays = dayjs(endDate).diff(dayjs(""), "days");
     return remainDays > 0 ? remainDays : 0;
   };
 
@@ -78,7 +77,6 @@ const Home = ({ dashboard }) => {
     return `${path}/${adId}?${queryStr}`;
   };
 
-  console.info(2222, dashboard);
   return (
     <div className={styles.wrapper}>
       <Head>
@@ -198,7 +196,14 @@ const Home = ({ dashboard }) => {
                           </span>
                         </span>
                         <span className={styles.divider} />
-                        <span>剩{calRemainDays(game?.end_date)}天</span>
+                        <Choose>
+                          <When condition={calRemainDays(game?.end_date) <= 0}>
+                            <span>即将结束</span>
+                          </When>
+                          <Otherwise>
+                            <span>剩{calRemainDays(game?.end_date)}天</span>
+                          </Otherwise>
+                        </Choose>
                         <span className={styles.divider} />
                         <span>等你挑战</span>
                       </div>

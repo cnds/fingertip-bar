@@ -1,25 +1,21 @@
 import Bubble from "@/components/bubble";
 import Contact from "@/components/contact";
 import Tag from "@/components/tag";
-import Banner from "@/public/banner.svg";
 import BubbleTriangle from "@/public/bubble_triangle.svg";
 import Exclamation from "@/public/exclamation.svg";
 import gameImg from "@/public/game.png";
-import Gift from "@/public/gift.svg";
 import MoneyLeft from "@/public/money_left.svg";
 import MoneyRight from "@/public/money_right.svg";
 import playerImg from "@/public/player.png";
-import redPacketLeft from "@/public/red_packet_left.png";
-import redPacketRight from "@/public/red_packet_right.png";
 import RedPacketSpeed from "@/public/red_packet_speed.svg";
-import { getAdDetail } from "@/request/index";
+import { getClientAdDetail, getServeAdDetail } from "@/request/index";
 import { Button, Modal, NavBar, Space, Steps, Swiper, Tabs } from "antd-mobile";
 import dayjs from "dayjs";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import queryString from "query-string";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Bonus from "./bonus";
 import Cash from "./cash";
 import styles from "./index.module.scss";
@@ -27,57 +23,90 @@ import Rankings from "./rankings";
 
 const { Step } = Steps;
 
-const GameDetail = ({ adDetail }) => {
+const GameDetail = ({ adDetail: initAdDetail }) => {
   const router = useRouter();
-  const { id } = router.query;
+  const { MobileModel } = router.query;
   const adTimeoutRef = useRef(null);
-
-  const isAccountSync = id > 2;
+  const [adDetail, setAdDetail] = useState(initAdDetail);
 
   const handleClickRefresh = () => {
-    Modal.alert({
-      bodyClassName: styles.matchInfoModal,
-      title: "未匹配到有效信息",
-      content:
-        "您尚未注册或操作有误，暂不要试玩或充值。请务必按要求操作，绑定账号后才能领取红包。",
-      onConfirm: () => {
-        // console.log("Confirmed");
-      },
+    getClientAdDetail(queryString.stringify(router?.query)).then((res) => {
+      const refreshedAdDetail = res?.data?.payload;
+
+      setAdDetail(res?.data?.payload);
+
+      if (!refreshedAdDetail?.account_info?.account_id) {
+        Modal.alert({
+          bodyClassName: styles.matchInfoModal,
+          title: "未匹配到有效信息",
+          content:
+            "您尚未注册或操作有误，暂不要试玩或充值。请务必按要求操作，绑定账号后才能领取红包。",
+          onConfirm: () => {
+            // console.log("Confirmed");
+          },
+        });
+      }
     });
   };
 
   const handleClickStart = () => {
-    const reward = adDetail?.message?.find((modal) => modal?.type === 1);
+    const CallApp = require("callapp-lib");
 
-    if (reward) {
-      Modal.alert({
-        content: (
-          <>
-            <span className={styles.redPacketLeft}>
-              <Image src={redPacketLeft} />
-            </span>
-            <span className={styles.redPacketRight}>
-              <Image src={redPacketRight} />
-            </span>
-            <Gift className={styles.gift} />
-            <Banner className={styles.banner} />
-            <span className={styles.title}>恭喜获得奖励</span>
-            <div className={styles.amount}>+{reward?.amount}</div>
-            <div className={styles.content}>{reward?.content}</div>
-          </>
-        ),
-        bodyClassName: styles.getRewardModal,
-        onConfirm: () => {
-          // console.log("Confirmed");
-        },
-        confirmText: "继续努力",
-      });
-    }
+    const options = {
+      scheme: {
+        protocol: adDetail?.game_info?.scheme,
+      },
+    };
+
+    callLib = new CallApp(options);
+
+    callLib?.open({
+      path: "",
+    });
+
+    // const reward = adDetail?.messages?.find((modal) => modal?.type === 1);
+
+    // if (reward) {
+    //   Modal.alert({
+    //     content: (
+    //       <>
+    //         <span className={styles.redPacketLeft}>
+    //           <Image src={redPacketLeft} />
+    //         </span>
+    //         <span className={styles.redPacketRight}>
+    //           <Image src={redPacketRight} />
+    //         </span>
+    //         <Gift className={styles.gift} />
+    //         <Banner className={styles.banner} />
+    //         <span className={styles.title}>恭喜获得奖励</span>
+    //         <div className={styles.amount}>+{reward?.amount}</div>
+    //         <div className={styles.content}>{reward?.content}</div>
+    //       </>
+    //     ),
+    //     bodyClassName: styles.getRewardModal,
+    //     onConfirm: () => {
+    //       // console.log("Confirmed");
+    //     },
+    //     confirmText: "继续努力",
+    //   });
+    // }
+  };
+
+  const generateRandom = (min = 0, max = 100) => {
+    let difference = max - min;
+
+    let rand = Math.random();
+
+    rand = Math.floor(rand * difference);
+
+    rand = rand + min;
+
+    return rand;
   };
 
   useEffect(() => {
     adTimeoutRef.current = setTimeout(() => {
-      const advertisement = adDetail?.message?.find(
+      const advertisement = adDetail?.messages?.find(
         (modal) => modal?.type === 2
       );
 
@@ -87,11 +116,13 @@ const GameDetail = ({ adDetail }) => {
             <>
               <MoneyLeft className={styles.moneyLeft} />
               <MoneyRight className={styles.moneyRight} />
-              <div className={styles.title}>当前落后于85%玩家</div>
+              <div className={styles.title}>
+                当前落后于{generateRandom(85, 99)}%玩家
+              </div>
               <div className={styles.subTitle}>{advertisement?.title}</div>
               <div className={styles.redPacketSpeed}>
                 <span className={styles.amount}>+{advertisement?.amount}</span>
-                <span className={styles.text}>累计充值10元</span>
+                {/* <span className={styles.text}>累计充值10元</span> */}
                 <span className={styles.bubble}>
                   今日限时
                   <BubbleTriangle className={styles.triangle} />
@@ -100,7 +131,7 @@ const GameDetail = ({ adDetail }) => {
               </div>
               <div className={styles.content}>{addEventListener?.content}</div>
               <div className={styles.content}>
-                近3分钟完成的玩家平均加快<em>180%</em>
+                近3分钟完成的玩家平均加快<em>{generateRandom(140, 199)}%</em>
               </div>
             </>
           ),
@@ -108,10 +139,10 @@ const GameDetail = ({ adDetail }) => {
           onConfirm: () => {
             // console.log("Confirmed");
           },
-          confirmText: "试一试",
+          confirmText: "去完成",
         });
       }
-    }, 10 * 1000);
+    }, 2 * 60 * 1000);
 
     return () => {
       if (adTimeoutRef?.current) {
@@ -135,6 +166,10 @@ const GameDetail = ({ adDetail }) => {
 
     return `${secondAgo}秒前`;
   };
+
+  const isAccountSync = useMemo(() => {
+    return !!adDetail?.account_info?.account_id;
+  }, []);
 
   return (
     <div className={styles.wrapper}>
@@ -210,7 +245,7 @@ const GameDetail = ({ adDetail }) => {
             <Choose>
               <When condition={isAccountSync}>
                 <Space>
-                  {adDetail?.game_info?.ad_id}
+                  {adDetail?.account_info?.account_id}
                   <Tag type="period">老用户</Tag>
                 </Space>
               </When>
@@ -236,7 +271,7 @@ const GameDetail = ({ adDetail }) => {
               <div className={styles.info}>
                 <span>
                   <span className={styles.name}>
-                    账号：玩家昵称玩家昵称玩家昵称
+                    账号：{adDetail?.account_info?.character_name}
                   </span>
                   <span className={styles.level}>
                     等级：{adDetail?.account_info?.level} | 充值：
@@ -263,10 +298,24 @@ const GameDetail = ({ adDetail }) => {
                 title="下载/注册账号"
                 status="wait"
                 description={
-                  <span className={styles.start}>
-                    点击<span className={styles.entry}>开始</span>
-                    进入，中途请勿切换网络
-                  </span>
+                  <Choose>
+                    <When condition={MobileModel?.includes("iPhone")}>
+                      <span className={styles.start}>
+                        必须“允许”广告跟踪，中途请勿切换网络
+                      </span>
+                    </When>
+                    <When condition={MobileModel?.includes("android")}>
+                      <span className={styles.start}>
+                        选择“普通”下载，不能跳转应用商店，请勿切换网络
+                      </span>
+                    </When>
+                    <Otherwise>
+                      <span className={styles.start}>
+                        点击<span className={styles.entry}>开始</span>
+                        进入，中途请勿切换网络
+                      </span>
+                    </Otherwise>
+                  </Choose>
                 }
                 icon={<span className={styles.stepNumber}>1</span>}
               />
@@ -299,15 +348,30 @@ const GameDetail = ({ adDetail }) => {
         </span>
 
         <div className={styles.btnWrap}>
-          <Button
-            fill="solid"
-            block
-            className={styles.startBtn}
-            size="large"
-            onClick={handleClickStart}
-          >
-            开始
-          </Button>
+          <Choose>
+            <When condition={isAccountSync}>
+              <Button
+                fill="solid"
+                block
+                className={styles.startBtn}
+                size="large"
+                onClick={handleClickStart}
+              >
+                继续
+              </Button>
+            </When>
+            <Otherwise>
+              <Button
+                fill="solid"
+                block
+                className={styles.startBtn}
+                size="large"
+                onClick={handleClickStart}
+              >
+                开始
+              </Button>
+            </Otherwise>
+          </Choose>
         </div>
       </div>
     </div>
@@ -315,7 +379,7 @@ const GameDetail = ({ adDetail }) => {
 };
 
 export async function getServerSideProps(context) {
-  const res = await getAdDetail(queryString.stringify(context?.query));
+  const res = await getServeAdDetail(queryString.stringify(context?.query));
 
   return {
     props: {
