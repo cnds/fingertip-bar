@@ -33,7 +33,7 @@ const StartBtn = ({ game }) => {
   const handleClickPlay = (e, game) => {
     e.stopPropagation();
 
-    if (!game?.needDeduplicate) {
+    if (game?.need_deduplicate) {
       const str = queryString.stringify({ ...router.query, AdId: game?.ad_id });
 
       deduplicate(str).then((res) => {
@@ -45,6 +45,10 @@ const StartBtn = ({ game }) => {
             path: "",
           });
         }
+      });
+    } else {
+      callLib?.open({
+        path: "",
       });
     }
   };
