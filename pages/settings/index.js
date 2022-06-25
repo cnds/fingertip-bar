@@ -17,7 +17,6 @@ const Settings = ({ account }) => {
     router.push(path);
   };
 
-  console.info(11111, account);
   return (
     <div className={styles.wrapper}>
       <Head>

@@ -1,12 +1,16 @@
 import Bubble from "@/components/bubble";
 import Contact from "@/components/contact";
 import Tag from "@/components/tag";
+import Banner from "@/public/banner.svg";
 import BubbleTriangle from "@/public/bubble_triangle.svg";
 import Exclamation from "@/public/exclamation.svg";
 import gameImg from "@/public/game.png";
+import Gift from "@/public/gift.svg";
 import MoneyLeft from "@/public/money_left.svg";
 import MoneyRight from "@/public/money_right.svg";
 import playerImg from "@/public/player.png";
+import redPacketLeft from "@/public/red_packet_left.png";
+import redPacketRight from "@/public/red_packet_right.png";
 import RedPacketSpeed from "@/public/red_packet_speed.svg";
 import { getClientAdDetail, getServeAdDetail } from "@/request/index";
 import { Button, Modal, NavBar, Space, Steps, Swiper, Tabs } from "antd-mobile";
@@ -49,62 +53,36 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
     });
   };
 
-  const handleClickStart = () => {
-    const CallApp = require("callapp-lib");
+  const alertReward = () => {
+    const reward = adDetail?.messages?.find((modal) => modal?.type === 1);
 
-    const options = {
-      scheme: {
-        protocol: adDetail?.game_info?.scheme,
-      },
-    };
-
-    callLib = new CallApp(options);
-
-    callLib?.open({
-      path: "",
-    });
-
-    // const reward = adDetail?.messages?.find((modal) => modal?.type === 1);
-
-    // if (reward) {
-    //   Modal.alert({
-    //     content: (
-    //       <>
-    //         <span className={styles.redPacketLeft}>
-    //           <Image src={redPacketLeft} />
-    //         </span>
-    //         <span className={styles.redPacketRight}>
-    //           <Image src={redPacketRight} />
-    //         </span>
-    //         <Gift className={styles.gift} />
-    //         <Banner className={styles.banner} />
-    //         <span className={styles.title}>恭喜获得奖励</span>
-    //         <div className={styles.amount}>+{reward?.amount}</div>
-    //         <div className={styles.content}>{reward?.content}</div>
-    //       </>
-    //     ),
-    //     bodyClassName: styles.getRewardModal,
-    //     onConfirm: () => {
-    //       // console.log("Confirmed");
-    //     },
-    //     confirmText: "继续努力",
-    //   });
-    // }
+    if (reward) {
+      Modal.alert({
+        content: (
+          <>
+            <span className={styles.redPacketLeft}>
+              <Image src={redPacketLeft} />
+            </span>
+            <span className={styles.redPacketRight}>
+              <Image src={redPacketRight} />
+            </span>
+            <Gift className={styles.gift} />
+            <Banner className={styles.banner} />
+            <span className={styles.title}>恭喜获得奖励</span>
+            <div className={styles.amount}>+{reward?.amount}</div>
+            <div className={styles.content}>{reward?.content}</div>
+          </>
+        ),
+        bodyClassName: styles.getRewardModal,
+        onConfirm: () => {
+          // console.log("Confirmed");
+        },
+        confirmText: "继续努力",
+      });
+    }
   };
 
-  const generateRandom = (min = 0, max = 100) => {
-    let difference = max - min;
-
-    let rand = Math.random();
-
-    rand = Math.floor(rand * difference);
-
-    rand = rand + min;
-
-    return rand;
-  };
-
-  useEffect(() => {
+  const alertAdvertisement = () => {
     adTimeoutRef.current = setTimeout(() => {
       const advertisement = adDetail?.messages?.find(
         (modal) => modal?.type === 2
@@ -143,6 +121,39 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
         });
       }
     }, 2 * 60 * 1000);
+  };
+
+  const handleClickStart = () => {
+    const CallApp = require("callapp-lib");
+
+    const options = {
+      scheme: {
+        protocol: adDetail?.game_info?.scheme,
+      },
+    };
+
+    callLib = new CallApp(options);
+
+    callLib?.open({
+      path: "",
+    });
+  };
+
+  const generateRandom = (min = 0, max = 100) => {
+    let difference = max - min;
+
+    let rand = Math.random();
+
+    rand = Math.floor(rand * difference);
+
+    rand = rand + min;
+
+    return rand;
+  };
+
+  useEffect(() => {
+    alertReward();
+    alertAdvertisement();
 
     return () => {
       if (adTimeoutRef?.current) {

@@ -22,6 +22,10 @@ const RankList = ({ rankListData, type }) => {
     setIsOpened((isOpened) => !isOpened);
   };
 
+  if (rankListData?.length === 0) {
+    return null;
+  }
+
   return (
     <div className={styles.box}>
       <RankingsBg className={styles.rankingsBg} />
@@ -54,13 +58,21 @@ const RankList = ({ rankListData, type }) => {
         <div className={styles.rankingRow} key={index}>
           <span>{rank?.ad_title}</span>
           <span>{rank?.reward}</span>
-          <span>{rank?.reward_num}</span>
+          <span>
+            {rank?.rewarded_num}/{rank?.reward_num}
+          </span>
           <span
             className={classNames({
               [styles.received]: rank?.rewarded,
             })}
           >
-            {rank?.rewarded ? "已领取" : "未领取"}
+            <Choose>
+              <When condition={rank?.rewarded}>已领取</When>
+              <When condition={rank?.rewarded_num >= rank?.reward_num}>
+                不可参与
+              </When>
+              <Otherwise>虚位以待</Otherwise>
+            </Choose>
           </span>
         </div>
       </For>
@@ -69,13 +81,21 @@ const RankList = ({ rankListData, type }) => {
           <div className={styles.rankingRow} key={index}>
             <span>{rank?.ad_title}</span>
             <span>{rank?.reward}</span>
-            <span>{rank?.reward_num}</span>
+            <span>
+              {rank?.rewarded_num}/{rank?.reward_num}
+            </span>
             <span
               className={classNames({
                 [styles.received]: rank?.rewarded,
               })}
             >
-              {rank?.rewarded ? "已领取" : "未领取"}
+              <Choose>
+                <When condition={rank?.rewarded}>已领取</When>
+                <When condition={rank?.rewarded_num >= rank?.reward_num}>
+                  不可参与
+                </When>
+                <Otherwise>虚位以待</Otherwise>
+              </Choose>
             </span>
           </div>
         </For>
