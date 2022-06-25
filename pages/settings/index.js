@@ -17,6 +17,7 @@ const Settings = ({ account }) => {
     router.push(path);
   };
 
+  console.info(11111, account);
   return (
     <div className={styles.wrapper}>
       <Head>
@@ -40,7 +41,7 @@ const Settings = ({ account }) => {
           <div className={styles.title}>我的资料</div>
           <div className={styles.text}>昵称：{account?.nickname}</div>
           <div className={styles.text}>UID：{account?.uid}</div>
-          <div className={styles.text}>手机号：188****8888</div>
+          <div className={styles.text}>手机号：{account?.mobile}</div>
           <div className={styles.text}>邀请人：-</div>
         </div>
 

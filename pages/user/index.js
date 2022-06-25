@@ -70,7 +70,7 @@ const User = ({ account }) => {
   // 发送短信
   const handleClickGetCaptcha = () => {
     // 已绑定手机
-    if (account?.has_mobile) {
+    if (account?.mobile) {
       router.push(`/exchange?${queryString.stringify(router?.query)}`);
     } else {
       const params = {
@@ -135,6 +135,10 @@ const User = ({ account }) => {
     setIsAgree(value);
   };
 
+  const handleClickRecord = () => {
+    router.push(`/my_games?${queryString.stringify(router?.query)}`);
+  };
+
   return (
     <div className={styles.wrapper}>
       <Head>
@@ -193,7 +197,7 @@ const User = ({ account }) => {
         </div>
 
         <div className={styles.list}>
-          <div className={styles.action}>
+          <div className={styles.action} onClick={handleClickRecord}>
             <RecordIcon />
             <span className={styles.text}>参与记录</span>
             <RightArrow className={styles.rightArrow} />
