@@ -1,7 +1,8 @@
 import AlipayIcon from "@/public/alipay_icon.svg";
 import NoticeIcon from "@/public/notice_icon.svg";
 import WechatIcon from "@/public/wechat_icon.svg";
-import { Button, Form, Input, NavBar, Popup, Radio } from "antd-mobile";
+import { applyWithdraw, getAccount } from "@/request/index";
+import { Button, Form, Input, NavBar, Popup, Radio, Toast } from "antd-mobile";
 import classNames from "classnames";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -11,7 +12,7 @@ import styles from "./index.module.scss";
 
 const { useForm } = Form;
 
-const Exchange = () => {
+const Exchange = ({ account }) => {
   const router = useRouter();
   const [form] = useForm();
   const [selectedAmount, setSelectedAmount] = useState(0.5);
@@ -38,8 +39,42 @@ const Exchange = () => {
     setIsPopupVisible(true);
   };
 
-  const handleClickConfirm = () => {
-    router.push("/exchange/success");
+  const handleClickConfirm = async () => {
+    const fieldValues = await form.validateFields();
+
+    const { name, idCard, alipay } = fieldValues;
+
+    const params = {
+      real_name: name,
+      card_no: alipay,
+      id_card: idCard,
+      pay: selectedAmount,
+    };
+
+    const queryStr = queryString.stringify(router?.query);
+
+    applyWithdraw(queryStr, params)
+      .then((res) => {
+        if (res?.data?.err_code === 0) {
+          router.push("/exchange/success");
+        } else {
+          Toast.show({
+            content: res?.data?.err_msg,
+          });
+        }
+      })
+      .catch((err) => {
+        if (err?.response?.data?.err_msg) {
+          Toast.show({
+            content: err?.response?.data?.err_msg,
+          });
+        }
+        if (err?.response?.status) {
+          Toast.show({
+            content: "服务器报错",
+          });
+        }
+      });
   };
 
   return (
@@ -62,7 +97,7 @@ const Exchange = () => {
         </div>
 
         <div className={styles.convertible}>
-          <div className={styles.amount}>10.0</div>
+          <div className={styles.amount}>{account?.balance}</div>
           <div className={styles.label}>可兑换金额</div>
         </div>
 
@@ -88,7 +123,7 @@ const Exchange = () => {
                   账号：<span>188****8888</span>（隐码）
                 </span>
               </div>
-              <Radio value="wechat" />
+              <Radio value="wechat" disabled />
             </div>
           </Radio.Group>
         </div>
@@ -181,5 +216,15 @@ const Exchange = () => {
     </div>
   );
 };
+
+export async function getServerSideProps(context) {
+  const res = await getAccount(queryString.stringify(context?.query));
+
+  return {
+    props: {
+      account: res?.data?.payload,
+    },
+  };
+}
 
 export default Exchange;

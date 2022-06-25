@@ -8,7 +8,7 @@ import SettingIcon from "@/public/setting_icon.svg";
 import userAvatar from "@/public/user_avatar.png";
 import { bindMobile, getAccount, sendSms } from "@/request/index";
 import { isPhone } from "@/utils/index.js";
-import { Button, Form, Input, NavBar, Popup, Radio } from "antd-mobile";
+import { Button, Form, Input, NavBar, Popup, Radio, Toast } from "antd-mobile";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -32,7 +32,12 @@ const User = ({ account }) => {
   const [isAgree, setIsAgree] = useState(true);
 
   const handleClickExchange = () => {
-    setIsPopupVisible(true);
+    // 已绑定手机
+    if (account?.mobile) {
+      router.push(`/exchange?${queryString.stringify(router?.query)}`);
+    } else {
+      setIsPopupVisible(true);
+    }
   };
 
   const handleClickCancel = () => {
@@ -69,24 +74,19 @@ const User = ({ account }) => {
 
   // 发送短信
   const handleClickGetCaptcha = () => {
-    // 已绑定手机
-    if (account?.mobile) {
-      router.push(`/exchange?${queryString.stringify(router?.query)}`);
-    } else {
-      const params = {
-        operation_type: 1, // 操作类型 1 - 绑定手机
-        mobile: phone,
-      };
+    const params = {
+      operation_type: 1, // 操作类型 1 - 绑定手机
+      mobile: phone,
+    };
 
-      const queryStr = queryString.stringify(router?.query);
+    const queryStr = queryString.stringify(router?.query);
 
-      sendSms(queryStr, params).then((res) => {
-        if (res?.data?.err_code === 0) {
-          setIsSending(true);
-          startCountdown();
-        }
-      });
-    }
+    sendSms(queryStr, params).then((res) => {
+      if (res?.data?.err_code === 0) {
+        setIsSending(true);
+        startCountdown();
+      }
+    });
   };
 
   // 绑定手机
@@ -110,7 +110,7 @@ const User = ({ account }) => {
       })
       .catch((err) => {
         Toast.show({
-          content: "参数错误",
+          content: err?.response?.data?.err_msg,
         });
       });
   };

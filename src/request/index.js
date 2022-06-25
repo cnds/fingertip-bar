@@ -60,3 +60,15 @@ export const bindMobile = (queryStr, params) => {
 export const getBalanceDetail = (queryStr) => {
   return axios.get(`https://api.maobey.com/m/balance_detail?${queryStr}`);
 };
+
+// 提现
+export const applyWithdraw = (queryStr, params) => {
+  if (process.env.NODE_ENV === "development") {
+    return axios.post(`/m/apply_withdraw?${queryStr}`, params);
+  }
+
+  return axios.post(
+    `https://api.maobey.com/m/apply_withdraw?${queryStr}`,
+    params
+  );
+};
