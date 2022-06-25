@@ -2,8 +2,8 @@ import MenuTabBar from "@/components/menuTabBar";
 import Tag from "@/components/tag";
 import game from "@/public/game.png";
 import RightArrow from "@/public/right_arrow.svg";
-import { getDashboard } from "@/request/index";
-import { Button, NavBar, Space } from "antd-mobile";
+import { deduplicate, getDashboard } from "@/request/index";
+import { Button, NavBar, Space, Toast } from "antd-mobile";
 import classNames from "classnames";
 import dayjs from "dayjs";
 import Head from "next/head";
@@ -11,8 +11,54 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import queryString from "query-string";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import styles from "./index.module.scss";
+
+const StartBtn = ({ game }) => {
+  const router = useRouter();
+  let callLib = null;
+
+  useEffect(() => {
+    const CallApp = require("callapp-lib");
+
+    const options = {
+      scheme: {
+        protocol: game?.scheme,
+      },
+    };
+
+    callLib = new CallApp(options);
+  }, []);
+
+  const handleClickPlay = (e, game) => {
+    e.stopPropagation();
+
+    if (!game?.needDeduplicate) {
+      const str = queryString.stringify({ ...router.query, AdId: game?.ad_id });
+
+      deduplicate(str).then((res) => {
+        // 排重失败，不可以进行试玩
+        if (res?.data?.err_code !== 0) {
+          Toast.show({ content: "该游戏不可参与，试试其他的哦" });
+        } else {
+          callLib?.open({
+            params: {},
+            path: "",
+          });
+        }
+      });
+    }
+  };
+
+  return (
+    <Button
+      className={styles.playBtn}
+      onClick={(e) => handleClickPlay(e, game)}
+    >
+      开玩
+    </Button>
+  );
+};
 
 const Home = ({ dashboard }) => {
   const router = useRouter();
@@ -32,6 +78,7 @@ const Home = ({ dashboard }) => {
     return `${path}/${adId}?${queryStr}`;
   };
 
+  console.info(2222, dashboard);
   return (
     <div className={styles.wrapper}>
       <Head>
@@ -84,7 +131,20 @@ const Home = ({ dashboard }) => {
                   </span>
                   <span className={styles.name}>{game?.app_name}</span>
                   <span className={styles.reward}>
-                    已领<span className={styles.amount}>{game?.rewarded}</span>
+                    <Choose>
+                      <When
+                        condition={
+                          game?.is_recommend || game?.rewarded === "0.000"
+                        }
+                      >
+                        即将领
+                        <span className={styles.amount}>{game?.rewarded}</span>
+                      </When>
+                      <Otherwise>
+                        已领
+                        <span className={styles.amount}>{game?.rewarded}</span>
+                      </Otherwise>
+                    </Choose>
                   </span>
                 </div>
               </Link>
@@ -142,7 +202,7 @@ const Home = ({ dashboard }) => {
                         <span className={styles.divider} />
                         <span>等你挑战</span>
                       </div>
-                      <Button className={styles.playBtn}>开玩</Button>
+                      <StartBtn game={game} />
                     </div>
                   </div>
                 </div>

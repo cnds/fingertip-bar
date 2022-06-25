@@ -21,6 +21,14 @@ const nextConfig = {
   images: {
     domains: ["statics1.qkcdn.com", "upload1.qkcdn.com"],
   },
+  async rewrites() {
+    return [
+      {
+        source: "/m/:path*",
+        destination: "https://api.maobey.com/m/:path*",
+      },
+    ];
+  },
 };
 
 module.exports = withTM(nextConfig);
