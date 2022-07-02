@@ -157,7 +157,7 @@ const Home = ({ dashboard }) => {
 
         <div className={styles.box}>
           <div className={styles.titleLine}>
-            <span className={styles.titleText}>游戏任务</span>
+            <span className={styles.titleText}>热门游戏</span>
           </div>
           <div className={styles.task}>
             <For of={dashboard?.list} each="game" index="index">
