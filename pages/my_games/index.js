@@ -55,6 +55,7 @@ const MyGames = ({ myGames }) => {
                   width={60}
                   height={60}
                   objectFit="cover"
+                  style={{ borderRadius: "8px" }}
                 />
                 <div className={styles.text}>
                   <div className={styles.first}>
@@ -99,6 +100,7 @@ const MyGames = ({ myGames }) => {
                   width={60}
                   height={60}
                   objectFit="cover"
+                  style={{ borderRadius: "8px" }}
                 />
                 <div className={styles.text}>
                   <div className={styles.first}>
@@ -143,6 +145,7 @@ const MyGames = ({ myGames }) => {
                     width={48}
                     height={48}
                     objectFit="cover"
+                    style={{ borderRadius: "8px" }}
                   />
                   <div className={styles.name}>{game?.app_name}</div>
                 </div>
