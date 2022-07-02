@@ -25,6 +25,7 @@ const StartBtn = ({ game }) => {
       scheme: {
         protocol: game?.scheme,
       },
+      fallback: game?.download_url,
     };
 
     callLib = new CallApp(options);
@@ -160,57 +161,64 @@ const Home = ({ dashboard }) => {
           </div>
           <div className={styles.task}>
             <For of={dashboard?.list} each="game" index="index">
-              <div className={styles.gameItem} key={index}>
-                <Image
-                  src={game?.logo}
-                  width={60}
-                  height={60}
-                  objectFit="cover"
-                  style={{ borderRadius: "8px" }}
-                />
-                <div className={styles.main}>
-                  <div className={styles.first}>
-                    <div className={styles.left}>
-                      <span className={styles.name}>{game?.app_name}</span>
-                      <Space>
-                        <Tag type="period">{game?.stage}期</Tag>
-                        <If condition={game?.is_new}>
-                          <Tag type="new">NEW</Tag>
-                        </If>
-                      </Space>
+              <Link
+                href={getAdDetailUrl({ path: "/my_games", adId: game?.ad_id })}
+                key={index}
+              >
+                <div className={styles.gameItem}>
+                  <Image
+                    src={game?.logo}
+                    width={60}
+                    height={60}
+                    objectFit="cover"
+                    style={{ borderRadius: "8px" }}
+                  />
+                  <div className={styles.main}>
+                    <div className={styles.first}>
+                      <div className={styles.left}>
+                        <span className={styles.name}>{game?.app_name}</span>
+                        <Space>
+                          <Tag type="period">{game?.stage}期</Tag>
+                          <If condition={game?.is_new}>
+                            <Tag type="new">NEW</Tag>
+                          </If>
+                        </Space>
+                      </div>
+                      <div className={styles.right}>
+                        1分钟人均
+                        <em className={styles.highlight}>
+                          {game?.avg_minute_reward}
+                        </em>
+                      </div>
                     </div>
-                    <div className={styles.right}>
-                      1分钟人均
-                      <em className={styles.highlight}>
-                        {game?.avg_minute_reward}
-                      </em>
-                    </div>
-                  </div>
 
-                  <div className={styles.second}>
-                    <div className={styles.reward}>
-                      <span>
-                        总奖
-                        <span className={styles.highlight}>
-                          {game?.reward_total}
+                    <div className={styles.second}>
+                      <div className={styles.reward}>
+                        <span>
+                          总奖
+                          <span className={styles.highlight}>
+                            {game?.reward_total}
+                          </span>
                         </span>
-                      </span>
-                      <span className={styles.divider} />
-                      <Choose>
-                        <When condition={calRemainDays(game?.end_date) <= 0}>
-                          <span>即将结束</span>
-                        </When>
-                        <Otherwise>
-                          <span>剩{calRemainDays(game?.end_date)}天</span>
-                        </Otherwise>
-                      </Choose>
-                      <span className={styles.divider} />
-                      <span>等你挑战</span>
+                        <span className={styles.divider} />
+                        <Choose>
+                          <When condition={calRemainDays(game?.end_date) <= 0}>
+                            <span>即将结束</span>
+                          </When>
+                          <Otherwise>
+                            <span>剩{calRemainDays(game?.end_date)}天</span>
+                          </Otherwise>
+                        </Choose>
+                        <If condition={game?.label}>
+                          <span className={styles.divider} />
+                          <span>{game?.label}</span>
+                        </If>
+                      </div>
+                      <StartBtn game={game} />
                     </div>
-                    <StartBtn game={game} />
                   </div>
                 </div>
-              </div>
+              </Link>
             </For>
           </div>
         </div>
