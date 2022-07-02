@@ -56,6 +56,10 @@
         line-height: 19px;
         text-align: right;
         color: #ffa200;
+
+        &.noInList {
+          color: rgba(0, 0, 0, 0.3);
+        }
       }
     }
 

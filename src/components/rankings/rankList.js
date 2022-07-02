@@ -2,6 +2,7 @@ import ArrowDown from "@/public/arrow_down.svg";
 import RankingsBg from "@/public/rankings_bg.svg";
 import RedPacketIcon from "@/public/red_packet_icon.svg";
 import TrophyGold from "@/public/trophy_gold.svg";
+import TrophyGray from "@/public/trophy_gray.svg";
 import classNames from "classnames";
 import { useMemo, useState } from "react";
 import { Collapse } from "react-collapse";
@@ -22,6 +23,14 @@ const RankList = ({ rankListData, type }) => {
     setIsOpened((isOpened) => !isOpened);
   };
 
+  const sumReward = useMemo(() => {
+    const sumNum = rankListData?.reduce(
+      (prev, curr) => prev + Number(curr?.reward),
+      0
+    );
+    return `${sumNum}.0`;
+  }, [rankListData]);
+
   if (rankListData?.length === 0) {
     return null;
   }
@@ -32,8 +41,16 @@ const RankList = ({ rankListData, type }) => {
       <div className={styles.title}>
         <span className={styles.amount}>
           <RedPacketIcon />
-          <span>奖励</span>
-          <em>3000.0</em>
+          <Choose>
+            <When condition={type === "level"}>
+              <span>奖励</span>
+              <em>{sumReward}</em>
+            </When>
+            <Otherwise>
+              <span>总榜</span>
+              <em>XXX.0</em>
+            </Otherwise>
+          </Choose>
         </span>
         <span className={styles.rankingName}>
           <Choose>
@@ -42,10 +59,20 @@ const RankList = ({ rankListData, type }) => {
             <Otherwise>排行榜</Otherwise>
           </Choose>
         </span>
-        <span className={styles.listStatus}>
-          <TrophyGold />
-          <span>恭喜中榜</span>
-        </span>
+        <Choose>
+          <When condition={fixedRankList?.[0]?.rewarded}>
+            <span className={styles.listStatus}>
+              <TrophyGold />
+              <span>恭喜中榜</span>
+            </span>
+          </When>
+          <Otherwise>
+            <span className={classNames(styles.listStatus, styles.noInList)}>
+              <TrophyGray />
+              <span>您未上榜</span>
+            </span>
+          </Otherwise>
+        </Choose>
       </div>
 
       <div className={styles.rankingHead}>
