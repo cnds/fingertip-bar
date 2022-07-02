@@ -200,6 +200,14 @@
           margin-bottom: 4px;
           color: rgba(0, 0, 0, 0.5);
           display: block;
+
+          .divider {
+            display: inline-block;
+            width: 1px;
+            height: 8px;
+            margin: 0 4px;
+            background-color: rgba(0, 0, 0, 0.3);
+          }
         }
 
         .level {

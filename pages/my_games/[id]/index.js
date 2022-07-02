@@ -16,7 +16,16 @@ import redPacketLeft from "@/public/red_packet_left.png";
 import redPacketRight from "@/public/red_packet_right.png";
 import RedPacketSpeed from "@/public/red_packet_speed.svg";
 import { getClientAdDetail, getServeAdDetail } from "@/request/index";
-import { Button, Modal, NavBar, Space, Steps, Swiper, Tabs } from "antd-mobile";
+import {
+  Button,
+  Modal,
+  NavBar,
+  Space,
+  Steps,
+  Swiper,
+  Tabs,
+  Toast,
+} from "antd-mobile";
 import dayjs from "dayjs";
 import Head from "next/head";
 import Image from "next/image";
@@ -34,23 +43,39 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
   const [adDetail, setAdDetail] = useState(initAdDetail);
 
   const handleClickRefresh = () => {
-    getClientAdDetail(queryString.stringify(router?.query)).then((res) => {
-      const refreshedAdDetail = res?.data?.payload;
+    getClientAdDetail(queryString.stringify(router?.query))
+      .then((res) => {
+        if (res?.data?.err_code === 0) {
+          Toast.show({
+            content: "刷新成功",
+          });
+        } else {
+          Toast.show({
+            content: "网络异常，稍后再试",
+          });
+        }
 
-      setAdDetail(res?.data?.payload);
+        const refreshedAdDetail = res?.data?.payload;
 
-      if (!refreshedAdDetail?.account_info?.account_id) {
-        Modal.alert({
-          bodyClassName: styles.matchInfoModal,
-          title: "未匹配到有效信息",
-          content:
-            "您尚未注册或操作有误，暂不要试玩或充值。请务必按要求操作，绑定账号后才能领取红包。",
-          onConfirm: () => {
-            // console.log("Confirmed");
-          },
+        setAdDetail(res?.data?.payload);
+
+        if (!refreshedAdDetail?.account_info?.account_id) {
+          Modal.alert({
+            bodyClassName: styles.matchInfoModal,
+            title: "未匹配到有效信息",
+            content:
+              "您尚未注册或操作有误，暂不要试玩或充值。请务必按要求操作，绑定账号后才能领取红包。",
+            onConfirm: () => {
+              // console.log("Confirmed");
+            },
+          });
+        }
+      })
+      .catch((err) => {
+        Toast.show({
+          content: "网络异常，稍后再试",
         });
-      }
-    });
+      });
   };
 
   const alertReward = () => {
@@ -283,6 +308,10 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
                 <span>
                   <span className={styles.name}>
                     账号：{adDetail?.account_info?.character_name}
+                    <If condition={adDetail?.account_info?.server_name}>
+                      <span className={styles.divider} />
+                      区服：{adDetail?.account_info?.server_name}
+                    </If>
                   </span>
                   <span className={styles.level}>
                     等级：{adDetail?.account_info?.level} | 充值：
