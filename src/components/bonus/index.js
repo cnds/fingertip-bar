@@ -1,7 +1,7 @@
 import ArrowDown from "@/public/arrow_down.svg";
 import { Button } from "antd-mobile";
 import classNames from "classnames";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import styles from "./index.module.scss";
 
 const Bonus = ({ level = [] }) => {
@@ -11,40 +11,42 @@ const Bonus = ({ level = [] }) => {
     setIsFolded((isFolded) => !isFolded);
   };
 
+  const rewardedLevelArr = useMemo(() => {
+    return level?.filter((item) => item?.rewarded);
+  }, [level]);
+
   return (
     <div className={styles.wrapper}>
-      <div className={styles.guide}>
+      {/* <div className={styles.guide}>
         引导文案占位，若有就展示；引导文案占位，若有就展示；引导文案占位，若有就展示；
-      </div>
+      </div> */}
       <div
         className={classNames(styles.completedWrapper, {
           [styles.completedWrapperFolded]: isFolded,
         })}
       >
-        <For
-          of={level?.filter((item) => item?.rewarded)}
-          index="index"
-          each="task"
-        >
+        <For of={rewardedLevelArr} index="index" each="task">
           <div className={styles.bonusCompleted} key={index}>
             <span className={styles.text}>
               {index + 1}.{task?.content}
             </span>
             <span className={styles.amount}>
-              已领<em>{task?.reward}</em>
+              不可领<em>{task?.reward}</em>
             </span>
-            <Choose>
-              <When condition={task?.support_old_user === 0}>
-                <span className={styles.bonusTag}>限新用户</span>
-              </When>
-              <Otherwise>
-                <span className={styles.bonusTag}>今日补贴</span>
-              </Otherwise>
-            </Choose>
+            <If condition={rewardedLevelArr?.length > 0 && index === 0}>
+              <Choose>
+                <When condition={task?.support_old_user === 0}>
+                  <span className={styles.bonusTag}>限新用户</span>
+                </When>
+                <Otherwise>
+                  <span className={styles.bonusTag}>今日补贴</span>
+                </Otherwise>
+              </Choose>
+            </If>
           </div>
         </For>
       </div>
-      <If condition={level?.filter((item) => item?.rewarded)?.length > 0}>
+      <If condition={rewardedLevelArr?.length > 0}>
         <Button onClick={handleToggleIsFolded} block className={styles.foldBtn}>
           {isFolded ? (
             <>
@@ -67,19 +69,21 @@ const Bonus = ({ level = [] }) => {
       >
         <div className={styles.bonus} key={index}>
           <span className={styles.text}>
-            {index + 1}.{task?.content}
+            {rewardedLevelArr?.length + index + 1}.{task?.content}
           </span>
           <span className={styles.amount}>
             + <em>{task?.reward}</em>
           </span>
-          <Choose>
-            <When condition={task?.support_old_user === 0}>
-              <span className={styles.bonusTag}>限新用户</span>
-            </When>
-            <Otherwise>
-              <span className={styles.bonusTag}>今日补贴</span>
-            </Otherwise>
-          </Choose>
+          <If condition={rewardedLevelArr?.length === 0 && index === 0}>
+            <Choose>
+              <When condition={task?.support_old_user === 0}>
+                <span className={styles.bonusTag}>限新用户</span>
+              </When>
+              <Otherwise>
+                <span className={styles.bonusTag}>今日补贴</span>
+              </Otherwise>
+            </Choose>
+          </If>
         </div>
       </For>
     </div>
