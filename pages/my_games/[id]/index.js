@@ -41,6 +41,7 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
   const { MobileModel } = router.query;
   const adTimeoutRef = useRef(null);
   const [adDetail, setAdDetail] = useState(initAdDetail);
+  let callLib = null;
 
   const handleClickRefresh = () => {
     getClientAdDetail(queryString.stringify(router?.query))
@@ -148,17 +149,20 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
     }, 2 * 60 * 1000);
   };
 
-  const handleClickStart = () => {
+  useEffect(() => {
     const CallApp = require("callapp-lib");
 
     const options = {
       scheme: {
         protocol: adDetail?.game_info?.scheme,
       },
+      fallback: adDetail?.game_info?.download_url,
     };
 
     callLib = new CallApp(options);
+  }, []);
 
+  const handleClickStart = () => {
     callLib?.open({
       path: "",
     });
