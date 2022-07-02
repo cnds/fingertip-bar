@@ -209,7 +209,7 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
 
   const isAccountSync = useMemo(() => {
     return !!adDetail?.account_info?.account_id;
-  }, []);
+  }, [adDetail]);
 
   return (
     <div className={styles.wrapper}>

@@ -111,7 +111,7 @@ const Exchange = ({ account }) => {
               <div className={styles.info}>
                 <span className={styles.type}>支付宝</span>
                 <span className={styles.account}>
-                  账号：<span>188****8888</span>（隐码）
+                  账号：<span>188****8888</span>（{account?.nickname}）
                 </span>
               </div>
               <Radio value="alipay" />
@@ -121,9 +121,7 @@ const Exchange = ({ account }) => {
               <WechatIcon />
               <div className={styles.info}>
                 <span className={styles.type}>微信</span>
-                <span className={styles.account}>
-                  账号：<span>188****8888</span>（隐码）
-                </span>
+                <span className={styles.account}>通道拥挤，暂不可用</span>
               </div>
               <Radio value="wechat" disabled />
             </div>
@@ -145,7 +143,7 @@ const Exchange = ({ account }) => {
                 })}
                 onClick={() => handleSelectAmount(amount)}
               >
-                <If condition={selectedAmount === amount}>
+                <If condition={selectedAmount === amount && amount === 0.5}>
                   <span className={styles.speedTag}>极速</span>
                 </If>
                 {amount}

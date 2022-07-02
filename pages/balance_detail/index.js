@@ -44,6 +44,10 @@ const BalanceDetail = ({ balanceDetail }) => {
     },
   ];
 
+  const onContinue = () => {
+    router.push(`/?${queryString.stringify(router?.query)}`);
+  };
+
   return (
     <div className={styles.wrapper}>
       <Head>
@@ -63,7 +67,7 @@ const BalanceDetail = ({ balanceDetail }) => {
         <div className={styles.tip}>只保留近30天余额记录</div>
 
         <div className={styles.btnWrapper}>
-          <Button className={styles.continueBtn} block>
+          <Button className={styles.continueBtn} block onClick={onContinue}>
             继续领红包
           </Button>
         </div>
