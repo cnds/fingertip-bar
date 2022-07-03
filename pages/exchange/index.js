@@ -7,7 +7,7 @@ import classNames from "classnames";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import queryString from "query-string";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import styles from "./index.module.scss";
 
 const { useForm } = Form;
@@ -36,18 +36,25 @@ const Exchange = ({ account }) => {
   };
 
   const handleClickExchange = () => {
-    setIsPopupVisible(true);
+    const { card_no, id_card, real_name } = account?.alipay || {};
+
+    // 已经兑换打款成功过，绑定为默认收款账号，后续无需再输入
+    if (card_no && id_card && real_name) {
+      handleClickConfirm({ card_no, id_card, real_name });
+    } else {
+      setIsPopupVisible(true);
+    }
   };
 
-  const handleClickConfirm = async () => {
+  const handleClickConfirm = async ({ card_no, id_card, real_name }) => {
     const fieldValues = await form.validateFields();
 
     const { name, idCard, alipay } = fieldValues;
 
     const params = {
-      real_name: name,
-      card_no: alipay,
-      id_card: idCard,
+      real_name: real_name || name,
+      card_no: card_no || alipay,
+      id_card: id_card || idCard,
       pay: selectedAmount,
     };
 
@@ -78,6 +85,30 @@ const Exchange = ({ account }) => {
         }
       });
   };
+
+  const desensitizedCardNo = useMemo(() => {
+    const cardNoArr = account?.alipay?.card_no?.split("");
+
+    cardNoArr[3] = "*";
+    cardNoArr[4] = "*";
+    cardNoArr[5] = "*";
+    cardNoArr[6] = "*";
+
+    return cardNoArr?.join("");
+  }, [account]);
+
+  const desensitizedRealName = useMemo(() => {
+    const realNameArr = account?.alipay?.real_name?.split("");
+
+    if (realNameArr?.length <= 2) {
+      realNameArr[0] = "*";
+    } else {
+      realNameArr[0] = "*";
+      realNameArr[1] = "*";
+    }
+
+    return realNameArr?.join("");
+  }, [account]);
 
   return (
     <div className={styles.wrapper}>
@@ -111,7 +142,18 @@ const Exchange = ({ account }) => {
               <div className={styles.info}>
                 <span className={styles.type}>支付宝</span>
                 <span className={styles.account}>
-                  账号：<span>188****8888</span>（{account?.nickname}）
+                  账号：
+                  <span>
+                    <Choose>
+                      <When condition={desensitizedCardNo}>
+                        {desensitizedCardNo}
+                      </When>
+                      <Otherwise>188****8888</Otherwise>
+                    </Choose>
+                  </span>
+                  <If condition={desensitizedRealName}>
+                    （{desensitizedRealName}）
+                  </If>
                 </span>
               </div>
               <Radio value="alipay" />
