@@ -15,7 +15,11 @@ import playerImg from "@/public/player.png";
 import redPacketLeft from "@/public/red_packet_left.png";
 import redPacketRight from "@/public/red_packet_right.png";
 import RedPacketSpeed from "@/public/red_packet_speed.svg";
-import { getClientAdDetail, getServeAdDetail } from "@/request/index";
+import {
+  deduplicate,
+  getClientAdDetail,
+  getServeAdDetail,
+} from "@/request/index";
 import {
   Button,
   Modal,
@@ -163,9 +167,27 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
   }, []);
 
   const handleClickStart = () => {
-    callLib?.open({
-      path: "",
-    });
+    if (adDetail?.need_deduplicate) {
+      const str = queryString.stringify({
+        ...router.query,
+        AdId: adDetail?.game_info?.ad_id,
+      });
+
+      deduplicate(str).then((res) => {
+        // 排重失败，不可以进行试玩
+        if (res?.data?.err_code !== 0) {
+          Toast.show({ content: "该游戏不可参与，试试其他的哦" });
+        } else {
+          callLib?.open({
+            path: "",
+          });
+        }
+      });
+    } else {
+      callLib?.open({
+        path: "",
+      });
+    }
   };
 
   const generateRandom = (min = 0, max = 100) => {

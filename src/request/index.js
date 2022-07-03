@@ -5,15 +5,6 @@ export const getDashboard = (queryStr) => {
   return axios.get(`https://api.maobey.com/m/dashboard?${queryStr}`);
 };
 
-// 排重
-export const deduplicate = (queryStr) => {
-  if (process.env.NODE_ENV === "development") {
-    return axios.get(`/m/deduplicate?${queryStr}`);
-  }
-
-  return axios.get(`https://api.maobey.com/m/deduplicate?${queryStr}`);
-};
-
 // 个人中心信息
 export const getAccount = (queryStr) => {
   return axios.get(`https://api.maobey.com/m/account?${queryStr}`);
@@ -35,6 +26,15 @@ export const getBalanceDetail = (queryStr) => {
 };
 
 // 服务端转发后端接口，避免CORS跨域
+// 排重
+export const deduplicate = (queryStr) => {
+  if (process.env.NODE_ENV === "development") {
+    return axios.get(`/api/deduplicate?${queryStr}`);
+  }
+
+  return axios.get(`https://api.maobey.com/api/deduplicate?${queryStr}`);
+};
+
 // 游戏详情
 export const getClientAdDetail = (queryStr) => {
   if (process.env.NODE_ENV === "development") {
