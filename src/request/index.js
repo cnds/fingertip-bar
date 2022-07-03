@@ -28,51 +28,25 @@ export const getBalanceDetail = (queryStr) => {
 // 服务端转发后端接口，避免CORS跨域
 // 排重
 export const deduplicate = (queryStr) => {
-  if (process.env.NODE_ENV === "development") {
-    return axios.get(`/api/deduplicate?${queryStr}`);
-  }
-
-  return axios.get(`https://api.maobey.com/api/deduplicate?${queryStr}`);
+  return axios.get(`/api/deduplicate?${queryStr}`);
 };
 
 // 游戏详情
 export const getClientAdDetail = (queryStr) => {
-  if (process.env.NODE_ENV === "development") {
-    return axios.get(`/api/getClientAdDetail?${queryStr}`);
-  }
-
-  return axios.get(`https://m.maobey.com/api/getClientAdDetail?${queryStr}`);
+  return axios.get(`/api/getClientAdDetail?${queryStr}`);
 };
 
 // 发送短信
 export const sendSms = (queryStr, params) => {
-  if (process.env.NODE_ENV === "development") {
-    return axios.post(`/api/sendSms?${queryStr}`, params);
-  }
-
-  return axios.post(`https://api.maobey.com/api/sendSms?${queryStr}`, params);
+  return axios.post(`/api/sendSms?${queryStr}`, params);
 };
 
 // 绑定手机
 export const bindMobile = (queryStr, params) => {
-  if (process.env.NODE_ENV === "development") {
-    return axios.post(`/api/bindMobile?${queryStr}`, params);
-  }
-
-  return axios.post(
-    `https://api.maobey.com/api/bindMobile?${queryStr}`,
-    params
-  );
+  return axios.post(`/api/bindMobile?${queryStr}`, params);
 };
 
 // 提现
 export const applyWithdraw = (queryStr, params) => {
-  if (process.env.NODE_ENV === "development") {
-    return axios.post(`/api/applyWithdraw?${queryStr}`, params);
-  }
-
-  return axios.post(
-    `https://api.maobey.com/api/applyWithdraw?${queryStr}`,
-    params
-  );
+  return axios.post(`/api/applyWithdraw?${queryStr}`, params);
 };
