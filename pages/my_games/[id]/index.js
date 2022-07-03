@@ -249,31 +249,33 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
         游戏详情
       </NavBar>
 
-      <div className={styles.notices}>
-        <Swiper
-          style={{ "--height": "24px" }}
-          autoplay={true}
-          loop={true}
-          allowTouchMove={false}
-          indicator={() => {}}
-        >
-          <For of={adDetail?.slides} each="slide" index="index">
-            <Swiper.Item key={index}>
-              <div className={styles.notice}>
-                <Image
-                  src={playerImg}
-                  width={20}
-                  height={20}
-                  objectFit="cover"
-                />
-                <span className={styles.noticeText}>
-                  {`${slide?.content} ${calSecondAgo(slide?.time)}`}
-                </span>
-              </div>
-            </Swiper.Item>
-          </For>
-        </Swiper>
-      </div>
+      <If condition={adDetail?.slides?.length > 0}>
+        <div className={styles.notices}>
+          <Swiper
+            style={{ "--height": "24px" }}
+            autoplay={true}
+            loop={true}
+            allowTouchMove={false}
+            indicator={() => {}}
+          >
+            <For of={adDetail?.slides} each="slide" index="index">
+              <Swiper.Item key={index}>
+                <div className={styles.notice}>
+                  <Image
+                    src={playerImg}
+                    width={20}
+                    height={20}
+                    objectFit="cover"
+                  />
+                  <span className={styles.noticeText}>
+                    {`${slide?.content} ${calSecondAgo(slide?.time)}`}
+                  </span>
+                </div>
+              </Swiper.Item>
+            </For>
+          </Swiper>
+        </div>
+      </If>
       <div className={styles.overview}>
         <Image
           src={adDetail?.game_info?.logo || gameImg}
