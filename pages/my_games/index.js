@@ -90,7 +90,7 @@ const MyGames = ({ myGames }) => {
           </div>
 
           <For of={myGames?.finished} each="game" index="index">
-            <div className={styles.gameItem}>
+            <div className={styles.gameItem} key={index}>
               <Image
                 src={game?.logo || gameImg}
                 width={60}
