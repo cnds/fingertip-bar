@@ -68,7 +68,7 @@ const Home = ({ dashboard }) => {
   const router = useRouter();
 
   const calRemainDays = (endDate) => {
-    const remainDays = dayjs(endDate).diff(dayjs(""), "days");
+    const remainDays = dayjs(endDate).diff(dayjs(), "days");
     return remainDays > 0 ? remainDays : 0;
   };
 
@@ -136,12 +136,12 @@ const Home = ({ dashboard }) => {
                   <span className={styles.reward}>
                     <Choose>
                       <When
-                        condition={
-                          game?.is_recommend || game?.rewarded === "0.000"
-                        }
+                        condition={game?.is_recommend || game?.rewarded === "0"}
                       >
                         即将领
-                        <span className={styles.amount}>{game?.rewarded}</span>
+                        <span className={styles.amount}>
+                          {game?.reward_first}
+                        </span>
                       </When>
                       <Otherwise>
                         已领
@@ -214,7 +214,7 @@ const Home = ({ dashboard }) => {
                           <span>{game?.label}</span>
                         </If>
                       </div>
-                      <StartBtn game={game} />
+                      <Button className={styles.playBtn}>开玩</Button>
                     </div>
                   </div>
                 </div>
