@@ -161,6 +161,7 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
         protocol: adDetail?.game_info?.scheme,
       },
       fallback: adDetail?.game_info?.download_url,
+      appstore: adDetail?.game_info?.download_url,
     };
 
     callLib = new CallApp(options);
@@ -178,37 +179,15 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
         if (res?.data?.err_code !== 0) {
           Toast.show({ content: "该游戏不可参与，试试其他的哦" });
         } else {
-          // callLib?.open({
-          //   path: "",
-          // });
-          window.location.href = adDetail?.game_info?.scheme;
-          setTimeout(() => {
-            let hidden =
-              window.document.hidden ||
-              window.document.mozHidden ||
-              window.document.msHidden ||
-              window.document.webkitHidden;
-            if (typeof hidden == "undefined" || hidden == false) {
-              window.location.href = adDetail?.game_info?.download_url;
-            }
-          }, 2000);
+          callLib?.open({
+            path: "",
+          });
         }
       });
     } else {
-      // callLib?.open({
-      //   path: "",
-      // });
-      window.location.href = adDetail?.game_info?.scheme;
-      setTimeout(() => {
-        let hidden =
-          window.document.hidden ||
-          window.document.mozHidden ||
-          window.document.msHidden ||
-          window.document.webkitHidden;
-        if (typeof hidden == "undefined" || hidden == false) {
-          window.location.href = adDetail?.game_info?.download_url;
-        }
-      }, 2000);
+      callLib?.open({
+        path: "",
+      });
     }
   };
 
