@@ -233,6 +233,55 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
     return !!adDetail?.account_info?.account_id;
   }, [adDetail]);
 
+  const isShowLevelTab = useMemo(() => {
+    return adDetail?.tasks?.level?.length > 0;
+  }, [adDetail]);
+
+  const isShowRechargeTab = useMemo(() => {
+    return adDetail?.tasks?.recharge?.length > 0;
+  }, [adDetail]);
+
+  const isShowRankTab = useMemo(() => {
+    return (
+      adDetail?.tasks?.rank?.level?.length > 0 ||
+      adDetail?.tasks?.rank?.recharge?.length > 0
+    );
+  }, [adDetail]);
+
+  const bubbleLeftStyle = useMemo(() => {
+    if (isShowLevelTab && isShowRankTab) {
+      return "44%";
+    }
+
+    if (isShowLevelTab && !isShowRankTab) {
+      return "67%";
+    }
+
+    if (!isShowLevelTab && isShowRankTab) {
+      return "18%";
+    }
+
+    if (!isShowLevelTab && !isShowRankTab) {
+      return "42%";
+    }
+  }, [isShowLevelTab, isShowRankTab]);
+
+  const defaultActiveKey = useMemo(() => {
+    if (isShowLevelTab) {
+      return "bonus";
+    }
+
+    if (isShowRechargeTab) {
+      return "recharge";
+    }
+
+    if (isShowRankTab) {
+      return "rankings";
+    }
+
+    return "bonus";
+  }, [isShowLevelTab, isShowRechargeTab, isShowRankTab]);
+
   return (
     <div className={styles.wrapper}>
       <Head>
@@ -399,21 +448,29 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
       </div>
 
       <div className={styles.tabsWrapper}>
-        <Tabs activeLineMode="fixed">
-          <Tabs.Tab title="等级奖励" key="bonus">
-            <Bonus level={adDetail?.tasks?.level} />
-          </Tabs.Tab>
-          <Tabs.Tab title="充值返现" key="recharge">
-            <Cash recharge={adDetail?.tasks?.recharge} />
-          </Tabs.Tab>
-          <Tabs.Tab title="排行榜" key="rankings">
-            <Rankings rank={adDetail?.tasks?.rank} />
-          </Tabs.Tab>
+        <Tabs activeLineMode="fixed" defaultActiveKey={defaultActiveKey}>
+          <If condition={isShowLevelTab}>
+            <Tabs.Tab title="等级奖励" key="bonus">
+              <Bonus level={adDetail?.tasks?.level} />
+            </Tabs.Tab>
+          </If>
+          <If condition={isShowRechargeTab}>
+            <Tabs.Tab title="充值返现" key="recharge">
+              <Cash recharge={adDetail?.tasks?.recharge} />
+            </Tabs.Tab>
+          </If>
+          <If condition={isShowRankTab}>
+            <Tabs.Tab title="排行榜" key="rankings">
+              <Rankings rank={adDetail?.tasks?.rank} />
+            </Tabs.Tab>
+          </If>
         </Tabs>
-        <span className={styles.bubble}>
-          首充最高返20
-          <BubbleTriangle className={styles.triangle} />
-        </span>
+        <If condition={isShowRechargeTab}>
+          <span className={styles.bubble} style={{ left: bubbleLeftStyle }}>
+            首充最高返20
+            <BubbleTriangle className={styles.triangle} />
+          </span>
+        </If>
 
         <div className={styles.btnWrap}>
           <Choose>
