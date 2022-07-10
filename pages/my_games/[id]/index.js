@@ -415,24 +415,28 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
                 title="下载/注册账号"
                 status="wait"
                 description={
-                  <Choose>
-                    <When condition={MobileModel?.includes("iPhone")}>
-                      <span className={styles.start}>
-                        必须“允许”广告跟踪，中途请勿切换网络
-                      </span>
-                    </When>
-                    <When condition={MobileModel?.includes("android")}>
-                      <span className={styles.start}>
-                        选择“普通”下载，不能跳转应用商店，请勿切换网络
-                      </span>
-                    </When>
-                    <Otherwise>
-                      <span className={styles.start}>
-                        点击<span className={styles.entry}>开始</span>
-                        进入，中途请勿切换网络
-                      </span>
-                    </Otherwise>
-                  </Choose>
+                  // <Choose>
+                  //   <When condition={MobileModel?.includes("iPhone")}>
+                  //     <span className={styles.start}>
+                  //       必须“允许”广告跟踪，中途请勿切换网络
+                  //     </span>
+                  //   </When>
+                  //   <When condition={MobileModel?.includes("android")}>
+                  //     <span className={styles.start}>
+                  //       选择“普通”下载，不能跳转应用商店，请勿切换网络
+                  //     </span>
+                  //   </When>
+                  //   <Otherwise>
+                  //     <span className={styles.start}>
+                  //       点击<span className={styles.entry}>开始</span>
+                  //       进入，中途请勿切换网络
+                  //     </span>
+                  //   </Otherwise>
+                  // </Choose>
+                  <span className={styles.start}>
+                    点击<span className={styles.entry}>开始</span>
+                    进入，中途请勿切换网络
+                  </span>
                 }
                 icon={<span className={styles.stepNumber}>1</span>}
               />
