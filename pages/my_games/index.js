@@ -90,44 +90,39 @@ const MyGames = ({ myGames }) => {
           </div>
 
           <For of={myGames?.finished} each="game" index="index">
-            <Link
-              href={getAdDetailUrl({ path: "/my_games", adId: game?.ad_id })}
-              key={index}
-            >
-              <div className={styles.gameItem}>
-                <Image
-                  src={game?.logo || gameImg}
-                  width={60}
-                  height={60}
-                  objectFit="cover"
-                  style={{ borderRadius: "8px" }}
-                />
-                <div className={styles.text}>
-                  <div className={styles.first}>
-                    <span className={styles.name}>{game?.app_name}</span>
-                    <span className={styles.amount}>
-                      已领<em>{game?.rewarded}</em>
+            <div className={styles.gameItem}>
+              <Image
+                src={game?.logo || gameImg}
+                width={60}
+                height={60}
+                objectFit="cover"
+                style={{ borderRadius: "8px" }}
+              />
+              <div className={styles.text}>
+                <div className={styles.first}>
+                  <span className={styles.name}>{game?.app_name}</span>
+                  <span className={styles.amount}>
+                    已领<em>{game?.rewarded}</em>
+                  </span>
+                </div>
+                <div className={styles.second}>
+                  <span>
+                    <span
+                      className={classNames(
+                        styles.endTime,
+                        styles.endTimeFinished
+                      )}
+                    >
+                      {dayjs(game?.end_date).format("YYYY/MM/DD")}结束
                     </span>
-                  </div>
-                  <div className={styles.second}>
-                    <span>
-                      <span
-                        className={classNames(
-                          styles.endTime,
-                          styles.endTimeFinished
-                        )}
-                      >
-                        {dayjs(game?.end_date).format("YYYY/MM/DD")}结束
-                      </span>
-                      <Tag type="period">{game?.stage}期</Tag>
-                    </span>
-                    <span className={styles.reward}>
-                      总奖{game?.reward_total}
-                    </span>
-                  </div>
+                    <Tag type="period">{game?.stage}期</Tag>
+                  </span>
+                  <span className={styles.reward}>
+                    总奖{game?.reward_total}
+                  </span>
                 </div>
               </div>
-            </Link>
+            </div>
           </For>
         </div>
 
