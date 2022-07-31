@@ -1,3 +1,4 @@
+import Logo from "@/public/logo.svg";
 import RightArrow from "@/public/right_arrow.svg";
 import { getAccount } from "@/request/index";
 import { NavBar } from "antd-mobile";
@@ -31,7 +32,7 @@ const Settings = ({ account }) => {
 
       <div className={styles.container}>
         <div className={styles.profile}>
-          <span className={styles.logo}>LOGO</span>
+          <Logo className={styles.logo} />
           <div className={styles.name}>指尖网咖</div>
           <div className={styles.banner}>挂机就能领红包</div>
         </div>
