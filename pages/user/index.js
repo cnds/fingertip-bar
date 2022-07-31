@@ -175,7 +175,7 @@ const User = ({ account }) => {
         <div className={styles.info}>
           <Image src={account?.avatar || userAvatar} />
           <div className={styles.detail}>
-            <div className={styles.name}>会员玩家</div>
+            <div className={styles.name}>{account?.nickname}</div>
             <div className={styles.userId}>
               <span>ID</span>
               <span>{account?.uid}</span>
