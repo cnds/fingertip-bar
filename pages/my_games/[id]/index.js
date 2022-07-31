@@ -51,28 +51,28 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
     getClientAdDetail(queryString.stringify(router?.query))
       .then((res) => {
         if (res?.data?.err_code === 0) {
-          Toast.show({
-            content: "刷新成功",
-          });
+          const refreshedAdDetail = res?.data?.payload;
+
+          setAdDetail(res?.data?.payload);
+
+          if (!refreshedAdDetail?.account_info?.account_id) {
+            Modal.alert({
+              bodyClassName: styles.matchInfoModal,
+              title: "未匹配到有效信息",
+              content:
+                "您尚未注册或操作有误，暂不要试玩或充值。请务必按要求操作，绑定账号后才能领取红包。",
+              onConfirm: () => {
+                // console.log("Confirmed");
+              },
+            });
+          } else {
+            Toast.show({
+              content: "刷新成功",
+            });
+          }
         } else {
           Toast.show({
             content: "网络异常，稍后再试",
-          });
-        }
-
-        const refreshedAdDetail = res?.data?.payload;
-
-        setAdDetail(res?.data?.payload);
-
-        if (!refreshedAdDetail?.account_info?.account_id) {
-          Modal.alert({
-            bodyClassName: styles.matchInfoModal,
-            title: "未匹配到有效信息",
-            content:
-              "您尚未注册或操作有误，暂不要试玩或充值。请务必按要求操作，绑定账号后才能领取红包。",
-            onConfirm: () => {
-              // console.log("Confirmed");
-            },
           });
         }
       })
@@ -360,9 +360,14 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
               <When condition={isAccountSync}>
                 <Space>
                   {adDetail?.game_info?.ad_id}
-                  <If condition={!adDetail?.account_info?.is_new}>
-                    <Tag type="period">老用户</Tag>
-                  </If>
+                  <Choose>
+                    <When condition={adDetail?.account_info?.is_new}>
+                      <Tag type="period">新用户</Tag>
+                    </When>
+                    <Otherwise>
+                      <Tag type="period">老用户</Tag>
+                    </Otherwise>
+                  </Choose>
                 </Space>
               </When>
               <Otherwise>
