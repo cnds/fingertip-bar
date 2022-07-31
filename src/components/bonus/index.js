@@ -31,7 +31,7 @@ const Bonus = ({ level = [] }) => {
               {index + 1}.{task?.content}
             </span>
             <span className={styles.amount}>
-              不可领<em>{task?.reward}</em>
+              已领<em>{task?.reward}</em>
             </span>
             <If condition={rewardedLevelArr?.length > 0 && index === 0}>
               <Choose>

@@ -11,7 +11,6 @@ import gameImg from "@/public/game.png";
 import Gift from "@/public/gift.svg";
 import MoneyLeft from "@/public/money_left.svg";
 import MoneyRight from "@/public/money_right.svg";
-import playerImg from "@/public/player.png";
 import redPacketLeft from "@/public/red_packet_left.png";
 import redPacketRight from "@/public/red_packet_right.png";
 import RedPacketSpeed from "@/public/red_packet_speed.svg";
@@ -311,14 +310,17 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
             <For of={adDetail?.slides} each="slide" index="index">
               <Swiper.Item key={index}>
                 <div className={styles.notice}>
-                  <Image
+                  {/* <Image
                     src={playerImg}
                     width={20}
                     height={20}
                     objectFit="cover"
-                  />
-                  <span className={styles.noticeText}>
+                  /> */}
+                  {/* <span className={styles.noticeText}>
                     {`${slide?.content} ${calSecondAgo(slide?.time)}`}
+                  </span> */}
+                  <span className={styles.noticeText}>
+                    {`${slide?.content} 1秒前`}
                   </span>
                 </div>
               </Swiper.Item>

@@ -31,7 +31,7 @@ const Cash = ({ recharge }) => {
               {index + 1}.{rechargeItem?.content}
             </span>
             <span className={styles.amount}>
-              不可领<em>{rechargeItem?.reward}</em>
+              已领<em>{rechargeItem?.reward}</em>
             </span>
             <If condition={rewardedRechargeArr?.length > 0 && index === 0}>
               <Choose>
