@@ -89,6 +89,10 @@ const Exchange = ({ account }) => {
   const desensitizedCardNo = useMemo(() => {
     const cardNoArr = account?.alipay?.card_no?.split("");
 
+    if (!Array.isArray(cardNoArr)) {
+      return null;
+    }
+
     cardNoArr[3] = "*";
     cardNoArr[4] = "*";
     cardNoArr[5] = "*";
@@ -99,6 +103,10 @@ const Exchange = ({ account }) => {
 
   const desensitizedRealName = useMemo(() => {
     const realNameArr = account?.alipay?.real_name?.split("");
+
+    if (!Array.isArray(realNameArr)) {
+      return null;
+    }
 
     if (realNameArr?.length <= 2) {
       realNameArr[0] = "*";
