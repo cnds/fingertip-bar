@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import styles from "./index.module.scss";
 
-const PrivacyPolicy = () => {
+const ShareEconomy = () => {
   const router = useRouter();
 
   const onBack = () => {
@@ -401,4 +401,4 @@ const PrivacyPolicy = () => {
   );
 };
 
-export default PrivacyPolicy;
+export default ShareEconomy;

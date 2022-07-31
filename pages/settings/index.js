@@ -67,10 +67,10 @@ const Settings = ({ account }) => {
           <div
             className={styles.agreement}
             onClick={() => {
-              gotoAgreement("/agreement/shareeconomy");
+              gotoAgreement("/agreement/gigEconomy");
             }}
           >
-            共享经济协议
+            零工经济合作伙伴协议
             <RightArrow />
           </div>
         </div>
