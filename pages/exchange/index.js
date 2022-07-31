@@ -38,6 +38,13 @@ const Exchange = ({ account }) => {
   const handleClickExchange = () => {
     const { card_no, id_card, real_name } = account?.alipay || {};
 
+    if (Number(account?.balance) < selectedAmount) {
+      Toast.show({
+        content: "余额不足",
+      });
+      return;
+    }
+
     // 已经兑换打款成功过，绑定为默认收款账号，后续无需再输入
     if (card_no && id_card && real_name) {
       handleClickConfirm({ card_no, id_card, real_name });
