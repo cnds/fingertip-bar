@@ -359,7 +359,7 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
             <Choose>
               <When condition={isAccountSync}>
                 <Space>
-                  {adDetail?.game_info?.ad_id}
+                  {adDetail?.account_info?.account_id}
                   <Choose>
                     <When condition={adDetail?.account_info?.is_new}>
                       <Tag type="period">新用户</Tag>
