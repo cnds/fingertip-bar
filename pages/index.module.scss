@@ -87,7 +87,7 @@
           line-height: 14px;
 
           .amount {
-            // font-weight: 500;
+            font-weight: bold;
             // font-size: 13px;
             // line-height: 18px;
             color: #f74757;
@@ -149,11 +149,15 @@
           justify-content: space-between;
           align-items: center;
           height: 30px;
+          max-width: calc(100vw - 114px);
 
           .reward {
             font-size: 12px;
             line-height: 17px;
             color: rgba(0, 0, 0, 0.3);
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
 
             .highlight {
               color: #f74757;
@@ -176,6 +180,7 @@
             background-color: #f74757;
             box-shadow: 0px 1px 4px rgba(247, 71, 87, 0.36);
             border-radius: 33px;
+            white-space: nowrap;
           }
         }
       }
