@@ -19,16 +19,16 @@ const Detail = ({ detail }) => {
     <div className={styles.detailWrapper}>
       <div className={styles.detail}>
         <Choose>
-          <When condition={detail.type === 1}>
+          <When condition={detail?.type === 1}>
             <BalanceIncrease />
           </When>
-          <When condition={detail.type === 0}>
+          <When condition={detail?.type === 0}>
             <BalanceGame />
           </When>
-          <When condition={detail.type === 3}>
+          <When condition={detail?.type === 3}>
             <BalanceInvitation />
           </When>
-          <When condition={detail.type === 2}>
+          <When condition={detail?.type === 2}>
             <BalanceDecrease />
           </When>
         </Choose>
@@ -40,7 +40,7 @@ const Detail = ({ detail }) => {
         </div>
         <div
           className={classNames(styles.amount, {
-            [styles.increase]: [0, 1, 3]?.includes(detail.type),
+            [styles.increase]: [0, 1, 3]?.includes(detail?.type),
           })}
         >
           {[0, 1, 3]?.includes(detail?.type) ? "+" : "-"}
