@@ -147,6 +147,16 @@ const User = ({ account }) => {
     router.push(`/my_games?${queryString.stringify(router?.query)}`);
   };
 
+  const onCopy = (text, result) => {
+    console.log(text, result);
+
+    if (result) {
+      Toast.show({
+        content: "已复制",
+      });
+    }
+  };
+
   return (
     <div className={styles.wrapper}>
       <Head>
@@ -169,7 +179,7 @@ const User = ({ account }) => {
             <div className={styles.userId}>
               <span>ID</span>
               <span>{account?.uid}</span>
-              <CopyToClipboard text={account?.uid}>
+              <CopyToClipboard text={account?.uid} onCopy={onCopy}>
                 <Button className={styles.copy}>复制</Button>
               </CopyToClipboard>
             </div>
