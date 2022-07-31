@@ -34,7 +34,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import queryString from "query-string";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import styles from "./index.module.scss";
 
 const { Step } = Steps;
@@ -42,7 +42,6 @@ const { Step } = Steps;
 const GameDetail = ({ adDetail: initAdDetail }) => {
   const router = useRouter();
   const { MobileModel } = router.query;
-  const adTimeoutRef = useRef(null);
   const [adDetail, setAdDetail] = useState(initAdDetail);
   let callLib = null;
 
@@ -112,44 +111,37 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
   };
 
   const alertAdvertisement = () => {
-    adTimeoutRef.current = setTimeout(() => {
-      const advertisement = adDetail?.messages?.find(
-        (modal) => modal?.type === 2
-      );
+    const advertisement = adDetail?.messages?.find(
+      (modal) => modal?.type === 2
+    );
 
-      if (advertisement) {
-        Modal.alert({
-          content: (
-            <>
-              <MoneyLeft className={styles.moneyLeft} />
-              <MoneyRight className={styles.moneyRight} />
-              <div className={styles.title}>
-                当前落后于{generateRandom(85, 99)}%玩家
-              </div>
-              <div className={styles.subTitle}>{advertisement?.title}</div>
-              <div className={styles.redPacketSpeed}>
-                <span className={styles.amount}>+{advertisement?.amount}</span>
-                {/* <span className={styles.text}>累计充值10元</span> */}
-                <span className={styles.bubble}>
-                  今日限时
-                  <BubbleTriangle className={styles.triangle} />
-                </span>
-                <RedPacketSpeed />
-              </div>
-              <div className={styles.content}>{addEventListener?.content}</div>
-              <div className={styles.content}>
-                近3分钟完成的玩家平均加快<em>{generateRandom(140, 199)}%</em>
-              </div>
-            </>
-          ),
-          bodyClassName: styles.speedUpModal,
-          onConfirm: () => {
-            // console.log("Confirmed");
-          },
-          confirmText: "去完成",
-        });
-      }
-    }, 2 * 60 * 1000);
+    if (advertisement) {
+      Modal.alert({
+        content: (
+          <>
+            <MoneyLeft className={styles.moneyLeft} />
+            <MoneyRight className={styles.moneyRight} />
+            <div className={styles.title}>{advertisement?.title}</div>
+            <div className={styles.subTitle}>{advertisement?.sub_title}</div>
+            <div className={styles.redPacketSpeed}>
+              <span className={styles.amount}>+{advertisement?.amount}</span>
+              {/* <span className={styles.text}>累计充值10元</span> */}
+              <span className={styles.bubble}>
+                今日限时
+                <BubbleTriangle className={styles.triangle} />
+              </span>
+              <RedPacketSpeed />
+            </div>
+            <div className={styles.content}>{advertisement?.content}</div>
+          </>
+        ),
+        bodyClassName: styles.speedUpModal,
+        onConfirm: () => {
+          // console.log("Confirmed");
+        },
+        confirmText: "去完成",
+      });
+    }
   };
 
   useEffect(() => {
@@ -205,13 +197,6 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
   useEffect(() => {
     alertReward();
     alertAdvertisement();
-
-    return () => {
-      if (adTimeoutRef?.current) {
-        clearTimeout(adTimeoutRef?.current);
-        adTimeoutRef.current = null;
-      }
-    };
   }, []);
 
   const handleClickBack = () => {
