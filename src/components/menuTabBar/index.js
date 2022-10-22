@@ -22,11 +22,11 @@ const MenuTabBar = () => {
     //   icon:
     //     router?.pathname === "/redPacket" ? <RedPacketActive /> : <RedPacket />,
     // },
-    {
-      key: "/user",
-      title: "我的",
-      icon: router?.pathname === "/user" ? <UserActive /> : <User />,
-    },
+    // {
+    //   key: "/user",
+    //   title: "我的",
+    //   icon: router?.pathname === "/user" ? <UserActive /> : <User />,
+    // },
   ];
 
   const handleChangeTabBar = (key) => {
