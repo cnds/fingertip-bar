@@ -35,7 +35,6 @@ const MenuTabBar = () => {
     router.push(`${key}?${queryStr}`);
   };
 
-  /*
   return (
     <TabBar
       className={styles.tabBar}
@@ -47,7 +46,6 @@ const MenuTabBar = () => {
       </For>
     </TabBar>
   );
-   */
 };
 
 export default MenuTabBar;

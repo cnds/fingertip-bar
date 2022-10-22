@@ -224,7 +224,7 @@ const Home = ({ dashboard }) => {
         </div>
       </div>
 
-      <MenuTabBar />
+      {/*<MenuTabBar />*/}
     </div>
   );
 };
