@@ -35,17 +35,19 @@ const MenuTabBar = () => {
     router.push(`${key}?${queryStr}`);
   };
 
+  /*
   return (
     <TabBar
       className={styles.tabBar}
       activeKey={router?.pathname}
       onChange={handleChangeTabBar}
     >
-      {/*<For of={tabs} each="tab">*/}
-      {/*  <TabBar.Item key={tab.key} icon={tab.icon} title={tab.title} />*/}
-      {/*</For>*/}
+      <For of={tabs} each="tab">
+        <TabBar.Item key={tab.key} icon={tab.icon} title={tab.title} />
+      </For>
     </TabBar>
   );
+   */
 };
 
 export default MenuTabBar;
