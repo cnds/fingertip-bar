@@ -11,22 +11,22 @@ const MenuTabBar = () => {
   const router = useRouter();
 
   const tabs = [
-    // {
-    //   key: "/",
-    //   title: "首页",
-    //   icon: router?.pathname === "/" ? <HomepageActive /> : <Homepage />,
-    // },
+    {
+      key: "/",
+      title: "首页",
+      icon: router?.pathname === "/" ? <HomepageActive /> : <Homepage />,
+    },
     // {
     //   key: "/redPacket",
     //   title: "拆红包",
     //   icon:
     //     router?.pathname === "/redPacket" ? <RedPacketActive /> : <RedPacket />,
     // },
-    // {
-    //   key: "/user",
-    //   title: "我的",
-    //   icon: router?.pathname === "/user" ? <UserActive /> : <User />,
-    // },
+    {
+      key: "/user",
+      title: "我的",
+      icon: router?.pathname === "/user" ? <UserActive /> : <User />,
+    },
   ];
 
   const handleChangeTabBar = (key) => {
@@ -41,9 +41,9 @@ const MenuTabBar = () => {
       activeKey={router?.pathname}
       onChange={handleChangeTabBar}
     >
-      <For of={tabs} each="tab">
-        <TabBar.Item key={tab.key} icon={tab.icon} title={tab.title} />
-      </For>
+      {/*<For of={tabs} each="tab">*/}
+      {/*  <TabBar.Item key={tab.key} icon={tab.icon} title={tab.title} />*/}
+      {/*</For>*/}
     </TabBar>
   );
 };
