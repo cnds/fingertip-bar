@@ -11,11 +11,11 @@ const MenuTabBar = () => {
   const router = useRouter();
 
   const tabs = [
-    {
-      key: "/",
-      title: "首页",
-      icon: router?.pathname === "/" ? <HomepageActive /> : <Homepage />,
-    },
+    // {
+    //   key: "/",
+    //   title: "首页",
+    //   icon: router?.pathname === "/" ? <HomepageActive /> : <Homepage />,
+    // },
     // {
     //   key: "/redPacket",
     //   title: "拆红包",
