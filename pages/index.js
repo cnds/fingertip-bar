@@ -33,7 +33,6 @@ const StartBtn = ({ game }) => {
 
   const handleClickPlay = (e, game) => {
     e.stopPropagation();
-
     if (game?.need_deduplicate) {
       const str = queryString.stringify({ ...router.query, AdId: game?.ad_id });
 
