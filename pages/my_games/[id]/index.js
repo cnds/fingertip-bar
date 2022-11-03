@@ -145,7 +145,7 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
         onConfirm: () => {
           // console.log("Confirmed");
         },
-        confirmText: "去完成",
+        confirmText: "去充值",
       });
     }
   };
