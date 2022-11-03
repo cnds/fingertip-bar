@@ -14,6 +14,7 @@ import MoneyRight from "@/public/money_right.svg";
 import redPacketLeft from "@/public/red_packet_left.png";
 import redPacketRight from "@/public/red_packet_right.png";
 import RedPacketSpeed from "@/public/red_packet_speed.svg";
+import Safari from "@/public/safari.svg";
 import {
   deduplicate,
   getClientAdDetail,
@@ -21,8 +22,10 @@ import {
 } from "@/request/index";
 import {
   Button,
+  Input,
   Modal,
   NavBar,
+  Popover,
   Space,
   Steps,
   Swiper,
@@ -34,7 +37,8 @@ import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import queryString from "query-string";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import styles from "./index.module.scss";
 
 const { Step } = Steps;
@@ -43,6 +47,8 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
   const router = useRouter();
   const { MobileModel } = router.query;
   const [adDetail, setAdDetail] = useState(initAdDetail);
+  const [isCopyPopoverVisible, setIsCopyPopoverVisible] = useState(false);
+  const btnRef = useRef(null);
   let callLib = null;
 
   const handleClickRefresh = () => {
@@ -159,6 +165,17 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
   }, []);
 
   const handleClickStart = () => {
+    const userAgent = window?.navigator?.userAgent?.toLowerCase();
+    const safari = /safari/.test(userAgent);
+    const ios = /iphone|ipod|ipad/.test(userAgent);
+
+    // ios and webview
+    if (ios && !safari) {
+      setIsCopyPopoverVisible(true);
+
+      return;
+    }
+
     if (adDetail?.need_deduplicate) {
       const str = queryString.stringify({
         ...router.query,
@@ -266,6 +283,14 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
 
     return "bonus";
   }, [isShowLevelTab, isShowRechargeTab, isShowRankTab]);
+
+  const onCopy = (text, result) => {
+    if (result) {
+      Toast.show({
+        content: "已复制，请到浏览器打开",
+      });
+    }
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -471,31 +496,60 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
           </span>
         </If>
 
-        <div className={styles.btnWrap}>
-          <Choose>
-            <When condition={isAccountSync}>
-              <Button
-                fill="solid"
-                block
-                className={styles.startBtn}
-                size="large"
-                onClick={handleClickStart}
+        <div className={styles.btnWrap} ref={btnRef}>
+          <Popover
+            content={
+              <CopyToClipboard
+                text={adDetail?.game_info?.download_url}
+                onCopy={onCopy}
               >
-                继续
-              </Button>
-            </When>
-            <Otherwise>
-              <Button
-                fill="solid"
-                block
-                className={styles.startBtn}
-                size="large"
-                onClick={handleClickStart}
-              >
-                开始
-              </Button>
-            </Otherwise>
-          </Choose>
+                <div className={styles.popoverWrap}>
+                  <Space>
+                    <Input
+                      value={adDetail?.game_info?.download_url}
+                      className={styles.linkInput}
+                      disabled
+                    />
+                    <Button size="small" className={styles.copy}>
+                      复制
+                    </Button>
+                  </Space>
+                  <div className={styles.copyText}>
+                    👆复制链接，到
+                    <Safari className={styles.safari} />
+                    Safari浏览器打开
+                  </div>
+                </div>
+              </CopyToClipboard>
+            }
+            getContainer={btnRef?.current || (() => document?.body)}
+            visible={isCopyPopoverVisible}
+          >
+            <Choose>
+              <When condition={isAccountSync}>
+                <Button
+                  fill="solid"
+                  block
+                  className={styles.startBtn}
+                  size="large"
+                  onClick={handleClickStart}
+                >
+                  继续
+                </Button>
+              </When>
+              <Otherwise>
+                <Button
+                  fill="solid"
+                  block
+                  className={styles.startBtn}
+                  size="large"
+                  onClick={handleClickStart}
+                >
+                  开始
+                </Button>
+              </Otherwise>
+            </Choose>
+          </Popover>
         </div>
       </div>
     </div>
