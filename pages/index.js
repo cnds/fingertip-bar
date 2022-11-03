@@ -85,14 +85,14 @@ const Home = ({ dashboard }) => {
   return (
     <div className={styles.wrapper}>
       <Head>
-        <title>指尖网咖</title>
-        <meta name="description" content="指尖网咖" />
+        <title>指尖试玩</title>
+        <meta name="description" content="指尖试玩" />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <NavBar backArrow={false} className={styles.navBar}>
-        指尖网咖
+        指尖试玩
       </NavBar>
 
       <div className={styles.body}>
@@ -224,7 +224,7 @@ const Home = ({ dashboard }) => {
         </div>
       </div>
 
-      <MenuTabBar />
+      {/*<MenuTabBar />*/}
     </div>
   );
 };
