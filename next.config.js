@@ -19,7 +19,7 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    domains: ["statics1.qkcdn.com", "upload1.qkcdn.com", "upload.qkcdn.com", "pic1.imgdb.cn"],
+    domains: ["statics1.qkcdn.com", "upload1.qkcdn.com", "upload.qkcdn.com", "pic1.imgdb.cn", "16014459.s21i.faiusr.com"],
   },
   async rewrites() {
     return [
