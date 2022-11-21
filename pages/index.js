@@ -45,6 +45,10 @@ const StartBtn = ({ game }) => {
             path: "",
           });
         }
+      }).catch(function(error) {
+        if (error.response.status != 200) {
+          Toast.show({ content: "该游戏不可参与，试试其他的哦" });
+        }
       });
     } else {
       callLib?.open({
