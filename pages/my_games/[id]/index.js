@@ -169,12 +169,12 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
     const safari = /safari/.test(userAgent);
     const ios = /iphone|ipod|ipad/.test(userAgent);
 
-    // ios and webview
-    if (ios && !safari) {
-      setIsCopyPopoverVisible(true);
+    // // ios and webview
+    // if (ios && !safari) {
+    //   setIsCopyPopoverVisible(true);
 
-      return;
-    }
+    //   return;
+    // }
 
     if (adDetail?.need_deduplicate) {
       const str = queryString.stringify({
@@ -187,6 +187,11 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
         if (res?.data?.err_code !== 0) {
           Toast.show({ content: "该游戏不可参与，试试其他的哦" });
         } else {
+          // ios and webview
+          if (ios && !safari) {
+            setIsCopyPopoverVisible(true);
+            return;
+          }
           callLib?.open({
             path: "",
           });
@@ -197,6 +202,11 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
         }
       });
     } else {
+      // ios and webview
+      if (ios && !safari) {
+        setIsCopyPopoverVisible(true);
+        return;
+      }
       callLib?.open({
         path: "",
       });

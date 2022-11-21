@@ -28,6 +28,7 @@ export const getBalanceDetail = (queryStr) => {
 // 服务端转发后端接口，避免CORS跨域
 // 排重
 export const deduplicate = (queryStr) => {
+  console.log(queryStr)
   return axios.get(`/api/deduplicate?${queryStr}`);
 };
 
