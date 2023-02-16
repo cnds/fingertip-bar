@@ -449,28 +449,24 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
                 title="下载/注册账号"
                 status="wait"
                 description={
-                  // <Choose>
-                  //   <When condition={MobileModel?.includes("iPhone")}>
-                  //     <span className={styles.start}>
-                  //       必须“允许”广告跟踪，中途请勿切换网络
-                  //     </span>
-                  //   </When>
-                  //   <When condition={MobileModel?.includes("android")}>
-                  //     <span className={styles.start}>
-                  //       选择“普通”下载，不能跳转应用商店，请勿切换网络
-                  //     </span>
-                  //   </When>
-                  //   <Otherwise>
-                  //     <span className={styles.start}>
-                  //       点击<span className={styles.entry}>开始</span>
-                  //       进入，中途请勿切换网络
-                  //     </span>
-                  //   </Otherwise>
-                  // </Choose>
-                  <span className={styles.start}>
-                    点击<span className={styles.entry}>开始</span>
-                    进入，中途请勿切换网络
-                  </span>
+                  <Choose>
+                    <When condition={adDetail?.game_info?.os == 1}>
+                      <span className={styles.start}>
+                        点击<span className={styles.entry}>开始</span>
+                        进入，必须「允许」广告追踪
+                      </span>
+                    </When>
+                    <Otherwise>
+                      <span className={styles.start}>
+                        点击<span className={styles.entry}>开始</span>
+                        进入，请勿跳转自带应用商店
+                      </span>
+                    </Otherwise>
+                  </Choose>
+                  // <span className={styles.start}>
+                  //   点击<span className={styles.entry}>开始</span>
+                  //   进入，中途请勿切换网络
+                  // </span>
                 }
                 icon={<span className={styles.stepNumber}>1</span>}
               />
@@ -488,16 +484,19 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
       <div className={styles.tabsWrapper}>
         <Tabs activeLineMode="fixed" defaultActiveKey={defaultActiveKey}>
           <If condition={isShowLevelTab}>
+            <span>{adDetail?.game_info?.desc}</span>
             <Tabs.Tab title="等级奖励" key="bonus">
               <Bonus level={adDetail?.tasks?.level} />
             </Tabs.Tab>
           </If>
           <If condition={isShowRechargeTab}>
+            <span>{adDetail?.game_info?.desc}</span>
             <Tabs.Tab title="充值返现" key="recharge">
               <Cash recharge={adDetail?.tasks?.recharge} />
             </Tabs.Tab>
           </If>
           <If condition={isShowRankTab}>
+            <span>{adDetail?.game_info?.desc}</span>
             <Tabs.Tab title="排行榜" key="rankings">
               <Rankings rank={adDetail?.tasks?.rank} />
             </Tabs.Tab>
