@@ -21,7 +21,6 @@ const Rankings = ({ rank, desc = "" }) => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.guide}>{desc}</div>
       <div className={styles.tips}>
         最先达到指定阶梯且最先领取者可获得奖励，名额领完即止。
       </div>
