@@ -70,7 +70,7 @@ const Bonus = ({ level = [] , desc = ""}) => {
             {rewardedLevelArr?.length + index + 1}.{task?.content}
           </span>
           <span className={styles.amount}>
-            + <em>{task?.reward}</em>
+            + <em><b>{task?.reward}</b></em>
           </span>
           <If condition={rewardedLevelArr?.length === 0 && index === 0}>
             <Choose>

@@ -70,7 +70,7 @@ const Cash = ({ recharge, desc = "" }) => {
             {rewardedRechargeArr?.length + index + 1}.{rechargeItem?.content}
           </span>
           <span className={styles.amount}>
-            + <em>{rechargeItem?.reward}</em>
+            + <em><b>{rechargeItem?.reward}</b></em>
           </span>
           <If condition={rewardedRechargeArr?.length === 0 && index === 0}>
             <Choose>
