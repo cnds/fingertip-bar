@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { useMemo, useState } from "react";
 import styles from "./index.module.scss";
 
-const Cash = ({ recharge }) => {
+const Cash = ({ recharge, desc = "" }) => {
   const [isFolded, setIsFolded] = useState(true);
 
   const handleToggleIsFolded = () => {
@@ -17,9 +17,7 @@ const Cash = ({ recharge }) => {
 
   return (
     <div className={styles.wrapper}>
-      {/* <div className={styles.guide}>
-        引导文案占位，若有就展示；引导文案占位，若有就展示；引导文案占位，若有就展示；
-      </div> */}
+      <div className={styles.guide}>{desc}</div>
       <div
         className={classNames(styles.completedWrapper, {
           [styles.completedWrapperFolded]: isFolded,

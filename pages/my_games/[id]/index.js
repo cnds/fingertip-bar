@@ -484,21 +484,18 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
       <div className={styles.tabsWrapper}>
         <Tabs activeLineMode="fixed" defaultActiveKey={defaultActiveKey}>
           <If condition={isShowLevelTab}>
-            <span>{adDetail?.game_info?.desc}</span>
             <Tabs.Tab title="等级奖励" key="bonus">
-              <Bonus level={adDetail?.tasks?.level} />
+              <Bonus level={adDetail?.tasks?.level} desc={adDetail?.game_info?.desc}/>
             </Tabs.Tab>
           </If>
           <If condition={isShowRechargeTab}>
-            <span>{adDetail?.game_info?.desc}</span>
             <Tabs.Tab title="充值返现" key="recharge">
-              <Cash recharge={adDetail?.tasks?.recharge} />
+              <Cash recharge={adDetail?.tasks?.recharge} desc={adDetail?.game_info?.desc} />
             </Tabs.Tab>
           </If>
           <If condition={isShowRankTab}>
-            <span>{adDetail?.game_info?.desc}</span>
             <Tabs.Tab title="排行榜" key="rankings">
-              <Rankings rank={adDetail?.tasks?.rank} />
+              <Rankings rank={adDetail?.tasks?.rank} desc={adDetail?.game_info?.desc}/>
             </Tabs.Tab>
           </If>
         </Tabs>
