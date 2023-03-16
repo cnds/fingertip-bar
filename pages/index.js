@@ -2,7 +2,7 @@ import MenuTabBar from "@/components/menuTabBar";
 import Tag from "@/components/tag";
 import game from "@/public/game.png";
 import RightArrow from "@/public/right_arrow.svg";
-import { deduplicate, getDashboard } from "@/request/index";
+import { deduplicate, getDashboard, getMenuBar } from "@/request/index";
 import { Button, NavBar, Space, Toast } from "antd-mobile";
 import classNames from "classnames";
 import dayjs from "dayjs";
@@ -227,7 +227,9 @@ const Home = ({ dashboard }) => {
         </div>
       </div>
 
-      {/*<MenuTabBar />*/}
+      <If condition={dashboard?.show_menu_bar}>
+        <MenuTabBar />
+      </If>
     </div>
   );
 };
