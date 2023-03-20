@@ -189,7 +189,7 @@ const Exchange = ({ account }) => {
           <div className={styles.title}>选择兑换金额</div>
           <div className={styles.amountWrapper}>
             <For
-              of={[0.5, 10, 100, 500, 800, 1000]}
+              of={[0.5, 10, 30, 50, 100, 500]}
               each="amount"
               index="index"
             >
