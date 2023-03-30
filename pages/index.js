@@ -183,7 +183,7 @@ const Home = ({ dashboard }) => {
                         <Space>
                           <Tag type="period">{game?.stage}期</Tag>
                           <If condition={game?.is_new}>
-                            <Tag type="new">NEW</Tag>
+                            <Tag type="new">新</Tag>
                           </If>
                         </Space>
                       </div>
