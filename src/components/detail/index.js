@@ -33,7 +33,7 @@ const Detail = ({ detail }) => {
           </When>
         </Choose>
         <div className={styles.content}>
-          <div className={styles.title}>{detail?.title}</div>
+          <div className={styles.title}>{detail?.content}</div>
           <div className={styles.time}>
             {dayjs(detail?.time).format("YYYY/MM/DD hh:mm:ss")}
           </div>
@@ -43,7 +43,7 @@ const Detail = ({ detail }) => {
             [styles.increase]: [0, 1, 3]?.includes(detail?.type),
           })}
         >
-          {[0, 1, 3]?.includes(detail?.type) ? "+" : "-"}
+          {[0, 1, 3]?.includes(detail?.type) && detail?.amount > 0 ? "+" : ""}
           {detail?.amount}
         </div>
       </div>
