@@ -163,7 +163,7 @@ const Exchange = ({ account }) => {
                       <When condition={desensitizedCardNo}>
                         {desensitizedCardNo}
                       </When>
-                      <Otherwise>188****8888</Otherwise>
+                      <Otherwise>暂未绑定支付宝</Otherwise>
                     </Choose>
                   </span>
                   <If condition={desensitizedRealName}>
