@@ -1,0 +1,55 @@
+.friend {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  gap: 8px;
+  background: #ffffff;
+  border-radius: 9px;
+
+  &:not(:last-child) {
+    margin-bottom: 16px;
+  }
+
+  .content {
+    flex: 1;
+
+    .first {
+      display: flex;
+      justify-content: space-between;
+
+      .name {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 24px;
+        color: rgba(0, 0, 0, 0.8);
+      }
+
+      .amount {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        color: #f74757;
+        font-style: italic;
+      }
+    }
+
+    .second {
+      display: flex;
+      justify-content: space-between;
+
+      .time {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+        color: rgba(0, 0, 0, 0.5);
+      }
+
+      .type {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 20px;
+        color: rgba(0, 0, 0, 0.5);
+      }
+    }
+  }
+}
