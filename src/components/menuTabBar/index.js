@@ -1,5 +1,7 @@
 import Homepage from "@/public/homepage.svg";
 import HomepageActive from "@/public/homepage_active.svg";
+import RedPacket from "@/public/red_packet.svg";
+import RedPacketActive from "@/public/red_packet_active.svg";
 import User from "@/public/user.svg";
 import UserActive from "@/public/user_active.svg";
 import { TabBar } from "antd-mobile";
@@ -16,12 +18,16 @@ const MenuTabBar = () => {
       title: "首页",
       icon: router?.pathname === "/" ? <HomepageActive /> : <Homepage />,
     },
-    // {
-    //   key: "/redPacket",
-    //   title: "拆红包",
-    //   icon:
-    //     router?.pathname === "/redPacket" ? <RedPacketActive /> : <RedPacket />,
-    // },
+    {
+      key: "/red_packet",
+      title: "拆红包",
+      icon:
+        router?.pathname === "/red_packet" ? (
+          <RedPacketActive />
+        ) : (
+          <RedPacket />
+        ),
+    },
     {
       key: "/user",
       title: "我的",

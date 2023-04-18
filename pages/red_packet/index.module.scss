@@ -1,0 +1,126 @@
+.wrapper {
+  min-height: 100vh;
+
+  .main {
+    text-align: center;
+    background: #9cd0e9 url("/red_packet_bg.png") no-repeat;
+    background-size: 100%;
+    min-height: 630px;
+
+    .titleInvite {
+      margin: 30vw 0 16px;
+    }
+
+    .notices {
+      height: 24px;
+      padding: 0 16px;
+
+      .notice {
+        display: inline-flex;
+        width: auto;
+        height: 100%;
+        align-items: center;
+        padding: 2px 12px 2px 2px;
+        background: rgba(34, 34, 34, 0.16);
+        border-radius: 15px;
+
+        .noticeText {
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 17px;
+          color: #fff;
+          margin-left: 6px;
+        }
+      }
+    }
+
+    .redPacketMain {
+      margin-top: 16px;
+    }
+  }
+
+  .contentBg {
+    position: relative;
+    padding: 0 16px 112px;
+    display: flex;
+    justify-content: center;
+    background-color: #9cd0e9;
+
+    .content {
+      max-width: 337px;
+
+      .myRecord {
+        position: relative;
+
+        .title {
+          font-size: 16px;
+          font-weight: 600;
+          position: absolute;
+          top: 7px;
+          left: 50%;
+          transform: translate(-50%);
+          color: rgba(188, 53, 28, 0.85);
+        }
+
+        .result {
+          position: absolute;
+          top: 48px;
+          width: 100%;
+          display: flex;
+          color: rgba(188, 53, 28, 0.85);
+
+          .btn {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(
+              90deg,
+              rgba(188, 53, 28, 0.01) 20.34%,
+              rgba(188, 53, 28, 0.12) 98.32%
+            );
+            border-radius: 12px;
+            font-size: 14px;
+            display: inline-block;
+            padding: 0 4px;
+          }
+
+          .text {
+            font-size: 32px;
+          }
+
+          .left {
+            flex: 1;
+            text-align: center;
+          }
+
+          .right {
+            flex: 1;
+            text-align: center;
+          }
+        }
+      }
+
+      .gameplay {
+        margin: 20px 0;
+      }
+
+      .rule {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 14px;
+        line-height: 22px;
+        padding: 16px 12px;
+        color: rgba(188, 53, 28, 0.7);
+        background: rgba(253, 250, 245, 0.9);
+        box-shadow: inset 1px 1px 7px rgba(236, 183, 105, 0.3),
+          inset -2px -3px 3px rgba(236, 183, 105, 0.3);
+        border-radius: 16px;
+      }
+    }
+
+    .clouds {
+      position: absolute;
+      bottom: 0;
+    }
+  }
+}
