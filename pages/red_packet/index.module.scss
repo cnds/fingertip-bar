@@ -34,8 +34,41 @@
       }
     }
 
-    .redPacketMain {
-      margin-top: 16px;
+    .packet {
+      position: relative;
+
+      .redPacketMain {
+        margin-top: 16px;
+      }
+
+      .share {
+        position: absolute;
+        top: 250px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .savedImage {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+
+        .imgWrapper {
+          position: relative;
+
+          .qrcode {
+            position: absolute;
+            top: 188px;
+            left: 50%;
+            transform: translateX(-50%);
+          }
+        }
+        .saveBtn {
+          margin: 20px 0 24px;
+        }
+      }
     }
   }
 

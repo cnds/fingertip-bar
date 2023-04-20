@@ -1,0 +1,33 @@
+.wrapper {
+  display: inline-block;
+  position: relative;
+  width: 243px;
+  height: 52px;
+  background: #fac82e;
+  box-shadow: inset 0px -3px 0px #fac82e;
+  border-radius: 26px;
+
+  .btn {
+    position: absolute;
+    top: -4px;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 52px;
+    color: #bc351c;
+    width: 243px;
+    height: 52px;
+    background: radial-gradient(
+          13.58% 78.91% at 98.15% 24.04%,
+          rgba(254, 160, 87, 0.3) 0%,
+          rgba(254, 160, 87, 0) 100%
+        )
+        /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */,
+      radial-gradient(
+        21.66% 62.5% at 44.24% 0%,
+        #fff8dd 0%,
+        rgba(255, 246, 210, 0) 100%
+      ),
+      linear-gradient(90deg, #fef5d2 1.85%, #ffe799 100%);
+    border-radius: 26px;
+  }
+}
