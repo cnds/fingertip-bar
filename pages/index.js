@@ -82,10 +82,12 @@ const Home = ({ dashboard }) => {
     return queryString.stringify(router?.query);
   }, []);
 
-  const getAdDetailUrl = ({ path, adId }) => {
+  const getAdDetailUrl = ({ path, game }) => {
+    const adId = game?.ad_id
     const queryStr = queryString.stringify({ ...router?.query, AdId: adId });
+    const downloadUrl = game?.download_url
 
-    return `${path}/${adId}?${queryStr}`;
+    return `${path}/${adId}?${queryStr}#url=${downloadUrl}`;
   };
 
   return (
@@ -120,7 +122,7 @@ const Home = ({ dashboard }) => {
           <div className={styles.recently}>
             <For of={dashboard?.playing} each="game" index="index">
               <Link
-                href={getAdDetailUrl({ path: "/my_games", adId: game?.ad_id })}
+                href={getAdDetailUrl({ path: "/my_games", game: game })}
                 key={index}
               >
                 <div className={styles.gameItem}>
@@ -168,7 +170,7 @@ const Home = ({ dashboard }) => {
           <div className={styles.task}>
             <For of={dashboard?.list} each="game" index="index">
               <Link
-                href={getAdDetailUrl({ path: "/my_games", adId: game?.ad_id })}
+                href={getAdDetailUrl({ path: "/my_games", game: game })}
                 key={index}
               >
                 <div className={styles.gameItem}>
