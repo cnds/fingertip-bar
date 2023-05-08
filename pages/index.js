@@ -2,7 +2,7 @@ import MenuTabBar from "@/components/menuTabBar";
 import Tag from "@/components/tag";
 import game from "@/public/game.png";
 import RightArrow from "@/public/right_arrow.svg";
-import { deduplicate, getDashboard, getMenuBar } from "@/request/index";
+import { deduplicate, getDashboard } from "@/request/index";
 import { Button, NavBar, Space, Toast } from "antd-mobile";
 import classNames from "classnames";
 import dayjs from "dayjs";
@@ -15,7 +15,7 @@ import { useEffect, useMemo } from "react";
 import styles from "./index.module.scss";
 
 const StartBtn = ({ game }) => {
-  const router = useRouter();
+  const routeruseRouter = useRouter();
   let callLib = null;
 
   useEffect(() => {
@@ -36,20 +36,22 @@ const StartBtn = ({ game }) => {
     if (game?.need_deduplicate) {
       const str = queryString.stringify({ ...router.query, AdId: game?.ad_id });
 
-      deduplicate(str).then((res) => {
-        // 排重失败，不可以进行试玩
-        if (res?.data?.err_code !== 0) {
-          Toast.show({ content: "该游戏不可参与，试试其他的哦" });
-        } else {
-          callLib?.open({
-            path: "",
-          });
-        }
-      }).catch(function(error) {
-        if (error.response.status != 200) {
-          Toast.show({ content: "该游戏不可参与，试试其他的哦" });
-        }
-      });
+      deduplicate(str)
+        .then((res) => {
+          // 排重失败，不可以进行试玩
+          if (res?.data?.err_code !== 0) {
+            Toast.show({ content: "该游戏不可参与，试试其他的哦" });
+          } else {
+            callLib?.open({
+              path: "",
+            });
+          }
+        })
+        .catch(function (error) {
+          if (error.response.status != 200) {
+            Toast.show({ content: "该游戏不可参与，试试其他的哦" });
+          }
+        });
     } else {
       callLib?.open({
         path: "",
@@ -227,9 +229,7 @@ const Home = ({ dashboard }) => {
         </div>
       </div>
 
-      <If condition={dashboard?.show_menu_bar}>
-        <MenuTabBar />
-      </If>
+      <MenuTabBar pageType={dashboard?.page_type} />
     </div>
   );
 };

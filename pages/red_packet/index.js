@@ -8,17 +8,21 @@ import RedPacketMain from "@/public/red_packet_main.svg";
 import SavedImage from "@/public/saved_image.svg";
 import TitleInvite from "@/public/title_invite.svg";
 import TitleRule from "@/public/title_rule.svg";
+import { getInvitationLink, getInvitationReward } from "@/request/index";
 import { Mask, Swiper, Toast } from "antd-mobile";
 import { CloseCircleOutline } from "antd-mobile-icons";
 import html2canvas from "html2canvas";
 import Head from "next/head";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { QRCodeCanvas } from "qrcode.react";
+import queryString from "query-string";
 import { useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import styles from "./index.module.scss";
 
-const RedPacket = () => {
+const RedPacket = ({ invitationLink, rewardPayload }) => {
+  const router = useRouter();
   const [visible, setVisible] = useState(false);
 
   const slides = [
@@ -42,6 +46,10 @@ const RedPacket = () => {
         content: "已保存并复制",
       });
     });
+  };
+
+  const gotoDetail = () => {
+    router.push(`/my_friends?${queryString.stringify(router?.query)}`);
   };
 
   return (
@@ -92,13 +100,15 @@ const RedPacket = () => {
             <div className={styles.savedImage}>
               <div className={styles.imgWrapper} id="capture">
                 <SavedImage />
-                <QRCodeCanvas
-                  value="https://baidu.com/"
-                  size={90}
-                  className={styles.qrcode}
-                />
+                {invitationLink && (
+                  <QRCodeCanvas
+                    value={invitationLink}
+                    size={90}
+                    className={styles.qrcode}
+                  />
+                )}
               </div>
-              <CopyToClipboard text={`实时提现到账，打开领https://baidu.com/`}>
+              <CopyToClipboard text={`实时提现到账，打开领${invitationLink}`}>
                 <ActionBtn className={styles.saveBtn} onClick={onSaveAndCopy}>
                   保存图片并复制
                 </ActionBtn>
@@ -118,17 +128,17 @@ const RedPacket = () => {
             <Image src={RecordBg} objectFit="cover" />
             <div className={styles.title}>我的战绩</div>
             <div className={styles.result}>
-              <div className={styles.left}>
+              <div className={styles.left} onClick={gotoDetail}>
                 <div className={styles.btn}>
                   已邀请 <MoreArrow />
                 </div>
-                <div className={styles.text}>695</div>
+                <div className={styles.text}>{rewardPayload?.invited_num}</div>
               </div>
-              <div className={styles.right}>
+              <div className={styles.right} onClick={gotoDetail}>
                 <div className={styles.btn}>
                   已分成 <MoreArrow />
                 </div>
-                <div className={styles.text}>958.6</div>
+                <div className={styles.text}>{rewardPayload?.total_reward}</div>
               </div>
             </div>
           </div>
@@ -165,5 +175,21 @@ const RedPacket = () => {
     </div>
   );
 };
+
+export async function getServerSideProps(context) {
+  const linkRes = await getInvitationLink(
+    queryString.stringify(context?.query)
+  );
+  const rewardRes = await getInvitationReward(
+    queryString.stringify(context?.query)
+  );
+
+  return {
+    props: {
+      invitationLink: linkRes?.data?.payload?.link,
+      rewardPayload: rewardRes?.data?.payload,
+    },
+  };
+}
 
 export default RedPacket;

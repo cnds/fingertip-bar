@@ -1,0 +1,38 @@
+.progress {
+  height: 46px;
+  line-height: 46px;
+  border-radius: 23px;
+  background-color: #98fb98;
+  position: relative;
+  overflow: hidden;
+
+  .bg {
+    // width: 40%;
+    background-color: #32cd32;
+    position: absolute;
+    height: 100%;
+  }
+
+  .outer {
+    font-size: 20px;
+    position: relative;
+    text-align: center;
+    color: #32cd32;
+
+    .inner {
+      // width: 40%;
+      position: absolute;
+      content: attr(content);
+      overflow: hidden;
+      color: #32cd32;
+      z-index: 999;
+      left: 0;
+      top: 0;
+
+      .full {
+        // width: 279px;
+        color: #fff;
+      }
+    }
+  }
+}

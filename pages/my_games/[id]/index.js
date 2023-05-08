@@ -2,6 +2,7 @@ import Bonus from "@/components/bonus";
 import Bubble from "@/components/bubble";
 import Cash from "@/components/cash";
 import Contact from "@/components/contact";
+import ProgressBar from "@/components/progressBar";
 import Rankings from "@/components/rankings";
 import Tag from "@/components/tag";
 import Banner from "@/public/banner.svg";
@@ -32,6 +33,7 @@ import {
   Tabs,
   Toast,
 } from "antd-mobile";
+import axios from "axios";
 import dayjs from "dayjs";
 import Head from "next/head";
 import Image from "next/image";
@@ -48,6 +50,7 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
   const { MobileModel } = router.query;
   const [adDetail, setAdDetail] = useState(initAdDetail);
   const [isCopyPopoverVisible, setIsCopyPopoverVisible] = useState(false);
+  const [progress, setProgress] = useState(0);
   const btnRef = useRef(null);
   let callLib = null;
 
@@ -164,6 +167,23 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
     callLib = new CallApp(options);
   }, []);
 
+  const download = (fileName) => {
+    axios({
+      url: `/api/downloadApk?url=${adDetail?.game_info?.download_url}`,
+      responseType: "arraybuffer",
+      onDownloadProgress: (progressEvent) => {
+        const { loaded, total } = progressEvent;
+        setProgress((loaded / total) * 100);
+      },
+    }).then((res) => {
+      const buffer = new Blob([res?.data]);
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(buffer);
+      link.download = `${fileName || "game"}.apk`;
+      link.click();
+    });
+  };
+
   const handleClickStart = () => {
     const userAgent = window?.navigator?.userAgent?.toLowerCase();
     const safari = /safari/.test(userAgent);
@@ -182,34 +202,54 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
         AdId: adDetail?.game_info?.ad_id,
       });
 
-      deduplicate(str).then((res) => {
-        // 排重失败，不可以进行试玩
-        if (res?.data?.err_code !== 0) {
-          Toast.show({ content: "该游戏不可参与，试试其他的哦" });
-        } else {
-          // ios and webview
-          if (ios && !safari) {
-            setIsCopyPopoverVisible(true);
-            return;
+      deduplicate(str)
+        .then((res) => {
+          // 排重失败，不可以进行试玩
+          if (res?.data?.err_code !== 0) {
+            Toast.show({ content: "该游戏不可参与，试试其他的哦" });
+          } else {
+            // ios and webview
+            if (ios && !safari) {
+              setIsCopyPopoverVisible(true);
+              return;
+            }
+            if (adDetail?.game_info?.download_url?.endsWith(".apk")) {
+              const strArr = adDetail?.game_info?.download_url?.split("/");
+              const fileName = strArr?.[strArr?.length - 1]?.replace(
+                ".apk",
+                ""
+              );
+
+              download(fileName);
+            } else {
+              callLib?.open({
+                path: "",
+              });
+            }
           }
-          callLib?.open({
-            path: "",
-          });
-        }
-      }).catch(function(error) {
-        if (error.response.status != 200) {
-          Toast.show({ content: "该游戏不可参与，试试其他的哦" });
-        }
-      });
+        })
+        .catch(function (error) {
+          if (error.response.status != 200) {
+            Toast.show({ content: "该游戏不可参与，试试其他的哦" });
+          }
+        });
     } else {
       // ios and webview
       if (ios && !safari) {
         setIsCopyPopoverVisible(true);
         return;
       }
-      callLib?.open({
-        path: "",
-      });
+
+      if (adDetail?.game_info?.download_url?.endsWith(".apk")) {
+        const strArr = adDetail?.game_info?.download_url?.split("/");
+        const fileName = strArr?.[strArr?.length - 1]?.replace(".apk", "");
+
+        download(fileName);
+      } else {
+        callLib?.open({
+          path: "",
+        });
+      }
     }
   };
 
@@ -485,17 +525,26 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
         <Tabs activeLineMode="fixed" defaultActiveKey={defaultActiveKey}>
           <If condition={isShowLevelTab}>
             <Tabs.Tab title="等级奖励" key="bonus">
-              <Bonus level={adDetail?.tasks?.level} desc={adDetail?.game_info?.desc}/>
+              <Bonus
+                level={adDetail?.tasks?.level}
+                desc={adDetail?.game_info?.desc}
+              />
             </Tabs.Tab>
           </If>
           <If condition={isShowRechargeTab}>
             <Tabs.Tab title="充值返现" key="recharge">
-              <Cash recharge={adDetail?.tasks?.recharge} desc={adDetail?.game_info?.desc} />
+              <Cash
+                recharge={adDetail?.tasks?.recharge}
+                desc={adDetail?.game_info?.desc}
+              />
             </Tabs.Tab>
           </If>
           <If condition={isShowRankTab}>
             <Tabs.Tab title="排行榜" key="rankings">
-              <Rankings rank={adDetail?.tasks?.rank} desc={adDetail?.game_info?.desc}/>
+              <Rankings
+                rank={adDetail?.tasks?.rank}
+                desc={adDetail?.game_info?.desc}
+              />
             </Tabs.Tab>
           </If>
         </Tabs>
@@ -536,6 +585,9 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
             visible={isCopyPopoverVisible}
           >
             <Choose>
+              <When condition={progress > 0 && progress < 100}>
+                <ProgressBar percent={progress} />
+              </When>
               <When condition={isAccountSync}>
                 <Button
                   fill="solid"
