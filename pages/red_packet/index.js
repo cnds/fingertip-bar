@@ -74,7 +74,7 @@ const RedPacket = ({ invitationLink, rewardPayload, dashboard }) => {
             allowTouchMove={false}
             indicator={() => {}}
           >
-            <For of={slides} each="slide" index="index">
+            <For of={rewardPayload?.slides || []} each="slide" index="index">
               <Swiper.Item key={index}>
                 <div className={styles.notice}>
                   {/* <Image
