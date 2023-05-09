@@ -162,6 +162,7 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
       },
       fallback: adDetail?.game_info?.download_url,
       appstore: adDetail?.game_info?.download_url,
+      timeout: 300,
     };
 
     callLib = new CallApp(options);

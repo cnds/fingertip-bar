@@ -26,6 +26,7 @@ const StartBtn = ({ game }) => {
         protocol: game?.scheme,
       },
       fallback: game?.download_url,
+      timeout: 300,
     };
 
     callLib = new CallApp(options);
