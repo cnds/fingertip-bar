@@ -6,7 +6,7 @@ import RecordIcon from "@/public/record_icon.svg";
 import RightArrow from "@/public/right_arrow.svg";
 import SettingIcon from "@/public/setting_icon.svg";
 import userAvatar from "@/public/user_avatar.png";
-import { bindMobile, getAccount, sendSms } from "@/request/index";
+import { bindMobile, getAccount, getDashboard, sendSms } from "@/request/index";
 import { isPhone } from "@/utils/index.js";
 import { Button, Form, Input, NavBar, Popup, Radio, Toast } from "antd-mobile";
 import Head from "next/head";
@@ -20,7 +20,7 @@ import styles from "./index.module.scss";
 const { useForm } = Form;
 const COUNTDOWN_SECOND = 60;
 
-const User = ({ account }) => {
+const User = ({ account, dashboard }) => {
   const router = useRouter();
   const [form] = useForm();
   const [isPopupVisible, setIsPopupVisible] = useState(false);
@@ -346,17 +346,21 @@ const User = ({ account }) => {
           </Form.Item>
         </Form>
       </Popup>
-      <MenuTabBar />
+      <MenuTabBar pageType={dashboard?.page_type} />
     </div>
   );
 };
 
 export async function getServerSideProps(context) {
   const res = await getAccount(queryString.stringify(context?.query));
+  const dashboardRes = await getDashboard(
+    queryString.stringify(context?.query)
+  );
 
   return {
     props: {
       account: res?.data?.payload,
+      dashboard: dashboardRes?.data?.payload,
     },
   };
 }

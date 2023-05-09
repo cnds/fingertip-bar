@@ -8,7 +8,11 @@ import RedPacketMain from "@/public/red_packet_main.svg";
 import SavedImage from "@/public/saved_image.svg";
 import TitleInvite from "@/public/title_invite.svg";
 import TitleRule from "@/public/title_rule.svg";
-import { getInvitationLink, getInvitationReward } from "@/request/index";
+import {
+  getDashboard,
+  getInvitationLink,
+  getInvitationReward,
+} from "@/request/index";
 import { Mask, Swiper, Toast } from "antd-mobile";
 import { CloseCircleOutline } from "antd-mobile-icons";
 import html2canvas from "html2canvas";
@@ -21,7 +25,7 @@ import { useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import styles from "./index.module.scss";
 
-const RedPacket = ({ invitationLink, rewardPayload }) => {
+const RedPacket = ({ invitationLink, rewardPayload, dashboard }) => {
   const router = useRouter();
   const [visible, setVisible] = useState(false);
 
@@ -171,7 +175,7 @@ const RedPacket = ({ invitationLink, rewardPayload }) => {
         </div>
         <Clouds className={styles.clouds} />
       </div>
-      <MenuTabBar />
+      <MenuTabBar pageType={dashboard?.page_type} />
     </div>
   );
 };
@@ -184,10 +188,15 @@ export async function getServerSideProps(context) {
     queryString.stringify(context?.query)
   );
 
+  const dashboardRes = await getDashboard(
+    queryString.stringify(context?.query)
+  );
+
   return {
     props: {
       invitationLink: linkRes?.data?.payload?.link,
       rewardPayload: rewardRes?.data?.payload,
+      dashboard: dashboardRes?.data?.payload,
     },
   };
 }
