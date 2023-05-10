@@ -1,10 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo } from "react";
 import styles from "./index.module.scss";
 
 const ProgressBar = ({ percent }) => {
-  const progressRef = useRef(null);
-  const [fullWidth, setFullWidth] = useState(null);
-
   const percentText = useMemo(() => {
     if (typeof percent === "number") {
       if (percent < 1) {
@@ -17,19 +14,20 @@ const ProgressBar = ({ percent }) => {
     return percent;
   }, [percent]);
 
-  useEffect(() => {
-    setFullWidth(progressRef?.current?.clientWidth || 280);
-  }, []);
-
   return (
-    <div className={styles.progress} ref={progressRef}>
+    <div className={styles.progress}>
       <div className={styles.bg} style={{ width: `${percent}%` }} />
       <div className={styles.outer}>
         {percentText}
         <div className={styles.inner} style={{ width: `${percent}%` }}>
-          <div className={styles.full} style={{ width: `${fullWidth}px` }}>
-            {percentText}
-          </div>
+          <If condition={percent > 0}>
+            <div
+              className={styles.full}
+              style={{ width: `${(100 * 100) / percent}%` }}
+            >
+              {percentText}
+            </div>
+          </If>
         </div>
       </div>
     </div>
