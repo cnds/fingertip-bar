@@ -1,9 +1,9 @@
 import ActionBtn from "@/components/actionBtn";
 import MenuTabBar from "@/components/menuTabBar";
 import Clouds from "@/public/clouds.svg";
-import Gameplay from "@/public/gameplay.png";
+import Gameplay from "@/public/gameplay.svg";
 import MoreArrow from "@/public/more_arrow.svg";
-import RecordBg from "@/public/record_bg.png";
+import RecordBg from "@/public/record_bg.svg";
 import RedPacketMain from "@/public/red_packet_main.svg";
 import SavedImage from "@/public/saved_image.svg";
 import TitleInvite from "@/public/title_invite.svg";
@@ -17,7 +17,6 @@ import { Mask, Swiper, Toast } from "antd-mobile";
 import { CloseCircleOutline } from "antd-mobile-icons";
 import html2canvas from "html2canvas";
 import Head from "next/head";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { QRCodeCanvas } from "qrcode.react";
 import queryString from "query-string";
@@ -129,7 +128,7 @@ const RedPacket = ({ invitationLink, rewardPayload, dashboard }) => {
       <div className={styles.contentBg}>
         <div className={styles.content}>
           <div className={styles.myRecord}>
-            <Image src={RecordBg} objectFit="cover" />
+            <RecordBg />
             <div className={styles.title}>我的战绩</div>
             <div className={styles.result}>
               <div className={styles.left} onClick={gotoDetail}>
@@ -147,7 +146,7 @@ const RedPacket = ({ invitationLink, rewardPayload, dashboard }) => {
             </div>
           </div>
           <div className={styles.gameplay}>
-            <Image src={Gameplay} objectFit="cover" />
+            <Gameplay />
           </div>
 
           <div className={styles.rule}>
