@@ -214,19 +214,22 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
               setIsCopyPopoverVisible(true);
               return;
             }
-            if (adDetail?.game_info?.download_url?.endsWith(".apk")) {
-              const strArr = adDetail?.game_info?.download_url?.split("/");
-              const fileName = strArr?.[strArr?.length - 1]?.replace(
-                ".apk",
-                ""
-              );
+            callLib?.open({
+              path: "",
+            })
+            // if (adDetail?.game_info?.download_url?.endsWith(".apk")) {
+            //   const strArr = adDetail?.game_info?.download_url?.split("/");
+            //   const fileName = strArr?.[strArr?.length - 1]?.replace(
+            //     ".apk",
+            //     ""
+            //   );
 
-              download(fileName);
-            } else {
-              callLib?.open({
-                path: "",
-              });
-            }
+            //   download(fileName);
+            // } else {
+            //   callLib?.open({
+            //     path: "",
+            //   });
+            // }
           }
         })
         .catch(function (error) {
@@ -240,17 +243,20 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
         setIsCopyPopoverVisible(true);
         return;
       }
+      callLib?.open({
+        path: "",
+      })
 
-      if (adDetail?.game_info?.download_url?.endsWith(".apk")) {
-        const strArr = adDetail?.game_info?.download_url?.split("/");
-        const fileName = strArr?.[strArr?.length - 1]?.replace(".apk", "");
+      // if (adDetail?.game_info?.download_url?.endsWith(".apk")) {
+      //   const strArr = adDetail?.game_info?.download_url?.split("/");
+      //   const fileName = strArr?.[strArr?.length - 1]?.replace(".apk", "");
 
-        download(fileName);
-      } else {
-        callLib?.open({
-          path: "",
-        });
-      }
+      //   download(fileName);
+      // } else {
+      //   callLib?.open({
+      //     path: "",
+      //   });
+      // }
     }
   };
 
