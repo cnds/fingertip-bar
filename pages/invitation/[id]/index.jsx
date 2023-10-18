@@ -38,6 +38,18 @@ const Invitation = ({ landingReward }) => {
       });
   };
 
+  const onOpenApp = () => {
+    const packageName = "com.maobey.fingertip"
+    const fallbackUrl = "https://www.baidu.com"
+    try {
+      window.location.href = `intent://${packageName}/#Intent;package=${packageName};scheme=yourapp;end`;
+    } catch (error) {
+      console.error(`无法打开应用：${error}`);
+      // 如果无法打开应用，跳转到备用链接
+      window.location.href = fallbackUrl;
+    }
+  }
+
   const rewardText = useMemo(() => {
     if (landingReward) {
       const rewardArr = [...String(landingReward)];
@@ -61,7 +73,7 @@ const Invitation = ({ landingReward }) => {
       <LandingPage />
       <div className={styles.reward}>{rewardText}</div>
       <CopyToClipboard text={router?.query?.id}>
-        <ActionBtn className={styles.action} onClick={onBindLink}>
+        <ActionBtn className={styles.action} onClick={onOpenApp}>
           立即领红包
         </ActionBtn>
       </CopyToClipboard>
