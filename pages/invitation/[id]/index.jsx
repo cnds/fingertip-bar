@@ -39,12 +39,14 @@ const Invitation = ({ landingReward }) => {
   };
 
   const onOpenApp = () => {
-    const packageName = "com.maobey.fingertip"
+    console.log("ok")
+    const packageName = "com.hjz.zjtestplay"
     const fallbackUrl = "https://www.baidu.com"
     try {
-      window.location.href = `intent://${packageName}/#Intent;package=${packageName};scheme=yourapp;end`;
+      window.location.href = `intent://${packageName}/#Intent;package=${packageName};scheme=${packageName};end`;
     } catch (error) {
-      console.error(`无法打开应用：${error}`);
+      console.log("fail")
+      console.log(`无法打开应用：${error}`);
       // 如果无法打开应用，跳转到备用链接
       window.location.href = fallbackUrl;
     }
