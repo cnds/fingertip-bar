@@ -40,16 +40,17 @@ const Invitation = ({ landingReward }) => {
 
   const onOpenApp = () => {
     console.log("ok")
-    const packageName = "com.hjz.zjtestplay"
-    const fallbackUrl = "https://www.baidu.com"
-    try {
-      window.location.href = `intent://${packageName}/#Intent;package=${packageName};scheme=${packageName};end`;
-    } catch (error) {
-      console.log("fail")
-      console.log(`无法打开应用：${error}`);
-      // 如果无法打开应用，跳转到备用链接
-      window.location.href = fallbackUrl;
-    }
+    const customScheme = "taobao://";
+    const fallbackUrl = "https://www.baidu.com";
+    window.location.href =  `${customScheme}`;
+    setTimeout(function() {
+      if (document.hidden) {
+        console.log("app opened")
+      } else {
+        console.log("app open failed")
+        window.location.href = fallbackUrl;
+      }
+    }, 1000);
   }
 
   const rewardText = useMemo(() => {
