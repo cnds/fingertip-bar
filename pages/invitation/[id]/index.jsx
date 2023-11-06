@@ -40,7 +40,7 @@ const Invitation = ({ landingReward }) => {
 
   const onOpenApp = () => {
     console.log("ok")
-    const customScheme = "taobao://";
+    const customScheme = "maobey://com.maobey.fingertip:6060/data"
     const fallbackUrl = "https://www.baidu.com";
     window.location.href =  `${customScheme}`;
     setTimeout(function() {
@@ -50,7 +50,7 @@ const Invitation = ({ landingReward }) => {
         console.log("app open failed")
         window.location.href = fallbackUrl;
       }
-    }, 1000);
+    }, 2000);
   }
 
   const rewardText = useMemo(() => {
