@@ -41,7 +41,7 @@ const Invitation = ({ landingReward }) => {
   const onOpenApp = () => {
     console.log("ok")
     const customScheme = "maobey://com.maobey.fingertip:6060/data"
-    const fallbackUrl = "https://www.baidu.com";
+    const fallbackUrl = "https://www.maoyoo.cn/"
     window.location.href =  `${customScheme}`;
     setTimeout(function() {
       if (document.hidden) {
