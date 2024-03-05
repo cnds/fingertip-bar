@@ -6,3 +6,8 @@ export const isWeixin = () => {
     typeof navigator?.wxuserAgent !== "undefined"
   );
 };
+
+export function isIOS() {
+  const userAgent = window.navigator.userAgent;
+  return /iPhone|iPad|iPod/i.test(userAgent);
+}

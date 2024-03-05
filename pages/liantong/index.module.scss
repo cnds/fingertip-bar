@@ -1,0 +1,22 @@
+.wrapper {
+  position: relative;
+
+  .reward {
+    position: absolute;
+    top: 56vw;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #f74757;
+    font-family: "DIN";
+    font-weight: 500;
+    font-size: 88px;
+    text-shadow: 2px 2px 0px rgba(247, 71, 87, 0.16);
+  }
+
+  .action {
+    position: absolute;
+    top: 114vw;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
