@@ -40,7 +40,7 @@ const Detail = ({ detail }) => {
         </div>
         <div
           className={classNames(styles.amount, {
-            [styles.increase]: [0, 1, 3]?.includes(detail?.type),
+            [styles.increase]: detail?.amount > 0
           })}
         >
           {[0, 1, 2, 3]?.includes(detail?.type) && detail?.amount > 0 ? "+" : ""}
