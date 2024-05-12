@@ -17,7 +17,7 @@ const Bonus = ({ level = [] , desc = ""}) => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.guide}>{desc}</div>
+      <div className={styles.tips}>{desc}</div>
       <div
         className={classNames(styles.completedWrapper, {
           [styles.completedWrapperFolded]: isFolded,
