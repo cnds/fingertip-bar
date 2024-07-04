@@ -193,9 +193,9 @@ const Home = ({ dashboard }) => {
                         </Space>
                       </div>
                       <div className={styles.right}>
-                        1分钟人均
+                        人均
                         <em className={styles.highlight}>
-                          {game?.avg_minute_reward}
+                          {game?.avg_reward}
                         </em>
                       </div>
                     </div>
