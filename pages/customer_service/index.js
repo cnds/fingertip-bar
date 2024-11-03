@@ -24,7 +24,7 @@ const CustomerService = () => {
       </NavBar>
       <iframe
         className={styles.iframeWrapper}
-        src="http://m.maoyoo.cn/col.jsp?id=116"
+        src="https://m.maoyoo.cn/col.jsp?id=116"
       />
     </div>
   );
