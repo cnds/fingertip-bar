@@ -24,7 +24,7 @@ const CustomerService = () => {
       </NavBar>
       <iframe
         className={styles.iframeWrapper}
-        src="https://yzf.qq.com/xv/web/static/chat/index.html?sign=37ef9b97d27354c7714d9ce849e1b76461665a28638153f3870fab90fcd400b714017e14abd8e4d6b2cd5f432111bb53880c16"
+        src="http://m.maoyoo.cn/col.jsp?id=116"
       />
     </div>
   );
