@@ -486,7 +486,7 @@ const GameDetail = ({ adDetail: initAdDetail }) => {
 
               <div className={styles.tips}>
                 <Exclamation />
-                <span>请认准绑定账号，不要更换设备、账号或角色。</span>
+                <span>请认准绑定账号，不要更换设备、账号或区服。</span>
               </div>
             </div>
           </When>
